@@ -1,6 +1,7 @@
 #include <iostream>
 #include "include/util/Color.h"
 #include "include/util/Vec3.h"
+#include "include/MeowImage.h"
 
 void testColor() {
 	Color c1;
@@ -19,12 +20,14 @@ void testVec3() {
 int main(int argc, char* argv[]) {
 	if (argc > 1) {
 		char* fileName = argv[1];
+		MeowImage img(fileName);
+		img.ppm();
 		// TODO: load file and stuff
 	} else {
 		std::cout << "File name must be specified." << std::endl;
 	}
 
-	testColor();
-	testVec3();
+	//testColor();
+	//testVec3();
 	return 0;
 }
