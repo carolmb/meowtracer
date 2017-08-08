@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include "include/util/Color.h"
 #include "include/util/Vec3.h"
 #include "include/MeowImage.h"
@@ -19,7 +20,7 @@ void testVec3() {
 
 int main(int argc, char* argv[]) {
 	if (argc > 1) {
-		char* fileName = argv[1];
+		std::string fileName = argv[1];
 		MeowImage img(fileName);
 		img.ppm();
 		// TODO: load file and stuff
