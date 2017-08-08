@@ -1,4 +1,7 @@
 
+#ifndef __COLOR__
+#define __COLOR__
+
 class Color {
 	typedef unsigned char number;
 public:
@@ -12,3 +15,5 @@ public:
 	Color lerp(Color &other, double t);
 
 };
+
+#endif

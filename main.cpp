@@ -21,7 +21,7 @@ void testVec3() {
 int main(int argc, char* argv[]) {
 	if (argc > 1) {
 		std::string fileName = argv[1];
-		MeowImage img(fileName);
+		MeowImage img = MeowImage::gradient(fileName);
 		img.ppm();
 		// TODO: load file and stuff
 	} else {
