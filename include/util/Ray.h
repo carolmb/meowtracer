@@ -12,8 +12,8 @@ public:
 	
 	Ray(Point3 o = Point3(), Vec3 d = vec3()) : origin(o), direction(d) {}
 	
-	inline Vec3 getDirection() { return direction; }         
-	inline Ṕoint3 getOrigin(){ return origin; }         
+	Vec3 getDirection() { return direction; }         
+	Point3 getOrigin(){ return origin; }         
 	Point3 at( real_type t_ ) { return origin + t_ * direction; }
     	          
 };

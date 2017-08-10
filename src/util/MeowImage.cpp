@@ -34,7 +34,7 @@ std::string readInput(std::ifstream &file) {
 			cleanInput += input + "\n";
 		}
 	}
-	std::cout << cleanInput << std::endl;
+	//std::cout << cleanInput << std::endl;
 	return cleanInput;
 }
 
