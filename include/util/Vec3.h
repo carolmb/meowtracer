@@ -25,8 +25,10 @@ public:
 	void operator -= (Vec3 other) { x -= other.x; y -= other.y; z -= other.z; }
 	void operator *= (double scalar) { x *= scalar; y *= scalar; z *= scalar; }
 
-	typedef Vec3 Point3;
+	number dot(Vec3 &other) { return x * other.x + y * other.y + z * other.z; }
 
 };
+
+typedef Vec3 Point3;
 
 #endif

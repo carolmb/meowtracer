@@ -6,16 +6,13 @@
 class Ray {     
 private:         
 	Point3 origin; 
-    vec3 direction;    
-public:         
-	typedef float real_type;         
-	
-	Ray(Point3 o = Point3(), Vec3 d = vec3()) : origin(o), direction(d) {}
-	
-	inline Vec3 getDirection() { return direction; }         
-	inline Ṕoint3 getOrigin(){ return origin; }         
-	Point3 at( real_type t_ ) { return origin + t_ * direction; }
-    	          
+    Vec3 direction;    
+public:
+	typedef double number;         
+	Ray(Point3 o = Point3(), Vec3 d = Vec3()) : origin(o), direction(d) {}
+	Vec3 getDirection() { return direction; }         
+	Point3 getOrigin() { return origin; }         
+	Point3 at(number n) { return origin + direction * n; }
 };
 
 #endif

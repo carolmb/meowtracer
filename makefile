@@ -1,14 +1,11 @@
-main: main.o Color.o Vec3.o MeowImage.o
-	g++ -o main main.o Color.o Vec3.o MeowImage.o
+main: main.o *.o util.o
+	g++ -o main main.o *.o util.o
 
 main.o: main.cpp
 	g++ -c main.cpp
 
-Color.o: src/util/Color.cpp 
-	g++ -c src/util/Color.cpp include/util/Color.h
+*.o: src/*.cpp 
+	g++ -c src/*.cpp include/*.h
 
-Vec3.o: src/util/Vec3.cpp 
-	g++ -c src/util/Vec3.cpp include/util/Vec3.h
-
-MeowImage.o: src/util/MeowImage.cpp
-	g++ -c src/util/MeowImage.cpp include/util/MeowImage.h
+util.o: src/util/*.cpp 
+	g++ -c src/util/*.cpp include/util/*.h

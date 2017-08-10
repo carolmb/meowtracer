@@ -16,7 +16,7 @@ class MeowImage {
 
 public:
 	MeowImage () : isBin(false), colCount(100), rowCount(100), outputFile("image.ppm") {}
-	MeowImage (bool b, int r, int c, std::string o) : isBin(b), colCount(c), rowCount(r), outputFile(o) {}
+	MeowImage (bool b, int c, int r, std::string o) : isBin(b), colCount(c), rowCount(r), outputFile(o) {}
 	MeowImage (bool b, int c, int r, std::string o, Color* crls) : isBin(b), colCount(c), rowCount(r), outputFile(o), colors(crls) {}
 
 	void save();
