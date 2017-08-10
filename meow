@@ -1,8 +1,10 @@
-bla.ppm
-1
-100
-100
-255 0 0
-255 0 255
-0 0 255
-255 255 255
+NAME = background.ppm
+TYPE = PPM
+CODIFICATION = # BLA
+binary 
+WIDTH = 200
+HEIGHT = 100
+UPPER_LEFT = 0 255 0    
+LOWER_LEFT = 0 0 0      
+UPPER_RIGHT = 255 255 0 
+LOWER_RIGHT = 255 0 0   
