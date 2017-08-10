@@ -1,10 +1,10 @@
+#ifndef __IMAGE__
+#define __IMAGE__
+
 #include <fstream>
 #include <iostream>
 #include <string>
-#include "util/Color.h"
-
-#ifndef __IMAGE__
-#define __IMAGE__
+#include "Color.h"
 
 class MeowImage {
 	bool isBin;

@@ -1,3 +1,5 @@
+#ifndef __VEC4__
+#define __VEC4__
 
 #include "util/Vec3.h"
 
@@ -27,3 +29,5 @@ public:
 	}
 
 };
+
+#endif

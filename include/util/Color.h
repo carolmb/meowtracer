@@ -1,4 +1,3 @@
-
 #ifndef __COLOR__
 #define __COLOR__
 

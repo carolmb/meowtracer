@@ -1,3 +1,5 @@
+#ifndef __VEC3__
+#define __VEC3__
 
 #include <cmath>
 
@@ -23,4 +25,8 @@ public:
 	void operator -= (Vec3 other) { x -= other.x; y -= other.y; z -= other.z; }
 	void operator *= (double scalar) { x *= scalar; y *= scalar; z *= scalar; }
 
+	typedef Vec3 Point3;
+
 };
+
+#endif

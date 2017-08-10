@@ -2,7 +2,7 @@
 #include <string>
 #include "include/util/Color.h"
 #include "include/util/Vec3.h"
-#include "include/MeowImage.h"
+#include "include/util/MeowImage.h"
 
 void testColor() {
 	Color c1;
