@@ -1,14 +1,14 @@
 #ifndef __RENDERER__
 #define __RENDERER__
 
-#include "Camera.h"
+#include "Scene.h"
+#include "Ray.h"
 #include "Color.h"
-#include "Sphere.h"
 
 class Renderer {
 public:
-	Color* render(Camera* camera, int width, int height);
-	Color getColor(Ray &ray);
+	Color* render(Scene &scene, int width, int height);
+	Color getColor(Scene &scene, Ray &ray, double x, double y);
 };
 
 #endif

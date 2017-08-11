@@ -1,30 +1,20 @@
 #ifndef __IMAGE__
 #define __IMAGE__
 
-#include <fstream>
-#include <iostream>
-#include <string>
 #include "Color.h"
+#include <string>
 
 class MeowImage {
-	bool isBin;
-	int colCount;
-	int rowCount;
-	std::string outputFile; //ppm file name
+	int width;
+	int height;
 	Color *colors;
-	// list of objects
-
 public:
-	MeowImage () : isBin(false), colCount(100), rowCount(100), outputFile("image.ppm") {}
-	MeowImage (bool b, int c, int r, std::string o) : isBin(b), colCount(c), rowCount(r), outputFile(o) {}
-	MeowImage (bool b, int c, int r, std::string o, Color* crls) : isBin(b), colCount(c), rowCount(r), outputFile(o), colors(crls) {}
+	MeowImage (int w, int h) : width(w), height(h) {}
+	MeowImage (int w, int h, Color* crls) : width(w), height(h), colors(crls) {}
 
-	void save();
-	void saveBin();
-	void ppm();
-
-	static MeowImage gradient(bool bin, int colCount, int rowCount, std::string file, Color tl, Color tr, Color bl, Color br);
-	static MeowImage gradient(std::string fileName);
+	void save(std::string &fileName);
+	void saveBin(std::string &fileName);
+	void ppm(std::string &fileName, bool binary);
 };
 
 #endif
