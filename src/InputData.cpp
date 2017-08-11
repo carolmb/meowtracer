@@ -4,6 +4,7 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
+#include <cmath>
 
 Color readColor(std::istringstream &file, Color &a, bool &valid) {
 	int r, g, b;
@@ -93,7 +94,13 @@ bool InputData::parse(std::string &content) {
 	scene.tl = c[0]; scene.bl = c[1]; scene.tr = c[2]; scene.br = c[3];
 
 	// TODO: specify camera and objects
-	scene.camera = new OrthogonalCamera();
+	Vec3 horizontal(colCount, 0, 0);
+	Vec3 vertical(0, rowCount, 0);
+	Point3 pos(0, 0, 0);
+	scene.camera = new OrthogonalCamera(horizontal, vertical, pos);
+	Point3 lens(0, 0, std::max(colCount, rowCount));
+	//scene.camera = new PerspectiveCamera(horizontal, vertical, pos, lens);
+	scene.sphere = Sphere(Point3(colCount / 2, rowCount / 2, 0), std::min(colCount, rowCount) / 2);
 
 	return true;
 }
