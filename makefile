@@ -1,11 +1,20 @@
-main: main.o *.o util.o
-	g++ -o main main.o *.o util.o
+main: main.o Color.o MeowImage.o OrthogonalCamera.o PerspectiveCamera.o Renderer.o
+	g++ -o main main.o Color.o MeowImage.o OrthogonalCamera.o PerspectiveCamera.o Renderer.o
 
 main.o: main.cpp
 	g++ -c main.cpp
 
-*.o: src/*.cpp 
-	g++ -c src/*.cpp include/*.h
+Color.o: src/Color.cpp
+	g++ -c src/Color.cpp include/Color.h
 
-util.o: src/util/*.cpp 
-	g++ -c src/util/*.cpp include/util/*.h
+MeowImage.o: src/MeowImage.cpp
+	g++ -c src/MeowImage.cpp include/MeowImage.h
+
+Renderer.o: src/Renderer.cpp
+	g++ -c src/Renderer.cpp include/Renderer.h
+
+OrthogonalCamera.o: src/OrthogonalCamera.cpp
+	g++ -c src/OrthogonalCamera.cpp include/OrthogonalCamera.h
+
+PerspectiveCamera.o: src/PerspectiveCamera.cpp
+	g++ -c src/PerspectiveCamera.cpp include/PerspectiveCamera.h

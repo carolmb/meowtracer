@@ -1,10 +1,10 @@
 #include <iostream>
 #include <string>
-#include "include/util/Color.h"
-#include "include/util/Vec3.h"
-#include "include/util/MeowImage.h"
+#include "include/Color.h"
+#include "include/Vec3.h"
+#include "include/MeowImage.h"
 #include "include/Renderer.h"
-#include "include/util/OrthogonalCamera.h"
+#include "include/OrthogonalCamera.h"
 
 void printSphere(std::string &fileName) {
 	int width = 100;

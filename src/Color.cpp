@@ -1,7 +1,6 @@
 
+#include "../include/Color.h"
 #include <cmath>
-
-#include "../../include/util/Color.h"
 
 Color Color::lerp(Color &other, double t) { 
 	double tt = 1 - t;

@@ -18,6 +18,7 @@ public:
 	number len() { return sqrt(len2()); }
 
 	Vec3 operator + (Vec3 other) { return Vec3(x + other.x, y + other.y, z + other.z); }
+	Vec3 operator - (Vec3 other) { return Vec3(x - other.x, y - other.y, z - other.z); }
 	Vec3 operator - (void) { return Vec3(-x, -y, -z); }
 	Vec3 operator * (double scalar) { return Vec3(x * scalar, y * scalar, z * scalar); }
 	

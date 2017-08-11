@@ -1,4 +1,4 @@
-#include "../../include/util/MeowImage.h"
+#include "../include/MeowImage.h"
 #include <sstream>
 
 Color readColor(std::istringstream &file, Color &a, bool &valid) {
