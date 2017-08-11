@@ -21,8 +21,11 @@ void testVec3() {
 int main(int argc, char* argv[]) {
 	if (argc > 1) {
 		std::string fileName = argv[1];
-		MeowImage img = MeowImage::gradient(fileName);
-		img.ppm();
+		bool isValid;
+		MeowImage img = MeowImage::gradient(fileName, isValid);
+		if (isValid) {
+			img.ppm();
+		}
 		// TODO: load file and stuff
 	} else {
 		std::cout << "File name must be specified." << std::endl;

@@ -1,11 +1,12 @@
 #include "../../include/util/MeowImage.h"
 #include <sstream>
 
-Color readColor(std::istringstream &file, Color &a, bool &valid) {
+bool readColor(std::istringstream &file, Color &a) {
 	int r, g, b;
 	file >> r >> g >> b;
-	valid = r >= 0 && r < 256 && g >= 0 && g < 256 && b >= 0 && b < 256;
+	bool valid = r >= 0 && r < 256 && g >= 0 && g < 256 && b >= 0 && b < 256;
 	a = Color((unsigned char) r, (unsigned char) g, (unsigned char) b);
+	return valid;
 }
 
 std::string clearComments(std::string &input) {
@@ -38,42 +39,36 @@ std::string readInput(std::ifstream &file) {
 	return cleanInput;
 }
 
+bool readField(std::istringstream &reader, std::string fieldName) {
+	std::string f;
+	reader >> f;
+	if (f.compare(fieldName) != 0) return false;
+	reader >> f;
+	if (f.compare("=") != 0) return false;
+	return true;
+}
+
 bool parser(std::string content, std::string &outputFile, std::string &outputType, bool &isBin, int &colCount, int &rowCount, 
 	Color &tl, Color &tr, Color &bl, Color &br) {
 	
 	std::istringstream reader(content);
 
-	std::string fieldName;
-	reader >> fieldName;
-	if (fieldName.compare("NAME") != 0) return false;
-	reader >> fieldName;
-	if (fieldName.compare("=") != 0) return false;
+	if (!readField(reader, "NAME")) return false;
 	reader >> outputFile;
-	
-	reader >> fieldName;
-	if (fieldName.compare("TYPE") != 0) return false;
-	reader >> fieldName;
-	if (fieldName.compare("=") != 0) return false;
+
+	if (!readField(reader, "TYPE")) return false;
 	reader >> outputType;
 
-	reader >> fieldName;
-	if (fieldName.compare("CODIFICATION") != 0) return false;
-	reader >> fieldName;
-	if (fieldName.compare("=") != 0) return false;
-	reader >> fieldName;
-	isBin = (fieldName.compare("binary") == 0);
+	std::string cod;
+	if (!readField(reader, "CODIFICATION")) return false;
+	reader >> cod;
+	isBin = (cod.compare("binary") == 0);
 	
-	reader >> fieldName;
-	if (fieldName.compare("WIDTH") != 0) return false;
-	reader >> fieldName;
-	if (fieldName.compare("=") != 0) return false;
+	if (!readField(reader, "WIDTH")) return false;
 	reader >> colCount;
 	if (colCount <= 0) return false;
 
-	reader >> fieldName;
-	if (fieldName.compare("HEIGHT") != 0) return false;
-	reader >> fieldName;
-	if (fieldName.compare("=") != 0) return false;
+	if (!readField(reader, "HEIGHT")) return false;
 	reader >> rowCount;
 	if (rowCount <= 0) return false;
 	
@@ -81,18 +76,14 @@ bool parser(std::string content, std::string &outputFile, std::string &outputTyp
 	std::string v[4] = {"UPPER_LEFT", "LOWER_LEFT", "UPPER_RIGHT", "LOWER_RIGHT"};
 	bool valid;
 	for (int i = 0; i < 4; i++) {
-		reader >> fieldName;
-		if (fieldName.compare(v[i]) != 0) return false;
-		reader >> fieldName;
-		if (fieldName.compare("=") != 0) return false;
-		readColor(reader, c[i], valid);
-		if (!valid) return false;
+		if (!readField(reader, v[i])) return false; 
+		if (!readColor(reader, c[i])) return false;
 	}
 	tl = c[0]; bl = c[1]; tr = c[2]; br = c[3];
 	return true;
 }
 
-MeowImage MeowImage::gradient(std::string inputFile) {
+MeowImage MeowImage::gradient(std::string inputFile, bool &isValid) {
 	std::ifstream file(inputFile.c_str(), std::ifstream::in);
 	std::string outputFile, outputType;
 	bool isBin;
@@ -101,9 +92,11 @@ MeowImage MeowImage::gradient(std::string inputFile) {
 		Color tl, tr, bl, br;
 		std::string content = readInput(file);
 		if (parser(content, outputFile, outputType, isBin, colCount, rowCount, tl, tr, bl, br)) {
+			isValid = true;
 			return MeowImage::gradient(isBin, colCount, rowCount, outputFile, tl, tr, bl, br);
 		} else {
 			std::cout << "File not valid." << std::endl;
+			isValid = false;
 			return MeowImage();
 		}
 	} else {

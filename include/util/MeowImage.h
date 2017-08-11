@@ -24,7 +24,7 @@ public:
 	void ppm();
 
 	static MeowImage gradient(bool bin, int colCount, int rowCount, std::string file, Color tl, Color tr, Color bl, Color br);
-	static MeowImage gradient(std::string fileName);
+	static MeowImage gradient(std::string fileName, bool &isValid);
 };
 
 #endif
