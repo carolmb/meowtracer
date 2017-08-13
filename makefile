@@ -1,5 +1,9 @@
-main: main.o Color.o Sphere.o MeowImage.o OrthogonalCamera.o PerspectiveCamera.o InputData.o Renderer.o
-	g++ -o main main.o Color.o Sphere.o MeowImage.o OrthogonalCamera.o PerspectiveCamera.o InputData.o Renderer.o
+OBJS = main.o Color.o Sphere.o MeowImage.o MeowGif.o OrthogonalCamera.o PerspectiveCamera.o InputData.o Renderer.o
+
+all: main clean
+
+main: $(OBJS)
+	g++ -o main $(OBJS)
 
 main.o: main.cpp
 	g++ -c main.cpp
@@ -13,6 +17,9 @@ Sphere.o: src/Sphere.cpp
 MeowImage.o: src/MeowImage.cpp
 	g++ -c src/MeowImage.cpp include/MeowImage.h
 
+MeowGif.o: src/MeowGif.cpp
+	g++ -c src/MeowGif.cpp include/MeowGif.h
+
 Renderer.o: src/Renderer.cpp
 	g++ -c src/Renderer.cpp include/Renderer.h
 
@@ -24,3 +31,6 @@ OrthogonalCamera.o: src/OrthogonalCamera.cpp
 
 PerspectiveCamera.o: src/PerspectiveCamera.cpp
 	g++ -c src/PerspectiveCamera.cpp include/PerspectiveCamera.h
+
+clean:
+	rm -f *.o *~ include/*.h.gch
