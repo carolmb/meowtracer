@@ -1,10 +1,19 @@
-NAME = background.ppm
-TYPE = PPM
-CODIFICATION = # BLA
-binary 
-WIDTH = 150
-HEIGHT = 150
-UPPER_LEFT = 0 255 0    
-LOWER_LEFT = 0 0 0      
-UPPER_RIGHT = 255 255 0 
-LOWER_RIGHT = 255 0 0   
+{
+	"NAME": "background.ppm",
+	"TYPE": "PPM",
+	"CODIFICATION": "binary", # bleh
+	# balbla
+	"WIDTH": 150,
+	"HEIGHT": 150,
+	"CAMERA": "perspective",
+	"UPPER_LEFT": [0, 255, 0], 
+	"LOWER_LEFT": [0, 0, 0],
+	"UPPER_RIGHT": [255, 255, 0], 
+	"LOWER_RIGHT": [255, 0, 0],
+	"SPHERES": [
+		{
+			"RADIUS": 0.5,
+			"CENTER": [0.5, 0.5, -1]
+		}
+	]
+}

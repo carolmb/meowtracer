@@ -5,14 +5,7 @@
 #include <sstream>
 #include <fstream>
 #include <cmath>
-
-bool readColor(std::istringstream &file, Color &a) {
-	int r, g, b;
-	file >> r >> g >> b;
-	bool valid = r >= 0 && r < 256 && g >= 0 && g < 256 && b >= 0 && b < 256;
-	a = Color((unsigned char) r, (unsigned char) g, (unsigned char) b);
-	return valid;
-}
+#include <json_spirit/json_spirit.h>
 
 std::string clearComments(std::string &input) {
 	int found = input.find_first_of("#");
@@ -40,56 +33,7 @@ std::string readInput(std::ifstream &file) {
 			cleanInput += input + "\n";
 		}
 	}
-	//std::cout << cleanInput << std::endl;
 	return cleanInput;
-}
-
-bool readField(std::istringstream &reader, std::string fieldName) {
-	std::string f;
-	reader >> f;
-	if (f.compare(fieldName) != 0) return false;
-	reader >> f;
-	if (f.compare("=") != 0) return false;
-	return true;
-}
-
-bool InputData::parse(std::string &content) {
-	std::istringstream reader(content);
-
-	if (!readField(reader, "NAME")) return false;
-	reader >> outputFile;
-
-	if (!readField(reader, "TYPE")) return false;
-	reader >> outputType;
-
-	std::string cod;
-	if (!readField(reader, "CODIFICATION")) return false;
-	reader >> cod;
-	isBin = (cod.compare("binary") == 0);
-	
-	if (!readField(reader, "WIDTH")) return false;
-	reader >> colCount;
-	if (colCount <= 0) return false;
-
-	if (!readField(reader, "HEIGHT")) return false;
-	reader >> rowCount;
-	if (rowCount <= 0) return false;
-	
-	Color c[4];
-	std::string v[4] = {"UPPER_LEFT", "LOWER_LEFT", "UPPER_RIGHT", "LOWER_RIGHT"};
-	bool valid;
-	for (int i = 0; i < 4; i++) {
-		if (!readField(reader, v[i])) return false; 
-		if (!readColor(reader, c[i])) return false;
-	}
-	scene.tl = c[0]; scene.bl = c[1]; scene.tr = c[2]; scene.br = c[3];
-
-	// TODO: specify camera and objects
-	//scene.camera = new OrthogonalCamera();
-	scene.camera = new PerspectiveCamera();
-	scene.sphere = Sphere(Point3(0.5, 0.5, 0), 0.25);
-
-	return true;
 }
 
 bool InputData::load(std::string &fileName) {
@@ -104,5 +48,52 @@ bool InputData::load(std::string &fileName) {
 		}
 	} else {
 		std::cout << "File does not exist." << std::endl;
+	}
+}
+
+Color parseColor(json_spirit::Value value) {
+	json_spirit::Array json = value.getArray();
+	int r = json[0].getInt();
+	int g = json[1].getInt();
+	int b = json[2].getInt();
+	return Color(r, g, b);
+}
+
+Vec3 parseVec3(json_spirit::Value value) {
+	json_spirit::Array arr = value.getArray();
+	double x = arr[0].getReal();
+	double y = arr[1].getReal();
+	double z = arr[2].getReal();
+	return Vec3(x, y, z);
+}
+
+Sphere parseSphere(json_spirit::Value value) {
+	json_spirit::Object json = value.getObject();
+	double r = json["RADIUS"].getReal();
+	Vec3 center = parseVec3(json["CENTER"]);
+	return Sphere(center, r);
+}
+
+bool InputData::parse(std::string &content) {
+	json_spirit::Value value;
+	json_spirit::read(content, value);
+	json_spirit::Object json = value.getObject();
+
+	outputFile = json["NAME"].getString();
+	outputType = json["TYPE"].getString();
+	isBin = json["CODIFICATION"].getString() == "binary";
+	colCount = json["WIDTH"].getInt();
+	rowCount = json["HEIGHT"].getInt();
+
+	scene.tl = parseColor(json["UPPER_LEFT"]);
+	scene.tr = parseColor(json["UPPER_RIGHT"]);
+	scene.bl = parseColor(json["LOWER_LEFT"]);
+	scene.br = parseColor(json["LOWER_RIGHT"]);
+
+	json_spirit::Array spheres = json["SPHERES"].getArray();
+	scene.sphere = parseSphere(spheres[0]);
+
+	if (json["CAMERA"].getString() == "perspective") {
+		scene.camera = new PerspectiveCamera();
 	}
 }

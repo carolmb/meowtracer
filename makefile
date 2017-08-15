@@ -3,7 +3,7 @@ OBJS = main.o Color.o Sphere.o MeowImage.o OrthogonalCamera.o PerspectiveCamera.
 all: main clean
 
 main: $(OBJS)
-	g++ -o main $(OBJS)
+	g++ -o main $(OBJS) -ljson_spirit
 
 main.o: main.cpp
 	g++ -c main.cpp
