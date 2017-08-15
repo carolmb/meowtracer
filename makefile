@@ -1,4 +1,4 @@
-OBJS = main.o Color.o Sphere.o MeowImage.o MeowGif.o OrthogonalCamera.o PerspectiveCamera.o InputData.o Renderer.o
+OBJS = main.o Color.o Sphere.o MeowImage.o OrthogonalCamera.o PerspectiveCamera.o InputData.o Renderer.o
 
 all: main clean
 
@@ -16,9 +16,6 @@ Sphere.o: src/Sphere.cpp
 
 MeowImage.o: src/MeowImage.cpp
 	g++ -c src/MeowImage.cpp include/MeowImage.h
-
-MeowGif.o: src/MeowGif.cpp
-	g++ -c src/MeowGif.cpp include/MeowGif.h
 
 Renderer.o: src/Renderer.cpp
 	g++ -c src/Renderer.cpp include/Renderer.h

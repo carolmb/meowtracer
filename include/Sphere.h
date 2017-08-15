@@ -2,6 +2,7 @@
 #define __SPHERE__
 
 #include "Ray.h"
+#include "Color.h"
 
 class Sphere {
 private:
@@ -9,7 +10,8 @@ private:
 	double radius;
 public:
 	Sphere(Point3 p, double r) : center(p), radius(r) {}
-	bool hits(Ray &ray);
+	double hit(Ray &ray);
+	Color getColor(Ray &ray, double t);
 };
 
 #endif

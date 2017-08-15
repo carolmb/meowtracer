@@ -28,6 +28,8 @@ public:
 
 	number dot(Vec3 &other) { return x * other.x + y * other.y + z * other.z; }
 
+	Vec3 norm(void) { return Vec3(x/len(), y/len(), z/len()); }
+
 };
 
 typedef Vec3 Point3;
