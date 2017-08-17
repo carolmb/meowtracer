@@ -91,11 +91,15 @@ Camera* parseCamera(json_spirit::Value &value) {
 }
 
 Renderer* parseRenderer(json_spirit::Value &value) {
-	std::string type = value.getString();
+	json_spirit::Object json = value.getObject();
+	std::string type = json["TYPE"].getString();
 	if (type == "normal") {
 		return new NormalRenderer();
 	} else {
-		return new MapRenderer();
+		Color fg = parseColor(json["FOREGROUND"]);
+		Color bg = parseColor(json["BACKGROUND"]);
+		double d = json["MAXDEPTH"].getReal();
+		return new MapRenderer(fg, bg, d);
 	}
 }
 
@@ -109,18 +113,14 @@ bool InputData::parse(std::string &content) {
 	isBin = json["CODIFICATION"].getString() == "binary";
 	colCount = json["WIDTH"].getInt();
 	rowCount = json["HEIGHT"].getInt();
-	scene.maxDepth = json["DEPTH"].getReal();
-
 	scene.tl = parseColor(json["UPPER_LEFT"]);
 	scene.tr = parseColor(json["UPPER_RIGHT"]);
 	scene.bl = parseColor(json["LOWER_LEFT"]);
 	scene.br = parseColor(json["LOWER_RIGHT"]);
-
 	json_spirit::Array spheres = json["SPHERES"].getArray();
 	for (int i = 0; i < spheres.size(); i++) {
 		scene.spheres.push_back(parseSphere(spheres[i]));
 	}
 	scene.camera = parseCamera(json["CAMERA"]);
-
 	renderer = parseRenderer(json["RENDERER"]);
 }

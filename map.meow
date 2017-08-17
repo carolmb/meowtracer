@@ -1,5 +1,5 @@
 {
-	"NAME": "normal.ppm",
+	"NAME": "map.ppm",
 	"TYPE": "PPM",
 	"CODIFICATION": "binary",
 	"WIDTH": 1200,
@@ -16,7 +16,10 @@
 		"LENS": [0, 0, 0]
 	},
 	"RENDERER": {
-		"TYPE": "normal"
+		"TYPE": "map",
+		"FOREGROUND": [255, 255, 255],
+		"BACKGROUND": [0, 0, 0],
+		"MAXDEPTH": 4
 	},
 	"SPHERES": [
 		{

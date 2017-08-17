@@ -15,8 +15,9 @@ Color MapRenderer::getColor(Scene &scene, Ray &ray, double x, double y) {
 	}
 	if (hitSphere) {
 		Point3 p = ray.at(mint);
-		double d = scene.camera->getDepth(p);
-		d /= scene.maxDepth;
+		double t = scene.camera->getDepth(p) / maxDepth;
+		t = std::min(1.0, std::max(0.0, t));
+		return foreground.lerp(background, t);
 	} else {
 		return Color(0, 0, 0);
 	}
