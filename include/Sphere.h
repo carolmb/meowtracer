@@ -12,7 +12,6 @@ public:
 	Sphere(Point3 p, double r) : center(p), radius(r) {}
 	double hit(Ray &ray);
 	Color getColor(Ray &ray, double t);
-	double getDepth(Ray &ray, double t, double maxDepth);
 };
 
 #endif

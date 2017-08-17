@@ -1,4 +1,4 @@
-OBJS = main.o Color.o Sphere.o Scene.o MeowImage.o OrthogonalCamera.o PerspectiveCamera.o InputData.o Renderer.o
+OBJS = main.o Color.o Sphere.o Scene.o MeowImage.o OrthogonalCamera.o PerspectiveCamera.o Renderer.o NormalRenderer.o MapRenderer.o InputData.o
 
 all: main clean
 
@@ -31,6 +31,15 @@ OrthogonalCamera.o: src/OrthogonalCamera.cpp
 
 PerspectiveCamera.o: src/PerspectiveCamera.cpp
 	g++ -c src/PerspectiveCamera.cpp include/PerspectiveCamera.h
+
+Renderer.o: src/Renderer.cpp
+	g++ -c src/Renderer.cpp include/Renderer.h
+
+NormalRenderer.o: src/NormalRenderer.cpp
+	g++ -c src/NormalRenderer.cpp include/NormalRenderer.h
+
+MapRenderer.o: src/MapRenderer.cpp
+	g++ -c src/MapRenderer.cpp include/MapRenderer.h
 
 clean:
 	rm -f *.o *~ include/*.h.gch

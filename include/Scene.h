@@ -11,7 +11,7 @@ public:
 	Camera* camera;
 	Color tl, tr, bl, br;
 	std::vector<Sphere> spheres;
-	double backgroundZ;
+	double maxDepth;
 
 	Color backgroundColor(double tCol, double tRow);
 };

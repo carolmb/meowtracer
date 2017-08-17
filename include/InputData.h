@@ -2,6 +2,7 @@
 #define __INPUTDATA__
 
 #include "Scene.h"
+#include "Renderer.h"
 #include <string>
 
 class InputData {
@@ -14,6 +15,7 @@ public:
 	int rowCount;
 	std::string outputFile;
 	std::string outputType;
+	Renderer* renderer;
 	bool load(std::string &fileName);
 };
 

@@ -4,14 +4,12 @@
 #include <iostream>
 #include <string>
 #include "include/InputData.h"
-#include "include/Renderer.h"
 #include "include/MeowImage.h"
 
 void printScene(std::string &fileName) {
 	InputData data;
 	if (data.load(fileName)) {
-		Renderer renderer;
-		Color* colors = renderer.render(data.scene, data.colCount, data.rowCount);
+		Color* colors = data.renderer->render(data.scene, data.colCount, data.rowCount);
 		MeowImage img(data.colCount, data.rowCount, colors);
 		if (data.isBin) {
 			img.saveBin(data.outputFile);

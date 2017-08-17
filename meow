@@ -14,6 +14,7 @@
 		"TYPE": "perspective",
 		"LENS": [0.5, 0.5, 1]
 	},
+	"RENDERER": "normal",
 	"SPHERES": [
 		{
 			"RADIUS": 0.125,

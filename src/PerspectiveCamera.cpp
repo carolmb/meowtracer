@@ -1,5 +1,9 @@
 #include "../include/PerspectiveCamera.h"
 
-Vec3 PerspectiveCamera::getRayDirection(double i, double j) { 
-	return horizontal * i + vertical * j - lens; 
+Ray PerspectiveCamera::getRay(double i, double j) { 
+	return Ray(lens, position + horizontal * i + vertical * j - lens); 
+}
+
+double PerspectiveCamera::getDepth(Point3 p) {
+	return (p - lens).len();
 }

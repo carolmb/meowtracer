@@ -1,5 +1,9 @@
 #include "../include/OrthogonalCamera.h"
 
-Vec3 OrthogonalCamera::getRayDirection(double i, double j) { 
-	return Vec3(0, 0, -1); 
+Ray OrthogonalCamera::getRay(double i, double j) { 
+	return Ray(horizontal * i + vertical * j, Vec3(0, 0, -1)); 
+}
+
+double OrthogonalCamera::getDepth(Point3 p) {
+	return (position.z - p.z);
 }

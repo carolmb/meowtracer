@@ -12,8 +12,8 @@ double Sphere::hit(Ray &ray) {
 	double delta = b * b - 4 * a * c;
 	if (delta >= 0) {
 		double sqrtdelta = std::sqrt(delta);
-		double t1 = (-b - sqrtdelta) / 2 * a;
-		double t2 = (-b + sqrtdelta) / 2 * a;
+		double t1 = (-b - sqrtdelta) / (2 * a);
+		double t2 = (-b + sqrtdelta) / (2 * a);
 		return std::min(t1, t2);
 	} else {
 		return NAN;

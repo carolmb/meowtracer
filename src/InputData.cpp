@@ -1,6 +1,8 @@
 #include "../include/InputData.h"
 #include "../include/OrthogonalCamera.h"
 #include "../include/PerspectiveCamera.h"
+#include "../include/NormalRenderer.h"
+#include "../include/MapRenderer.h"
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -77,11 +79,23 @@ Sphere parseSphere(json_spirit::Value &value) {
 Camera* parseCamera(json_spirit::Value &value) {
 	json_spirit::Object json = value.getObject();
 	std::string type = json["TYPE"].getString();
+	Vec3 h = parseVec3(json["HORIZONTAL"]);
+	Vec3 v = parseVec3(json["VERTICAL"]);
+	Point3 p = parseVec3(json["POSITION"]);
 	if (type == "perspective") {
 		Vec3 lens = parseVec3(json["LENS"]);
-		return new PerspectiveCamera(lens);
+		return new PerspectiveCamera(h, v, p, lens);
 	} else {
-		return new OrthogonalCamera();
+		return new OrthogonalCamera(h, v, p);
+	}
+}
+
+Renderer* parseRenderer(json_spirit::Value &value) {
+	std::string type = value.getString();
+	if (type == "normal") {
+		return new NormalRenderer();
+	} else {
+		return new MapRenderer();
 	}
 }
 
@@ -95,7 +109,7 @@ bool InputData::parse(std::string &content) {
 	isBin = json["CODIFICATION"].getString() == "binary";
 	colCount = json["WIDTH"].getInt();
 	rowCount = json["HEIGHT"].getInt();
-	scene.backgroundZ = json["DEPTH"].getReal();
+	scene.maxDepth = json["DEPTH"].getReal();
 
 	scene.tl = parseColor(json["UPPER_LEFT"]);
 	scene.tr = parseColor(json["UPPER_RIGHT"]);
@@ -107,4 +121,6 @@ bool InputData::parse(std::string &content) {
 		scene.spheres.push_back(parseSphere(spheres[i]));
 	}
 	scene.camera = parseCamera(json["CAMERA"]);
+
+	renderer = parseRenderer(json["RENDERER"]);
 }
