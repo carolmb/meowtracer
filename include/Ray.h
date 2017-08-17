@@ -13,6 +13,7 @@ public:
 	Vec3 getDirection() { return direction; }         
 	Point3 getOrigin() { return origin; }         
 	Point3 at(number n) { return origin + direction * n; }
+	void normalize() { direction = direction * (1 / direction.len()); }
 };
 
 #endif

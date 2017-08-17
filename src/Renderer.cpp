@@ -8,6 +8,7 @@ Color* Renderer::render(Scene &scene, int width, int height) {
 			double x = 1.0 * i / (width - 1);
 			double y = 1.0 * (height - j - 1) / (height - 1);
 			Ray ray = scene.camera->getRay(x, y);
+			ray.normalize();
 			colors[j * width + i] = getColor(scene, ray, x, y);
 		}
 	}
