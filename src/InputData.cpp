@@ -51,7 +51,7 @@ bool InputData::load(std::string &fileName) {
 	}
 }
 
-Color parseColor(json_spirit::Value value) {
+Color parseColor(json_spirit::Value &value) {
 	json_spirit::Array json = value.getArray();
 	int r = json[0].getInt();
 	int g = json[1].getInt();
@@ -59,7 +59,7 @@ Color parseColor(json_spirit::Value value) {
 	return Color(r, g, b);
 }
 
-Vec3 parseVec3(json_spirit::Value value) {
+Vec3 parseVec3(json_spirit::Value &value) {
 	json_spirit::Array arr = value.getArray();
 	double x = arr[0].getReal();
 	double y = arr[1].getReal();
@@ -67,11 +67,22 @@ Vec3 parseVec3(json_spirit::Value value) {
 	return Vec3(x, y, z);
 }
 
-Sphere parseSphere(json_spirit::Value value) {
+Sphere parseSphere(json_spirit::Value &value) {
 	json_spirit::Object json = value.getObject();
 	double r = json["RADIUS"].getReal();
 	Vec3 center = parseVec3(json["CENTER"]);
 	return Sphere(center, r);
+}
+
+Camera* parseCamera(json_spirit::Value &value) {
+	json_spirit::Object json = value.getObject();
+	std::string type = json["TYPE"].getString();
+	if (type == "perspective") {
+		Vec3 lens = parseVec3(json["LENS"]);
+		return new PerspectiveCamera(lens);
+	} else {
+		return new OrthogonalCamera();
+	}
 }
 
 bool InputData::parse(std::string &content) {
@@ -84,6 +95,7 @@ bool InputData::parse(std::string &content) {
 	isBin = json["CODIFICATION"].getString() == "binary";
 	colCount = json["WIDTH"].getInt();
 	rowCount = json["HEIGHT"].getInt();
+	scene.backgroundZ = json["DEPTH"].getReal();
 
 	scene.tl = parseColor(json["UPPER_LEFT"]);
 	scene.tr = parseColor(json["UPPER_RIGHT"]);
@@ -91,9 +103,8 @@ bool InputData::parse(std::string &content) {
 	scene.br = parseColor(json["LOWER_RIGHT"]);
 
 	json_spirit::Array spheres = json["SPHERES"].getArray();
-	scene.sphere = parseSphere(spheres[0]);
-
-	if (json["CAMERA"].getString() == "perspective") {
-		scene.camera = new PerspectiveCamera();
+	for (int i = 0; i < spheres.size(); i++) {
+		scene.spheres.push_back(parseSphere(spheres[i]));
 	}
+	scene.camera = parseCamera(json["CAMERA"]);
 }

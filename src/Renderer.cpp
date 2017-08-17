@@ -1,4 +1,8 @@
 #include "../include/Renderer.h"
+#include <cmath>
+#include <limits>
+#include <iostream>
+#define INF std::numeric_limits<double>::infinity()
 
 Color* Renderer::render(Scene &scene, int width, int height) {
 	Color* colors = new Color[width * height];
@@ -13,11 +17,36 @@ Color* Renderer::render(Scene &scene, int width, int height) {
 	return colors;
 }
 
-Color Renderer::getColor(Scene &scene, Ray &ray, double x, double y) {
-	double t = scene.sphere.hit(ray);
-	if (isnan(t)) {
-		return scene.backgroundColor(x, y);
+double Renderer::getDepth(Scene &scene, Ray &ray) {
+	Sphere* hitSphere;
+	double mint = NAN;
+	for (int i = 0; i < scene.spheres.size(); i++) {
+		double t = scene.spheres[i].hit(ray);
+		if (isnan(mint) || !isnan(t) && t < mint) {
+			mint = t;
+		}
+	}
+	if (hitSphere) {
+		Point3 p = ray.at(mint);
+		return p.z;
 	} else {
-		return scene.sphere.getColor(ray, t);
+		return NAN;
+	}
+}
+
+Color Renderer::getColor(Scene &scene, Ray &ray, double x, double y) {
+	Sphere* hitSphere = 0;
+	double mint = INF;
+	for (int i = 0; i < scene.spheres.size(); i++) {
+		double t = scene.spheres[i].hit(ray);
+		if (!isnan(t) && t < mint && t > 0) {
+			mint = t;
+			hitSphere = &scene.spheres[i];
+		}
+	}
+	if (hitSphere) {
+		return hitSphere->getColor(ray, mint);
+	} else {
+		return scene.backgroundColor(x, y);
 	}
 }

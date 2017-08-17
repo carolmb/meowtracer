@@ -4,20 +4,16 @@
 #include "Color.h"
 #include "Camera.h"
 #include "Sphere.h"
-#include <string>
+#include <vector>
 
 class Scene {
 public:
 	Camera* camera;
 	Color tl, tr, bl, br;
-	Sphere sphere;
+	std::vector<Sphere> spheres;
+	double backgroundZ;
 
-	Scene() : sphere(Sphere(Point3(0, 0, 0), 0.25)) {}
-	Color backgroundColor(double tCol, double tRow) {
-		Color top = tl.lerp(tr, tCol);
-		Color bottom = bl.lerp(br, tCol);
-		return top.lerp(bottom, tRow);
-	}
+	Color backgroundColor(double tCol, double tRow);
 };
 
 #endif

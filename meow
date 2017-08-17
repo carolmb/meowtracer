@@ -3,17 +3,29 @@
 	"TYPE": "PPM",
 	"CODIFICATION": "binary", # bleh
 	# balbla
-	"WIDTH": 150,
-	"HEIGHT": 150,
-	"CAMERA": "perspective",
+	"WIDTH": 400,
+	"HEIGHT": 400,
 	"UPPER_LEFT": [0, 255, 0], 
 	"LOWER_LEFT": [0, 0, 0],
 	"UPPER_RIGHT": [255, 255, 0], 
 	"LOWER_RIGHT": [255, 0, 0],
+	"DEPTH": -50,
+	"CAMERA": {
+		"TYPE": "perspective",
+		"LENS": [0.5, 0.5, 1]
+	},
 	"SPHERES": [
 		{
-			"RADIUS": 0.5,
+			"RADIUS": 0.125,
 			"CENTER": [0.5, 0.5, -1]
+		},
+		{
+			"RADIUS": 0.125,
+			"CENTER": [0.875, 0.875, -5]
+		},
+		{
+			"RADIUS": 0.125,
+			"CENTER": [0.05, 0.05, -10]
 		}
 	]
 }
