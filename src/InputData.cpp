@@ -3,6 +3,7 @@
 #include "../include/PerspectiveCamera.h"
 #include "../include/NormalRenderer.h"
 #include "../include/MapRenderer.h"
+#include "../include/Sphere.h"
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -69,11 +70,16 @@ Vec3 parseVec3(json_spirit::Value &value) {
 	return Vec3(x, y, z);
 }
 
-Sphere parseSphere(json_spirit::Value &value) {
+Object* parseObject(json_spirit::Value &value) {
 	json_spirit::Object json = value.getObject();
-	double r = json["RADIUS"].getReal();
-	Vec3 center = parseVec3(json["CENTER"]);
-	return Sphere(center, r);
+	std::string type = json["TYPE"].getString();
+	if (type == "sphere") {
+		double r = json["RADIUS"].getReal();
+		Vec3 center = parseVec3(json["CENTER"]);
+		return new Sphere(center, r);
+	} else {
+		return NULL;
+	}
 }
 
 Camera* parseCamera(json_spirit::Value &value) {
@@ -117,9 +123,9 @@ bool InputData::parse(std::string &content) {
 	scene.tr = parseColor(json["UPPER_RIGHT"]);
 	scene.bl = parseColor(json["LOWER_LEFT"]);
 	scene.br = parseColor(json["LOWER_RIGHT"]);
-	json_spirit::Array spheres = json["SPHERES"].getArray();
-	for (int i = 0; i < spheres.size(); i++) {
-		scene.spheres.push_back(parseSphere(spheres[i]));
+	json_spirit::Array objects = json["OBJECTS"].getArray();
+	for (int i = 0; i < objects.size(); i++) {
+		scene.objects.push_back(parseObject(objects[i]));
 	}
 	scene.camera = parseCamera(json["CAMERA"]);
 	renderer = parseRenderer(json["RENDERER"]);

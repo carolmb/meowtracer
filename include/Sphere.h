@@ -1,10 +1,9 @@
 #ifndef __SPHERE__
 #define __SPHERE__
 
-#include "Ray.h"
-#include "Color.h"
+#include "Object.h"
 
-class Sphere {
+class Sphere : public Object {
 private:
 	Point3 center;
 	double radius;

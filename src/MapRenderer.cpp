@@ -4,17 +4,19 @@
 #define INF std::numeric_limits<double>::infinity()
 
 Color MapRenderer::getColor(Scene &scene, Ray &ray, double x, double y) {
-	Sphere* hitSphere = 0;
+	Object* hitObject = 0;
 	double mint = INF;
-	for (int i = 0; i < scene.spheres.size(); i++) {
-		double t = scene.spheres[i].hit(ray);
+	for (int i = 0; i < scene.objects.size(); i++) {
+		double t = scene.objects[i]->hit(ray);
 		if (!isnan(t) && t < mint && t > 0) {
 			mint = t;
-			hitSphere = &scene.spheres[i];
+			hitObject = scene.objects[i];
 		}
 	}
-	if (hitSphere) {
-		Point3 p = ray.at(mint);
+	if (hitObject) {
+		//Point3 p1 = ray.at(mint);
+		//Point3 p2 = scene.camera->pixelPosition(x, y);
+		//double t = (p1 - p2).len() / maxDepth;
 		double t = mint / maxDepth;
 		t = std::min(1.0, std::max(0.0, t));
 		return foreground.lerp(background, t);

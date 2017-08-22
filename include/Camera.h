@@ -14,6 +14,7 @@ protected:
 public:
 	virtual Ray getRay(double i, double j) = 0;
 	virtual double getDepth(Point3 p) = 0;
+	Point3 pixelPosition(double i, double j) { return position + horizontal * i + vertical * j; }
 };
 
 #endif

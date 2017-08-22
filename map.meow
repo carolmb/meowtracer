@@ -21,20 +21,24 @@
 		"BACKGROUND": [255, 255, 255],
 		"MAXDEPTH": 4
 	},
-	"SPHERES": [
+	"OBJECTS": [
 		{
+			"TYPE": "sphere",
 			"RADIUS": 99,
 			"CENTER": [0, -100.5, -3]
 		},
 		{
+			"TYPE": "sphere",
 			"RADIUS": 0.4,
 			"CENTER": [0.3, 0, -1]
 		},
 		{
+			"TYPE": "sphere",
 			"RADIUS": 0.6,
 			"CENTER": [0, 1, -2]
 		},
 		{
+			"TYPE": "sphere",
 			"RADIUS": 0.7,
 			"CENTER": [-0.4, 0, -3]
 		}

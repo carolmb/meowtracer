@@ -3,14 +3,14 @@
 
 #include "Color.h"
 #include "Camera.h"
-#include "Sphere.h"
+#include "Object.h"
 #include <vector>
 
 class Scene {
 public:
 	Camera* camera;
 	Color tl, tr, bl, br;
-	std::vector<Sphere> spheres;
+	std::vector<Object*> objects;
 	double maxDepth;
 
 	Color backgroundColor(double tCol, double tRow);

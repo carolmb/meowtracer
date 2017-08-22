@@ -23,6 +23,12 @@ MeowImage.o: src/MeowImage.cpp
 Renderer.o: src/Renderer.cpp
 	g++ -c src/Renderer.cpp include/Renderer.h
 
+NormalRenderer.o: src/NormalRenderer.cpp
+	g++ -c src/NormalRenderer.cpp include/NormalRenderer.h
+
+MapRenderer.o: src/MapRenderer.cpp
+	g++ -c src/MapRenderer.cpp include/MapRenderer.h
+
 InputData.o: src/InputData.cpp
 	g++ -c src/InputData.cpp include/InputData.h
 
@@ -31,15 +37,6 @@ OrthogonalCamera.o: src/OrthogonalCamera.cpp
 
 PerspectiveCamera.o: src/PerspectiveCamera.cpp
 	g++ -c src/PerspectiveCamera.cpp include/PerspectiveCamera.h
-
-Renderer.o: src/Renderer.cpp
-	g++ -c src/Renderer.cpp include/Renderer.h
-
-NormalRenderer.o: src/NormalRenderer.cpp
-	g++ -c src/NormalRenderer.cpp include/NormalRenderer.h
-
-MapRenderer.o: src/MapRenderer.cpp
-	g++ -c src/MapRenderer.cpp include/MapRenderer.h
 
 clean:
 	rm -f *.o *~ include/*.h.gch
