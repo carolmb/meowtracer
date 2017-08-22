@@ -6,13 +6,17 @@ Color* Renderer::render(Scene &scene, int width, int height) {
 	Color* colors = new Color[width * height];
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < height; j++) {
-			double pixelx = 1.0 * i;
-			double pixely = 1.0 * (height - j - 1);
-			double x = pixelx / (width - 1);
-			double y = pixely / (height - 1);
-			Ray ray = scene.camera->getRay(x, y);
-			ray.normalize();
-			colors[j * width + i] = getColor(scene, ray, x, y);
+			Color c(0, 0, 0);
+			for(int s = 0; s < sampleCount; s++) {
+				double pixelx = 1.0 * rand() / RAND_MAX + i;
+				double pixely = 1.0 * rand() / RAND_MAX + (height - j - 1);
+				double x = pixelx / (width - 1);
+				double y = pixely / (height - 1);
+				Ray ray = scene.camera->getRay(x, y);
+				ray.normalize();
+				c += getColor(scene, ray, x, y) / sampleCount;
+			}
+			colors[j * width + i] = c;
 		}
 	}
 	return colors;
