@@ -56,9 +56,9 @@ bool InputData::load(std::string &fileName) {
 
 Color parseColor(json_spirit::Value &value) {
 	json_spirit::Array json = value.getArray();
-	int r = json[0].getInt();
-	int g = json[1].getInt();
-	int b = json[2].getInt();
+	double r = json[0].getReal();
+	double g = json[1].getReal();
+	double b = json[2].getReal();
 	return Color(r, g, b);
 }
 
@@ -99,13 +99,14 @@ Camera* parseCamera(json_spirit::Value &value) {
 Renderer* parseRenderer(json_spirit::Value &value) {
 	json_spirit::Object json = value.getObject();
 	std::string type = json["TYPE"].getString();
+	int samples = json["SAMPLES"].getInt();
 	if (type == "normal") {
-		return new NormalRenderer();
+		return new NormalRenderer(samples);
 	} else {
 		Color fg = parseColor(json["FOREGROUND"]);
 		Color bg = parseColor(json["BACKGROUND"]);
 		double d = json["MAXDEPTH"].getReal();
-		return new MapRenderer(fg, bg, d);
+		return new MapRenderer(samples, fg, bg, d);
 	}
 }
 

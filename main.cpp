@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <string>
+#include <cstdlib>
+#include <ctime>
 #include "include/InputData.h"
 #include "include/MeowImage.h"
 
@@ -20,6 +22,7 @@ void printScene(std::string &fileName) {
 }
 
 int main(int argc, char* argv[]) {
+	srand (time(NULL));
 	if (argc > 1) {
 		std::string fileName = argv[1];
 		printScene(fileName);

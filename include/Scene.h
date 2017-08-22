@@ -1,7 +1,7 @@
 #ifndef __SCENE__
 #define __SCENE__
 
-#include "Color.h"
+#include "Vec3.h"
 #include "Camera.h"
 #include "Object.h"
 #include <vector>

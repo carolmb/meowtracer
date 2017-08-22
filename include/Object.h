@@ -2,7 +2,7 @@
 #define __OBJECT__
 
 #include "Ray.h"
-#include "Color.h"
+#include "Vec3.h"
 
 class Object {
 public:

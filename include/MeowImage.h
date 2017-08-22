@@ -1,7 +1,7 @@
 #ifndef __IMAGE__
 #define __IMAGE__
 
-#include "Color.h"
+#include "Vec3.h"
 #include <string>
 
 class MeowImage {
