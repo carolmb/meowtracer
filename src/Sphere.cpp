@@ -20,11 +20,7 @@ double Sphere::hit(Ray &ray) {
 	}
 }
 
-Color Sphere::getColor(Ray &ray, double t) {
+Vec3 Sphere::getNormal(Ray &ray, double t) {
 	Point3 p = ray.at(t);
-	Vec3 n = (p - center).norm();
-	double r = (n.x + 1) / 2;
-	double g = (n.y + 1) / 2;
-	double b = (n.z + 1) / 2;
-	return Color(r, g, b);
+	return (p - center).norm();
 }

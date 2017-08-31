@@ -1,6 +1,6 @@
-OBJS = main.o Sphere.o Scene.o MeowImage.o OrthogonalCamera.o PerspectiveCamera.o Renderer.o NormalRenderer.o MapRenderer.o InputData.o
+OBJS = main.o Sphere.o Scene.o MeowImage.o OrthogonalCamera.o PerspectiveCamera.o Renderer.o NormalRenderer.o MapRenderer.o DiffuseRenderer.o InputData.o
 
-all: main clean
+all: main
 
 main: $(OBJS)
 	g++ -o main $(OBJS) -ljson_spirit
@@ -25,6 +25,9 @@ NormalRenderer.o: src/NormalRenderer.cpp
 
 MapRenderer.o: src/MapRenderer.cpp
 	g++ -c src/MapRenderer.cpp include/MapRenderer.h
+
+DiffuseRenderer.o: src/DiffuseRenderer.cpp
+	g++ -c src/DiffuseRenderer.cpp include/DiffuseRenderer.h
 
 InputData.o: src/InputData.cpp
 	g++ -c src/InputData.cpp include/InputData.h

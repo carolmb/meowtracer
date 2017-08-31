@@ -3,7 +3,7 @@
 #include <limits>
 #define INF std::numeric_limits<double>::infinity()
 
-Color MapRenderer::getColor(Scene &scene, Ray &ray, double x, double y) {
+Color MapRenderer::getColor(Scene &scene, Ray &ray, double &x, double &y) {
 	Object* hitObject = 0;
 	double mint = INF;
 	for (int i = 0; i < scene.objects.size(); i++) {

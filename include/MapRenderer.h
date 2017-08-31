@@ -10,8 +10,8 @@ private:
 	Color background;
 	double maxDepth;
 public:
-	MapRenderer(int s, Color fg, Color bg, double d) : Renderer(s), foreground(fg), background(bg), maxDepth(d) {}
-	Color getColor(Scene &scene, Ray &ray, double x, double y);
+	MapRenderer(int &s, Color &fg, Color &bg, double &d) : Renderer(s), foreground(fg), background(bg), maxDepth(d) {}
+	Color getColor(Scene &scene, Ray &ray, double &x, double &y);
 };
 
 #endif

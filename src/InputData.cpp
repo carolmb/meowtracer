@@ -3,7 +3,9 @@
 #include "../include/PerspectiveCamera.h"
 #include "../include/NormalRenderer.h"
 #include "../include/MapRenderer.h"
+#include "../include/DiffuseRenderer.h"
 #include "../include/Sphere.h"
+#include "../include/Material.h"
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -70,16 +72,28 @@ Vec3 parseVec3(json_spirit::Value &value) {
 	return Vec3(x, y, z);
 }
 
-Object* parseObject(json_spirit::Value &value) {
+Material parseMaterial(json_spirit::Value &value) {
+	json_spirit::Object json = value.getObject();
+	Color albedo = parseColor(json["ALBEDO"]);
+	return Material(albedo);
+}
+
+Object* parseObject(json_spirit::Value &value, Scene &scene) {
 	json_spirit::Object json = value.getObject();
 	std::string type = json["TYPE"].getString();
+	Object* obj = 0;
 	if (type == "sphere") {
 		double r = json["RADIUS"].getReal();
 		Vec3 center = parseVec3(json["CENTER"]);
-		return new Sphere(center, r);
+		obj = new Sphere(center, r);
 	} else {
 		return NULL;
 	}
+	if (json.count("MATERIAL")) {
+		int material = json["MATERIAL"].getInt();
+		obj->material = &(scene.materials[material]);
+	}
+	return obj;
 }
 
 Camera* parseCamera(json_spirit::Value &value) {
@@ -102,11 +116,17 @@ Renderer* parseRenderer(json_spirit::Value &value) {
 	int samples = json["SAMPLES"].getInt();
 	if (type == "normal") {
 		return new NormalRenderer(samples);
-	} else {
+	} else if (type == "map") {
 		Color fg = parseColor(json["FOREGROUND"]);
 		Color bg = parseColor(json["BACKGROUND"]);
 		double d = json["MAXDEPTH"].getReal();
 		return new MapRenderer(samples, fg, bg, d);
+	} else if (type == "diffuse") {
+		int depth = json["RAYDEPTH"].getInt();
+		return new DiffuseRenderer(samples, depth);
+	} else {
+		std::cout << "Renderer type not recognized." << std::endl;
+		return NULL;
 	}
 }
 
@@ -124,9 +144,15 @@ bool InputData::parse(std::string &content) {
 	scene.tr = parseColor(json["UPPER_RIGHT"]);
 	scene.bl = parseColor(json["LOWER_LEFT"]);
 	scene.br = parseColor(json["LOWER_RIGHT"]);
+	if (json.count("MATERIALS")) {
+		json_spirit::Array materials = json["MATERIALS"].getArray();
+		for (int i = 0; i < materials.size(); i++) {
+			scene.materials.push_back(parseMaterial(materials[i]));
+		}
+	}
 	json_spirit::Array objects = json["OBJECTS"].getArray();
 	for (int i = 0; i < objects.size(); i++) {
-		scene.objects.push_back(parseObject(objects[i]));
+		scene.objects.push_back(parseObject(objects[i], scene));
 	}
 	scene.camera = parseCamera(json["CAMERA"]);
 	renderer = parseRenderer(json["RENDERER"]);

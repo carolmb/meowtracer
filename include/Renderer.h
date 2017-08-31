@@ -9,9 +9,9 @@ class Renderer {
 private:
 	int sampleCount;
 public:
-	Renderer(int s) : sampleCount(s) {}
+	Renderer(int &s) : sampleCount(s) {}
 	Color* render(Scene &scene, int width, int height);
-	virtual Color getColor(Scene &scene, Ray &ray, double x, double y) = 0;
+	virtual Color getColor(Scene &scene, Ray &ray, double &x, double &y) = 0;
 };
 
 #endif

@@ -6,8 +6,8 @@
 
 class NormalRenderer : public Renderer {
 public:
-	NormalRenderer (int s) : Renderer(s) {}
-	Color getColor(Scene &scene, Ray &ray, double x, double y);
+	NormalRenderer (int &s) : Renderer(s) {}
+	Color getColor(Scene &scene, Ray &ray, double &x, double &y);
 };
 
 #endif

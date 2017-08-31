@@ -11,7 +11,7 @@ public:
 	typedef double number;         
 	Ray(Point3 o = Point3(), Vec3 d = Vec3()) : origin(o), direction(d) {}
 	Vec3 getDirection() { return direction; }         
-	Point3 getOrigin() { return origin; }         
+	Point3 getOrigin() { return origin; }
 	Point3 at(number n) { return origin + direction * n; }
 	void normalize() { direction = direction * (1 / direction.len()); }
 };

@@ -21,15 +21,18 @@ public:
 	Vec3 operator - (Vec3 other) { return Vec3(x - other.x, y - other.y, z - other.z); }
 	Vec3 operator - (void) { return Vec3(-x, -y, -z); }
 	Vec3 operator * (double scalar) { return Vec3(x * scalar, y * scalar, z * scalar); }
+	Vec3 operator * (Vec3 other) { return Vec3(x * other.x, y * other.y, z * other.z); }
 	Vec3 operator / (double scalar) { return Vec3(x / scalar, y / scalar, z / scalar); }
 
 	void operator += (Vec3 other) { x += other.x; y += other.y; z += other.z; }
 	void operator -= (Vec3 other) { x -= other.x; y -= other.y; z -= other.z; }
 	void operator *= (double scalar) { x *= scalar; y *= scalar; z *= scalar; }
+	void operator *= (Vec3 other) { x *= other.x; y *= other.y; z *= other.z; }
+	void operator /= (double scalar) { x /= scalar; y /= scalar; z /= scalar; }
 
 	number dot(Vec3 &other) { return x * other.x + y * other.y + z * other.z; }
 
-	Vec3 norm(void) { 
+	Vec3 norm() { 
 		double l = len();
 		return Vec3(x/l, y/l, z/l); 
 	}
@@ -39,6 +42,11 @@ public:
 		return Vec3(other.x * t + x * tt, 
 					other.y * t + y * tt, 
 					other.z * t + z * tt); 
+	}
+
+	Vec3 lamb(Vec3 normal, Vec3 light, Vec3 i) {
+		number cos = fmax(light.dot(normal), 0.0);
+		return Vec3(cos * x * i.x, cos * y * i.y, cos * z * i.z);
 	}
 
 };

@@ -25,21 +25,25 @@
 	"OBJECTS": [
 		{
 			"TYPE": "sphere",
+			"COLOR": [0, 1, 0],
 			"RADIUS": 99,
 			"CENTER": [0, -100.5, -3]
 		},
 		{
 			"TYPE": "sphere",
+			"COLOR": [1, 0, 0],
 			"RADIUS": 0.4,
 			"CENTER": [0.3, 0, -1]
 		},
 		{
 			"TYPE": "sphere",
+			"COLOR": [0, 0, 1],
 			"RADIUS": 0.6,
 			"CENTER": [0, 1, -2]
 		},
 		{
 			"TYPE": "sphere",
+			"COLOR": [1, 1, 0],
 			"RADIUS": 0.7,
 			"CENTER": [-0.4, 0, -3]
 		}
