@@ -78,6 +78,14 @@ Material parseMaterial(json_spirit::Value &value) {
 	return Material(albedo);
 }
 
+Light parseLight(json_spirit::Value &value) {
+	json_spirit::Object json = value.getObject();
+	Color color = parseColor(json["COLOR"]);
+	Vec3 dir = parseVec3(json["DIRECTION"]);
+	dir.normalize();
+	return Light(color, dir);
+}
+
 Object* parseObject(json_spirit::Value &value, Scene &scene) {
 	json_spirit::Object json = value.getObject();
 	std::string type = json["TYPE"].getString();
@@ -148,6 +156,12 @@ bool InputData::parse(std::string &content) {
 		json_spirit::Array materials = json["MATERIALS"].getArray();
 		for (int i = 0; i < materials.size(); i++) {
 			scene.materials.push_back(parseMaterial(materials[i]));
+		}
+	}
+	if (json.count("LIGHTS")) {
+		json_spirit::Array lights = json["LIGHTS"].getArray();
+		for (int i = 0; i < lights.size(); i++) {
+			scene.lights.push_back(parseLight(lights[i]));
 		}
 	}
 	json_spirit::Array objects = json["OBJECTS"].getArray();

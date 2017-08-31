@@ -2,6 +2,12 @@
 #include <iostream>
 #include <fstream>
 #include <cmath>
+using namespace std;
+
+int toInt(double a) {
+    a = max(min(a, 1.0), 0.0);
+    return rint(a * 255);
+}
 
 void MeowImage::save(std::string &fileName) {
     std::ofstream file;
@@ -11,9 +17,9 @@ void MeowImage::save(std::string &fileName) {
     file << "255" << std::endl;
     size_t len = width * height;
     for (int i = 0; i < len; i ++) {
-        int red = rint(colors[i].x * 255);
-        int green = rint(colors[i].y * 255);
-        int blue = rint(colors[i].z * 255);
+        int red = toInt(colors[i].x);
+        int green = toInt(colors[i].y);
+        int blue = toInt(colors[i].z);
         file << red << " " << green << " " << blue << std::endl;
     }
     file.close();
@@ -27,9 +33,9 @@ void MeowImage::saveBin(std::string &fileName) {
     file << "255" << std::endl;
     size_t len = width * height;
     for (int i = 0; i < len; i ++) {
-        unsigned char r = rint(colors[i].x * 255);
-        unsigned char g = rint(colors[i].y * 255);
-        unsigned char b = rint(colors[i].z * 255);
+        unsigned char r = toInt(colors[i].x);
+        unsigned char g = toInt(colors[i].y);
+        unsigned char b = toInt(colors[i].z);
     	file << r << g << b;
     }
 	file.close();

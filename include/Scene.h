@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "Object.h"
 #include "Material.h"
+#include "Light.h"
 #include <vector>
 
 class Scene {
@@ -13,7 +14,7 @@ public:
 	Color tl, tr, bl, br;
 	std::vector<Object*> objects;
 	std::vector<Material> materials;
-
+	std::vector<Light> lights;
 	Color backgroundColor(double tCol, double tRow);
 };
 

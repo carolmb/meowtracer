@@ -37,16 +37,16 @@ public:
 		return Vec3(x/l, y/l, z/l); 
 	}
 
+	Vec3 normalize() {
+		double l = len();
+		x /= l; y /= l; z /= l;
+	}
+
 	Vec3 lerp(Vec3 &other, double t) { 
 		double tt = 1 - t;
 		return Vec3(other.x * t + x * tt, 
 					other.y * t + y * tt, 
 					other.z * t + z * tt); 
-	}
-
-	Vec3 lamb(Vec3 normal, Vec3 light, Vec3 i) {
-		number cos = fmax(light.dot(normal), 0.0);
-		return Vec3(cos * x * i.x, cos * y * i.y, cos * z * i.z);
 	}
 
 };

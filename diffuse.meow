@@ -17,13 +17,17 @@
 	},
 	"RENDERER": {
 		"TYPE": "diffuse",
-		"SAMPLES": 16,
+		"SAMPLES": 4,
 		"RAYDEPTH": 3
 	},
 	"LIGHTS": [
 		{
-			"DIRECTION": [0, -1, 0],
-			"COLOR": [1, 1, 1]
+			"DIRECTION": [0, 1, 0],
+			"COLOR": [0, 0, 1]
+		},
+		{
+			"DIRECTION": [1, 0, 0],
+			"COLOR": [0, 1, 0]
 		}
 	],
 	"MATERIALS": [
@@ -38,6 +42,9 @@
 		},
 		{
 			"ALBEDO": [1, 0, 1]
+		},
+		{
+			"ALBEDO": [1, 1, 1]
 		}
 	],
 	"OBJECTS": [
@@ -45,25 +52,25 @@
 			"TYPE": "sphere",
 			"RADIUS": 99,
 			"CENTER": [0, -100.5, -3],
-			"MATERIAL": 3
+			"MATERIAL": 4
 		},
 		{
 			"TYPE": "sphere",
 			"RADIUS": 0.4,
 			"CENTER": [0.3, 0, -1],
-			"MATERIAL": 0
+			"MATERIAL": 4
 		},
 		{
 			"TYPE": "sphere",
 			"RADIUS": 0.6,
 			"CENTER": [0, 1, -2],
-			"MATERIAL": 1
+			"MATERIAL": 4
 		},
 		{
 			"TYPE": "sphere",
 			"RADIUS": 0.7,
 			"CENTER": [-0.4, 0, -3],
-			"MATERIAL": 2
+			"MATERIAL": 4
 		}
 	]
 }
