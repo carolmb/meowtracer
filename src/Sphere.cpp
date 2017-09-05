@@ -20,7 +20,6 @@ double Sphere::hit(Ray &ray) {
 	}
 }
 
-Vec3 Sphere::getNormal(Ray &ray, double t) {
-	Point3 p = ray.at(t);
+Vec3 Sphere::getNormal(Point3 &p) {
 	return (p - center).norm();
 }

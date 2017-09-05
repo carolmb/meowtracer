@@ -6,7 +6,7 @@
 #include <cstdlib>
 #include <ctime>
 #include "include/InputData.h"
-#include "include/MeowImage.h"
+#include "include/Image.h"
 
 void printScene(std::string &fileName) {
 	InputData data;
@@ -16,7 +16,7 @@ void printScene(std::string &fileName) {
 		time_t after = time(NULL);
 		double seconds = difftime(after, before);
 		std::cout << "Rendering done in " << seconds << " seconds." << std::endl; 
-		MeowImage img(data.colCount, data.rowCount, colors);
+		Image img(data.colCount, data.rowCount, colors);
 		if (data.isBin) {
 			img.saveBin(data.outputFile);
 		} else {

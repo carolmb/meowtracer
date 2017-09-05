@@ -4,10 +4,10 @@
 #include "../include/NormalRenderer.h"
 #include "../include/MapRenderer.h"
 #include "../include/DiffuseRenderer.h"
+#include "../include/BlinnPhongRenderer.h"
 #include "../include/Sphere.h"
 #include "../include/Material.h"
-#include "../include/ParallelLight.h"
-#include "../include/AmbientLight.h"
+#include "../include/DirectionalLight.h"
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -76,20 +76,21 @@ Vec3 parseVec3(json_spirit::Value &value) {
 
 Material* parseMaterial(json_spirit::Value &value) {
 	json_spirit::Object json = value.getObject();
-	Color albedo = parseColor(json["ALBEDO"]);
-	return new Material(albedo);
+	Color amb = parseColor(json["AMBIENT"]);
+	Color diff = parseColor(json["DIFFUSE"]);
+	Color spec = parseColor(json["SPECULAR"]);
+	double i = json["SHINE"].getReal();
+	return new Material(amb, diff, spec, i);
 }
 
 Light* parseLight(json_spirit::Value &value) {
 	json_spirit::Object json = value.getObject();
 	std::string type = json["TYPE"].getString();
 	Color color = parseColor(json["COLOR"]);
-	if (type == "parallel") {
+	if (type == "directional") {
 		Vec3 dir = parseVec3(json["DIRECTION"]);
 		dir.normalize();
-		return new ParallelLight(color, dir);
-	} else if (type == "ambient") {
-		return new AmbientLight(color);
+		return new DirectionalLight(color, dir);
 	} else {
 		return NULL;
 	}
@@ -141,6 +142,9 @@ Renderer* parseRenderer(json_spirit::Value &value) {
 	} else if (type == "diffuse") {
 		int depth = json["RAYDEPTH"].getInt();
 		return new DiffuseRenderer(samples, depth);
+	} else if (type == "blinnphong") {
+		int depth = json["RAYDEPTH"].getInt();
+		return new BlinnPhongRenderer(samples, depth);
 	} else {
 		std::cout << "Renderer type not recognized." << std::endl;
 		return NULL;

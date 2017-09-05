@@ -2,10 +2,13 @@
 #define __MATERIAL__
 
 class Material {
-	Color albedo;
 public:
-	Material(Color &c) : albedo(c) {}
-	Color getColor() { return albedo; }
+	Color ambient;
+	Color diffuse;
+	Color specular;
+	double shininess;
+	Material(Color &a, Color &d, Color &s, double i) : 
+		ambient(a), diffuse(d), specular(s), shininess(i) {}
 };
 
 #endif

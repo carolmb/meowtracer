@@ -10,7 +10,7 @@ private:
 public:
 	Sphere(Point3 p, double r) : center(p), radius(r) {}
 	double hit(Ray &ray);
-	Vec3 getNormal(Ray &ray, double t);
+	Vec3 getNormal(Point3 &p);
 };
 
 #endif

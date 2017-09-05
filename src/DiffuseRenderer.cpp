@@ -7,29 +7,6 @@
 #define INF std::numeric_limits<double>::infinity()
 #define PI2 6.28318530718 
 
-Vec3 randomUnitVec3() {
-	double phi = PI2 * rand() / RAND_MAX;
-	double cost = 1.0 * rand() / RAND_MAX;
-	double sint = sqrt(1 - cost*cost);
-	double x = sint * cos(phi);
-    double y = sint * sin(phi);
-    return Vec3(x, y, cost);
-}
-
-Color getObjectColor(Scene &scene, Ray &ray, double &t, Object* object) {
-	Color color = object->material->getColor();
-	Vec3 n = object->getNormal(ray, t);
-	n.normalize();
-	Color finalColor(0, 0, 0);
-	for (int i = 0; i < scene.lights.size(); i++) {
-		double r = (scene.lights[i]->getIntensity(n));
-		if (r > 0) {
-			finalColor += (color * scene.lights[i]->color) * r;
-		}
-	}
-	return finalColor;
-}
-
 Color DiffuseRenderer::getColor(Scene &scene, Ray &initRay, double &x, double &y) {
 	int depth = 0;
 	Object* hitObject;
@@ -50,10 +27,10 @@ Color DiffuseRenderer::getColor(Scene &scene, Ray &initRay, double &x, double &y
 			if (depth >= rayCount) {
 				break;
 			} else {
-				Vec3 n = hitObject->getNormal(ray, mint);
-				Point3 o = ray.at(mint);
+				Point3 hitPoint = ray.at(mint);
+				Vec3 n = hitObject->getNormal(hitPoint);
 				Point3 d = n + randomUnitVec3();
-				ray = Ray(o, d);
+				ray = Ray(hitPoint, d);
 			}
 		} else {
 			color *= scene.backgroundColor(x, y);
@@ -61,4 +38,25 @@ Color DiffuseRenderer::getColor(Scene &scene, Ray &initRay, double &x, double &y
 		}
 	}
 	return color;
+}
+
+Vec3 DiffuseRenderer::randomUnitVec3() {
+	double phi = PI2 * rand() / RAND_MAX;
+	double cost = 1.0 * rand() / RAND_MAX;
+	double sint = sqrt(1 - cost*cost);
+	double x = sint * cos(phi);
+    double y = sint * sin(phi);
+    return Vec3(x, y, cost);
+}
+
+Color DiffuseRenderer::getObjectColor(Scene &scene, Ray &ray, double &t, Object* object) {
+	Point3 hitPoint = ray.at(t);
+	Vec3 n = object->getNormal(hitPoint);
+	n.normalize();
+	Color finalColor(0, 0, 0);
+	for (int i = 0; i < scene.lights.size(); i++) {
+		Vec3 dir = scene.lights[i]->getDirection(hitPoint);
+		finalColor += scene.lights[i]->diffuseColor(object->material, n, dir);
+	}
+	return finalColor;
 }

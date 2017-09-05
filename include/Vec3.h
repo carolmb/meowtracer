@@ -49,6 +49,12 @@ public:
 					other.z * t + z * tt); 
 	}
 
+	Vec3 halfway(Vec3 &other) {
+		Vec3 v = other + *this;
+		v.normalize();
+		return v;
+	}
+
 };
 
 typedef Vec3 Point3;

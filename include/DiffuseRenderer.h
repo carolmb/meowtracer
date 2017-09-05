@@ -5,8 +5,10 @@
 #include "Renderer.h"
 
 class DiffuseRenderer : public Renderer {
-private:
+protected:
 	int rayCount;
+	virtual Color getObjectColor(Scene &scene, Ray &ray, double &t, Object* object);
+	Vec3 randomUnitVec3();
 public:
 	DiffuseRenderer (int &s, int &r) : Renderer(s), rayCount(r) {}
 	Color getColor(Scene &scene, Ray &ray, double &x, double &y);

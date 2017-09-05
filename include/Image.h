@@ -4,13 +4,13 @@
 #include "Vec3.h"
 #include <string>
 
-class MeowImage {
+class Image {
 	int width;
 	int height;
 	Color *colors;
 public:
-	MeowImage (int w, int h) : width(w), height(h) {}
-	MeowImage (int w, int h, Color* crls) : width(w), height(h), colors(crls) {}
+	Image (int w, int h) : width(w), height(h) {}
+	Image (int w, int h, Color* crls) : width(w), height(h), colors(crls) {}
 
 	void save(std::string &fileName);
 	void saveBin(std::string &fileName);

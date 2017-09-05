@@ -15,7 +15,8 @@ Color NormalRenderer::getColor(Scene &scene, Ray &ray, double &x, double &y) {
 		}
 	}
 	if (hitObject) {
-		Vec3 n = hitObject->getNormal(ray, mint);
+		Point3 hitPoint = ray.at(mint);
+		Vec3 n = hitObject->getNormal(hitPoint);
 		double r = (n.x + 1) / 2;
 		double g = (n.y + 1) / 2;
 		double b = (n.z + 1) / 2;

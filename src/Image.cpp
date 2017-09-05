@@ -1,15 +1,15 @@
-#include "../include/MeowImage.h"
+#include "../include/Image.h"
 #include <iostream>
 #include <fstream>
 #include <cmath>
 using namespace std;
 
 int toInt(double a) {
-    a = max(min(a, 1.0), 0.0);
+    a = max(min(sqrt(a), 1.0), 0.0);
     return rint(a * 255);
 }
 
-void MeowImage::save(std::string &fileName) {
+void Image::save(std::string &fileName) {
     std::ofstream file;
     file.open (fileName.c_str());
     file << "P3" << std::endl;
@@ -25,7 +25,7 @@ void MeowImage::save(std::string &fileName) {
     file.close();
 }
 
-void MeowImage::saveBin(std::string &fileName) {
+void Image::saveBin(std::string &fileName) {
     std::ofstream file;
     file.open (fileName.c_str(), std::ofstream::binary);
     file << "P6" << std::endl;

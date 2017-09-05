@@ -9,7 +9,7 @@ class Object {
 public:
 	Material* material;
 	virtual double hit(Ray &ray) = 0;
-	virtual Vec3 getNormal(Ray &ray, double t) = 0;
+	virtual Vec3 getNormal(Point3 &p) = 0;
 };
 
 #endif
