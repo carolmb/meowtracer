@@ -17,17 +17,23 @@
 	},
 	"RENDERER": {
 		"TYPE": "diffuse",
-		"SAMPLES": 512,
-		"RAYDEPTH": 10
+		"SAMPLES": 1024,
+		"RAYDEPTH": 5
 	},
 	"LIGHTS": [
 		{
-			"DIRECTION": [0, 1, 0],
-			"COLOR": [0, 0, 1]
+			"TYPE": "parallel",
+			"COLOR": [1, 1, 1],
+			"DIRECTION": [1, 1, 0]
 		},
 		{
-			"DIRECTION": [1, 0, 0],
-			"COLOR": [0, 1, 0]
+			"TYPE": "parallel",
+			"COLOR": [0, 0.5, 0],
+			"DIRECTION": [-1, 0, 0]
+		},
+		{
+			"TYPE": "ambient",
+			"COLOR": [0, 0, 0.1]
 		}
 	],
 	"MATERIALS": [

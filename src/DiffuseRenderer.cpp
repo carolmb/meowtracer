@@ -22,9 +22,9 @@ Color getObjectColor(Scene &scene, Ray &ray, double &t, Object* object) {
 	n.normalize();
 	Color finalColor(0, 0, 0);
 	for (int i = 0; i < scene.lights.size(); i++) {
-		double r = (scene.lights[i].direction.dot(n));
+		double r = (scene.lights[i]->getIntensity(n));
 		if (r > 0) {
-			finalColor += (color * scene.lights[i].color) * r;
+			finalColor += (color * scene.lights[i]->color) * r;
 		}
 	}
 	return finalColor;

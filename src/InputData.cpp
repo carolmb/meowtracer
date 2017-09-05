@@ -6,6 +6,8 @@
 #include "../include/DiffuseRenderer.h"
 #include "../include/Sphere.h"
 #include "../include/Material.h"
+#include "../include/ParallelLight.h"
+#include "../include/AmbientLight.h"
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -72,18 +74,25 @@ Vec3 parseVec3(json_spirit::Value &value) {
 	return Vec3(x, y, z);
 }
 
-Material parseMaterial(json_spirit::Value &value) {
+Material* parseMaterial(json_spirit::Value &value) {
 	json_spirit::Object json = value.getObject();
 	Color albedo = parseColor(json["ALBEDO"]);
-	return Material(albedo);
+	return new Material(albedo);
 }
 
-Light parseLight(json_spirit::Value &value) {
+Light* parseLight(json_spirit::Value &value) {
 	json_spirit::Object json = value.getObject();
+	std::string type = json["TYPE"].getString();
 	Color color = parseColor(json["COLOR"]);
-	Vec3 dir = parseVec3(json["DIRECTION"]);
-	dir.normalize();
-	return Light(color, dir);
+	if (type == "parallel") {
+		Vec3 dir = parseVec3(json["DIRECTION"]);
+		dir.normalize();
+		return new ParallelLight(color, dir);
+	} else if (type == "ambient") {
+		return new AmbientLight(color);
+	} else {
+		return NULL;
+	}
 }
 
 Object* parseObject(json_spirit::Value &value, Scene &scene) {
@@ -99,7 +108,7 @@ Object* parseObject(json_spirit::Value &value, Scene &scene) {
 	}
 	if (json.count("MATERIAL")) {
 		int material = json["MATERIAL"].getInt();
-		obj->material = &(scene.materials[material]);
+		obj->material = scene.materials[material];
 	}
 	return obj;
 }

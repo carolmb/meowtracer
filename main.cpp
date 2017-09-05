@@ -11,7 +11,11 @@
 void printScene(std::string &fileName) {
 	InputData data;
 	if (data.load(fileName)) {
+		time_t before = time(NULL);
 		Color* colors = data.renderer->render(data.scene, data.colCount, data.rowCount);
+		time_t after = time(NULL);
+		double seconds = difftime(after, before);
+		std::cout << "Rendering done in " << seconds << " seconds." << std::endl; 
 		MeowImage img(data.colCount, data.rowCount, colors);
 		if (data.isBin) {
 			img.saveBin(data.outputFile);

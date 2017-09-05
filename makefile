@@ -1,6 +1,6 @@
-OBJS = main.o Sphere.o Scene.o MeowImage.o OrthogonalCamera.o PerspectiveCamera.o Renderer.o NormalRenderer.o MapRenderer.o DiffuseRenderer.o InputData.o
+OBJS = main.o Sphere.o AmbientLight.o ParallelLight.o Scene.o MeowImage.o OrthogonalCamera.o PerspectiveCamera.o Renderer.o NormalRenderer.o MapRenderer.o DiffuseRenderer.o InputData.o
 
-CPP_FLAGS=-O3
+CPP_FLAGS= -O3
 
 all: main
 
@@ -12,6 +12,12 @@ main.o: main.cpp
 
 Sphere.o: src/Sphere.cpp
 	g++ -c $(CPP_FLAGS) src/Sphere.cpp include/Sphere.h
+
+AmbientLight.o: src/AmbientLight.cpp
+	g++ -c $(CPP_FLAGS) src/AmbientLight.cpp include/AmbientLight.h
+
+ParallelLight.o: src/ParallelLight.cpp
+	g++ -c $(CPP_FLAGS) src/ParallelLight.cpp include/ParallelLight.h
 
 Scene.o: src/Scene.cpp
 	g++ -c $(CPP_FLAGS) src/Scene.cpp include/Scene.h
