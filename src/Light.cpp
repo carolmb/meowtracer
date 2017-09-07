@@ -1,7 +1,7 @@
 #include "../include/Light.h"
 
 Color Light::diffuseColor (Material* material, Vec3 &n, Vec3 &l) {
-	double r = (-l).dot(n);
+	double r = l.dot(n);
 	if (r > 0) {
 		return (material->diffuse * color) * fmin(1.0, r);
 	} else {
@@ -10,7 +10,7 @@ Color Light::diffuseColor (Material* material, Vec3 &n, Vec3 &l) {
 }
 
 Color Light::specularColor(Material* material, Vec3 &n, Vec3 &l, Vec3 &v) {
-	Vec3 half = -v - l;
+	Vec3 half = l - v;
 	half.normalize();
 	double r = half.dot(n);
 	if (r > 0) {

@@ -55,7 +55,7 @@ Color DiffuseRenderer::getObjectColor(Scene &scene, Ray &ray, double &t, Object*
 	n.normalize();
 	Color finalColor(0, 0, 0);
 	for (int i = 0; i < scene.lights.size(); i++) {
-		Vec3 dir = scene.lights[i]->getDirection(hitPoint);
+		Vec3 dir = -scene.lights[i]->getDirection(hitPoint);
 		finalColor += scene.lights[i]->diffuseColor(object->material, n, dir);
 	}
 	return finalColor;
