@@ -32,6 +32,7 @@
 			"DIRECTION": [2, -1, 0.1]
 		}
 	],
+	"AMBIENT": [0.1, 0.1, 0.1],
 	"MATERIALS": [
 		{
 			"DIFFUSE": [1, 1, 0],

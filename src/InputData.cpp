@@ -143,8 +143,7 @@ Renderer* parseRenderer(json_spirit::Value &value) {
 		int depth = json["RAYDEPTH"].getInt();
 		return new DiffuseRenderer(samples, depth);
 	} else if (type == "blinnphong") {
-		int depth = json["RAYDEPTH"].getInt();
-		return new BlinnPhongRenderer(samples, depth);
+		return new BlinnPhongRenderer(samples);
 	} else {
 		std::cout << "Renderer type not recognized." << std::endl;
 		return NULL;
@@ -165,6 +164,7 @@ bool InputData::parse(std::string &content) {
 	scene.tr = parseColor(json["UPPER_RIGHT"]);
 	scene.bl = parseColor(json["LOWER_LEFT"]);
 	scene.br = parseColor(json["LOWER_RIGHT"]);
+	scene.ambientColor = parseColor(json["AMBIENT"]);
 	if (json.count("MATERIALS")) {
 		json_spirit::Array materials = json["MATERIALS"].getArray();
 		for (int i = 0; i < materials.size(); i++) {
@@ -183,4 +183,6 @@ bool InputData::parse(std::string &content) {
 	}
 	scene.camera = parseCamera(json["CAMERA"]);
 	renderer = parseRenderer(json["RENDERER"]);
+
+	std::cout << scene.lights.size() << std::endl;
 }

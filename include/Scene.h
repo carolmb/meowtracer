@@ -15,6 +15,7 @@ public:
 	std::vector<Object*> objects;
 	std::vector<Material*> materials;
 	std::vector<Light*> lights;
+  Color ambientColor;
 	Color backgroundColor(double tCol, double tRow);
 };
 

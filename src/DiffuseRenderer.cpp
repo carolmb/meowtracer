@@ -45,8 +45,8 @@ Vec3 DiffuseRenderer::randomUnitVec3() {
 	double cost = 1.0 * rand() / RAND_MAX;
 	double sint = sqrt(1 - cost*cost);
 	double x = sint * cos(phi);
-    double y = sint * sin(phi);
-    return Vec3(x, y, cost);
+	double y = sint * sin(phi);
+	return Vec3(x, y, cost);
 }
 
 Color DiffuseRenderer::getObjectColor(Scene &scene, Ray &ray, double &t, Object* object) {

@@ -1,4 +1,5 @@
 #include "../include/Light.h"
+#include <iostream>
 
 Color Light::diffuseColor (Material* material, Vec3 &n, Vec3 &l) {
 	double r = l.dot(n);
@@ -18,8 +19,4 @@ Color Light::specularColor(Material* material, Vec3 &n, Vec3 &l, Vec3 &v) {
 	} else {
 		return Color(0, 0, 0);
 	}
-}
-
-Color Light::ambientColor(Material* material) {
-	return material->ambient * color;
 }
