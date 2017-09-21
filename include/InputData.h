@@ -2,7 +2,7 @@
 #define __INPUTDATA__
 
 #include "Scene.h"
-#include "Renderer.h"
+#include "Renderer/Renderer.h"
 #include <string>
 
 class InputData {

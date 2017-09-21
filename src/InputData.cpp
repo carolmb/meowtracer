@@ -1,13 +1,15 @@
 #include "../include/InputData.h"
 #include "../include/OrthogonalCamera.h"
 #include "../include/PerspectiveCamera.h"
-#include "../include/NormalRenderer.h"
-#include "../include/MapRenderer.h"
-#include "../include/DiffuseRenderer.h"
-#include "../include/BlinnPhongRenderer.h"
 #include "../include/Sphere.h"
 #include "../include/Material.h"
 #include "../include/DirectionalLight.h"
+#include "../include/PointLight.h"
+#include "../include/Renderer/NormalRenderer.h"
+#include "../include/Renderer/MapRenderer.h"
+#include "../include/Renderer/DiffuseRenderer.h"
+#include "../include/Renderer/BlinnPhongRenderer.h"
+#include "../include/Renderer/CelRenderer.h"
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -76,11 +78,38 @@ Vec3 parseVec3(json_spirit::Value &value) {
 
 Material* parseMaterial(json_spirit::Value &value) {
 	json_spirit::Object json = value.getObject();
-	Color amb = parseColor(json["AMBIENT"]);
-	Color diff = parseColor(json["DIFFUSE"]);
-	Color spec = parseColor(json["SPECULAR"]);
-	double i = json["SHINE"].getReal();
-	return new Material(amb, diff, spec, i);
+	Material* m = new Material();
+	if (json.count("AMBIENT")) {
+		m->ambient = parseColor(json["AMBIENT"]);
+	}
+	if (json.count("DIFFUSE")) {
+		m->diffuse = parseColor(json["DIFFUSE"]);
+	}
+	if (json.count("SPECULAR")) {
+		m->specular = parseColor(json["SPECULAR"]);
+	}
+	if (json.count("SHINE")) {
+		m->shininess = json["SHINE"].getReal();
+	}
+	if (json.count("OUTLINECOLOR")) {
+		m->outlineColor = parseColor(json["OUTLINECOLOR"]);
+	}
+	if (json.count("OUTLINEANGLE")) {
+		m->outlineAngle = json["OUTLINEANGLE"].getReal();
+	}
+	if (json.count("COLORS")) {
+		json_spirit::Array arr = json["COLORS"].getArray();
+		for (int i = 0; i < arr.size(); i++) {
+			m->colors.push_back(parseColor(arr[i]));
+		}
+	}
+	if (json.count("INTERVALS")) {
+		json_spirit::Array arr = json["INTERVALS"].getArray();
+		for (int i = 0; i < arr.size(); i++) {
+			m->times.push_back(arr[i].getReal());
+		}
+	}
+	return m;
 }
 
 Light* parseLight(json_spirit::Value &value) {
@@ -91,6 +120,9 @@ Light* parseLight(json_spirit::Value &value) {
 		Vec3 dir = parseVec3(json["DIRECTION"]);
 		dir.normalize();
 		return new DirectionalLight(color, dir);
+	} else if (type == "point") {
+		Point3 origin = parseVec3(json["ORIGIN"]);
+		return new PointLight(color, origin);
 	} else {
 		return NULL;
 	}
@@ -144,6 +176,8 @@ Renderer* parseRenderer(json_spirit::Value &value) {
 		return new DiffuseRenderer(samples, depth);
 	} else if (type == "blinnphong") {
 		return new BlinnPhongRenderer(samples);
+	} else if (type == "cel") {
+		return new CelRenderer(samples);
 	} else {
 		std::cout << "Renderer type not recognized." << std::endl;
 		return NULL;
@@ -183,6 +217,4 @@ bool InputData::parse(std::string &content) {
 	}
 	scene.camera = parseCamera(json["CAMERA"]);
 	renderer = parseRenderer(json["RENDERER"]);
-
-	std::cout << scene.lights.size() << std::endl;
 }

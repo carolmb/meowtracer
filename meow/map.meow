@@ -1,0 +1,51 @@
+{
+	"NAME": "map.ppm",
+	"TYPE": "PPM",
+	"CODIFICATION": "binary",
+	"WIDTH": 1200,
+	"HEIGHT": 600,
+	"UPPER_LEFT": [1, 1, 1], 
+	"LOWER_LEFT": [0.5, 0.7, 1],
+	"UPPER_RIGHT": [1, 1, 1],
+	"LOWER_RIGHT": [0.5, 0.7, 1],
+	"CAMERA": {
+		"TYPE": "perspective",
+		"POSITION": [-2, -1, -1],
+		"HORIZONTAL": [4, 0, 0],
+		"VERTICAL": [0, 2, 0],
+		"LENS": [0, 0, 0]
+	},
+	"RENDERER": {
+		"TYPE": "map",
+		"SAMPLES": 8,
+		"FOREGROUND": [0, 0, 0],
+		"BACKGROUND": [1, 1, 1],
+		"MAXDEPTH": 4
+	},
+	"OBJECTS": [
+		{
+			"TYPE": "sphere",
+			"COLOR": [0, 1, 0],
+			"RADIUS": 99,
+			"CENTER": [0, -100.5, -3]
+		},
+		{
+			"TYPE": "sphere",
+			"COLOR": [1, 0, 0],
+			"RADIUS": 0.4,
+			"CENTER": [0.3, 0, -1]
+		},
+		{
+			"TYPE": "sphere",
+			"COLOR": [0, 0, 1],
+			"RADIUS": 0.6,
+			"CENTER": [0, 1, -2]
+		},
+		{
+			"TYPE": "sphere",
+			"COLOR": [1, 1, 0],
+			"RADIUS": 0.7,
+			"CENTER": [-0.4, 0, -3]
+		}
+	]
+}

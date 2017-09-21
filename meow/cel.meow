@@ -1,0 +1,70 @@
+{
+  "NAME": "blinnphong.ppm",
+  "TYPE": "PPM",
+  "CODIFICATION": "binary",
+  "WIDTH": 900,
+  "HEIGHT": 450,
+  "UPPER_LEFT": [1, 1, 1], 
+  "LOWER_LEFT": [0.5, 0.7, 1],
+  "UPPER_RIGHT": [1, 1, 1],
+  "LOWER_RIGHT": [0.5, 0.7, 1],
+  "CAMERA": {
+    "TYPE": "perspective",
+    "POSITION": [-2, -1, -1],
+    "HORIZONTAL": [4, 0, 0],
+    "VERTICAL": [0, 2, 0],
+    "LENS": [0, 0, 0]
+  },
+  "RENDERER": {
+    "TYPE": "cel",
+    "SAMPLES": 8
+  },
+  "LIGHTS": [
+    {
+      "TYPE": "directional",
+      "COLOR": [0.8, 0.8, 0.8],
+      "DIRECTION": [-8, 7, 8]
+    }
+  ],
+  "AMBIENT": [0.4, 0.4, 0.4],
+  "MATERIALS": [
+    {
+      "OUTLINEANGLE": 0.2,
+      "OUTLINECOLOR": [0, 0, 0],
+      "COLORS": [
+        [0.2, 0, 0.2],
+        [0.4, 0, 0.4],
+        [0.6, 0, 0.6],
+        [0.8, 0, 0.8]
+      ],
+      "INTERVALS": [0.25, 0.5, 0.75],
+      "AMBIENT": [0, 0, 0]
+    },
+    {
+      "OUTLINEANGLE": 0.05,
+      "OUTLINECOLOR": [0, 0, 0],
+      "COLORS": [
+        [0, 0, 0.1],
+        [0.1, 0.1, 0.1],
+        [0.2, 0.2, 0.1]
+      ],
+      "INTERVALS": [0.3, 0.7],
+      "AMBIENT": [0.1, 0.1, 0.1]
+    }
+  ],
+  "OBJECTS": [
+    {
+      "TYPE": "sphere",
+      "RADIUS": 0.5,
+      "CENTER": [0, 0, -1],
+      "MATERIAL": 0
+    },
+    {
+      "TYPE": "sphere",
+      "RADIUS": 100,
+      "CENTER": [0, -100.5, -1],
+      "MATERIAL": 1
+    }
+  ]
+  ]
+}

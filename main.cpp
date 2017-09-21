@@ -10,7 +10,9 @@
 
 void printScene(std::string &fileName) {
 	InputData data;
-	if (data.load(fileName)) {
+	std::string inputFile = "meow/" + fileName + ".meow";
+	std::string outputFile = "ppm/" + fileName + ".ppm";
+	if (data.load(inputFile)) {
 		time_t before = time(NULL);
 		Color* colors = data.renderer->render(data.scene, data.colCount, data.rowCount);
 		time_t after = time(NULL);
@@ -18,9 +20,9 @@ void printScene(std::string &fileName) {
 		std::cout << "Rendering done in " << seconds << " seconds." << std::endl; 
 		Image img(data.colCount, data.rowCount, colors);
 		if (data.isBin) {
-			img.saveBin(data.outputFile);
+			img.saveBin(outputFile);
 		} else {
-			img.save(data.outputFile);
+			img.save(outputFile);
 		}
 	}
 }
