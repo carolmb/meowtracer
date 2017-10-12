@@ -156,14 +156,18 @@ Object* parseObject(json_spirit::Value &value, Scene &scene) {
 Camera* parseCamera(json_spirit::Value &value) {
 	json_spirit::Object json = value.getObject();
 	std::string type = json["TYPE"].getString();
-	Vec3 h = parseVec3(json["HORIZONTAL"]);
-	Vec3 v = parseVec3(json["VERTICAL"]);
-	Point3 p = parseVec3(json["POSITION"]);
+	Point3 center = parseVec3(json["CENTER"]);
+	double w = json["WIDTH"].getReal();
+	double h = json["HEIGHT"].getReal();
+	Vec3 hor(w, 0, 0);
+	Vec3 ver(0, h, 0);
+	Point3 p = center - Vec3(w / 2, h / 2, 0);
 	if (type == "perspective") {
-		Vec3 lens = parseVec3(json["LENS"]);
-		return new PerspectiveCamera(h, v, p, lens);
+		Point3 viewer = parseVec3(json["VIEWER"]);
+		Point3 lens = center + viewer;
+		return new PerspectiveCamera(hor, ver, p, lens);
 	} else {
-		return new OrthogonalCamera(h, v, p);
+		return new OrthogonalCamera(hor, ver, p);
 	}
 }
 

@@ -7,9 +7,9 @@ Vec3 SpotLight::getDirection(Point3 &p) {
 Color SpotLight::diffuseColor (Material* material, Vec3 &n, Vec3 &l) {
   double r = l.dot(n);
   if (r > 0) {
-    Vec3 d = -l;
+    Vec3 d = l;
     d.normalize();
-    double a = (-l).dot(direction);
+    double a = l.dot(direction) / l.len();
     if (a >= angle) {
       return (material->diffuse * color) * fmin(1.0, r * a);
     }
@@ -22,8 +22,7 @@ Color SpotLight::specularColor(Material* material, Vec3 &n, Vec3 &l, Vec3 &v) {
   half.normalize();
   double r = half.dot(n);
   if (r > 0) {
-    l.normalize();
-    double a = (-l).dot(direction);
+    double a = l.dot(direction) / l.len();
     if (a >= angle) {
       return (material->specular * color) * fmin(1.0, pow(r * a, material->shininess));
     }

@@ -10,15 +10,15 @@
 	"LOWER_RIGHT": [0.5, 0.7, 1],
 	"CAMERA": {
 		"TYPE": "perspective",
-		"POSITION": [-2, -1, -1],
-		"HORIZONTAL": [4, 0, 0],
-		"VERTICAL": [0, 2, 0],
-		"LENS": [0, 0, 2]
+		"CENTER": [0, 0, -1],
+		"WIDTH": 6,
+		"HEIGHT": 3,
+		"ROTATION": [0, 0, 0],
+		"VIEWER": [0, 0, 4]
 	},
 	"RENDERER": {
 		"TYPE": "blinnphong",
-		"SAMPLES": 32,
-		"RAYDEPTH": 5
+		"SAMPLES": 16
 	},
 	"LIGHTS": [
 		{

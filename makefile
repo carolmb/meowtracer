@@ -62,4 +62,4 @@ PerspectiveCamera.o: src/PerspectiveCamera.cpp
 	g++ -c $(CPP_FLAGS) src/PerspectiveCamera.cpp include/PerspectiveCamera.h
 
 clean:
-	rm -f *.o *~ include/*.h.gch
+	rm -f *.o *~ include/*.h.gch include/Renderer/*.h.gch
