@@ -24,12 +24,12 @@
 		{
 			"TYPE": "directional",
 			"COLOR": [0.8, 0.8, 0.8],
-			"DIRECTION": [-8, 7, 0]
+			"DIRECTION": [8, -7, 0]
 		},
 		{
 			"TYPE": "directional",
 			"COLOR": [0.5, 0.5, 0.5],
-			"DIRECTION": [20, 10, 15]
+			"DIRECTION": [-20, -10, -15]
 		}
 	],
 	"AMBIENT": [0.4, 0.4, 0.4],

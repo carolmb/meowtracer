@@ -13,7 +13,7 @@
     "POSITION": [-2, -1, -1],
     "HORIZONTAL": [4, 0, 0],
     "VERTICAL": [0, 2, 0],
-    "LENS": [0, 0, 0]
+    "LENS": [0, 0, 2]
   },
   "RENDERER": {
     "TYPE": "cel",
@@ -23,7 +23,7 @@
     {
       "TYPE": "directional",
       "COLOR": [0.8, 0.8, 0.8],
-      "DIRECTION": [-8, 7, 8]
+      "DIRECTION": [-1, -1, -0.25]
     }
   ],
   "AMBIENT": [0.4, 0.4, 0.4],
@@ -32,12 +32,13 @@
       "OUTLINEANGLE": 0.2,
       "OUTLINECOLOR": [0, 0, 0],
       "COLORS": [
-        [0.2, 0, 0.2],
-        [0.4, 0, 0.4],
-        [0.6, 0, 0.6],
+        [0.05, 0, 0.1],
+        [0.14, 0, 0.26],
+        [0.36, 0, 0.44],
+        [0.58, 0, 0.62],
         [0.8, 0, 0.8]
       ],
-      "INTERVALS": [0.25, 0.5, 0.75],
+      "INTERVALS": [-0.5, -0.2, 0.5, 0.75],
       "AMBIENT": [0, 0, 0]
     },
     {
@@ -61,10 +62,21 @@
     },
     {
       "TYPE": "sphere",
+      "RADIUS": 0.5,
+      "CENTER": [-1, 0, -1],
+      "MATERIAL": 0
+    },
+    {
+      "TYPE": "sphere",
+      "RADIUS": 0.5,
+      "CENTER": [1, 0.5, -1],
+      "MATERIAL": 0
+    },
+    {
+      "TYPE": "sphere",
       "RADIUS": 100,
       "CENTER": [0, -100.5, -1],
       "MATERIAL": 1
     }
-  ]
   ]
 }

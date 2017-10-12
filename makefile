@@ -1,4 +1,4 @@
-OBJS = main.o Sphere.o Light.o DirectionalLight.o PointLight.o DefaultRenderer.o CelRenderer.o BlinnPhongRenderer.o Scene.o Image.o OrthogonalCamera.o PerspectiveCamera.o Renderer.o NormalRenderer.o MapRenderer.o DiffuseRenderer.o InputData.o
+OBJS = main.o Sphere.o Light.o DirectionalLight.o PointLight.o SpotLight.o DefaultRenderer.o CelRenderer.o BlinnPhongRenderer.o Scene.o Image.o OrthogonalCamera.o PerspectiveCamera.o Renderer.o NormalRenderer.o MapRenderer.o DiffuseRenderer.o InputData.o
 
 CPP_FLAGS= -O3
 
@@ -21,6 +21,9 @@ DirectionalLight.o: src/DirectionalLight.cpp
 
 PointLight.o: src/PointLight.cpp
 	g++ -c $(CPP_FLAGS) src/PointLight.cpp include/PointLight.h
+
+SpotLight.o: src/SpotLight.cpp
+	g++ -c $(CPP_FLAGS) src/SpotLight.cpp include/SpotLight.h
 
 Scene.o: src/Scene.cpp
 	g++ -c $(CPP_FLAGS) src/Scene.cpp include/Scene.h

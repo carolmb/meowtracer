@@ -5,6 +5,7 @@
 #include "../include/Material.h"
 #include "../include/DirectionalLight.h"
 #include "../include/PointLight.h"
+#include "../include/SpotLight.h"
 #include "../include/Renderer/NormalRenderer.h"
 #include "../include/Renderer/MapRenderer.h"
 #include "../include/Renderer/DiffuseRenderer.h"
@@ -15,6 +16,7 @@
 #include <fstream>
 #include <cmath>
 #include <json_spirit/json_spirit.h>
+#define PI 3.14159265359
 
 std::string clearComments(std::string &input) {
 	int found = input.find_first_of("#");
@@ -123,6 +125,11 @@ Light* parseLight(json_spirit::Value &value) {
 	} else if (type == "point") {
 		Point3 origin = parseVec3(json["ORIGIN"]);
 		return new PointLight(color, origin);
+	} else if (type == "spot") {
+		Point3 origin = parseVec3(json["ORIGIN"]);
+		Vec3 dir = parseVec3(json["DIRECTION"]);
+		double angle = cos(json["ANGLE"].getReal() * PI / 180.0);
+		return new SpotLight(color, origin, dir, angle);
 	} else {
 		return NULL;
 	}

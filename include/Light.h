@@ -10,8 +10,8 @@ public:
 	Color color;
 	Light(Color &c) : color(c) {}
 
-	Color diffuseColor (Material* material, Vec3 &n, Vec3 &l);
-	Color specularColor(Material* material, Vec3 &n, Vec3 &l, Vec3 &v);
+	virtual Color diffuseColor (Material* material, Vec3 &n, Vec3 &l);
+	virtual Color specularColor(Material* material, Vec3 &n, Vec3 &l, Vec3 &v);
 
 	virtual Vec3 getDirection(Point3 &point) = 0;
 
