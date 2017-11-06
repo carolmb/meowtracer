@@ -1,65 +1,36 @@
-OBJS = main.o Sphere.o Light.o DirectionalLight.o PointLight.o SpotLight.o DefaultRenderer.o CelRenderer.o BlinnPhongRenderer.o Scene.o Image.o OrthogonalCamera.o PerspectiveCamera.o Renderer.o NormalRenderer.o MapRenderer.o DiffuseRenderer.o InputData.o
+all: main
 
 CPP_FLAGS= -O3
 
-all: main
-
-main: $(OBJS)
-	g++ -o main $(OBJS) -ljson_spirit
+define recipe
+$(1).o: src/$(2)$(1).cpp
+	g++ -c $(CPP_FLAGS) src/$(2)$(1).cpp src/$(2)$(1).h
+endef
 
 main.o: main.cpp
 	g++ -c $(CPP_FLAGS) main.cpp
 
-Sphere.o: src/Sphere.cpp
-	g++ -c $(CPP_FLAGS) src/Sphere.cpp include/Sphere.h
+LIGHTS = DirectionalLight PointLight SpotLight
+$(foreach i,$(LIGHTS),$(eval $(call recipe,$(i),Light/)))
 
-Light.o: src/Light.cpp
-	g++ -c $(CPP_FLAGS) src/Light.cpp include/Light.h
+OBJS = Sphere
+$(foreach i,$(OBJS),$(eval $(call recipe,$(i),Object/)))
 
-DirectionalLight.o: src/DirectionalLight.cpp
-	g++ -c $(CPP_FLAGS) src/DirectionalLight.cpp include/DirectionalLight.h
+CAMS = OrthogonalCamera PerspectiveCamera
+$(foreach i,$(CAMS),$(eval $(call recipe,$(i),Camera/)))
 
-PointLight.o: src/PointLight.cpp
-	g++ -c $(CPP_FLAGS) src/PointLight.cpp include/PointLight.h
+RENDS = Renderer NormalRenderer MapRenderer DiffuseRenderer DefaultRenderer CelRenderer BlinnPhongRenderer
+$(foreach i,$(RENDS),$(eval $(call recipe,$(i),Renderer/)))
 
-SpotLight.o: src/SpotLight.cpp
-	g++ -c $(CPP_FLAGS) src/SpotLight.cpp include/SpotLight.h
+SRC = Vec3 Transform InputData Image
+$(foreach i,$(SRC),$(eval $(call recipe,$(i),./)))
 
-Scene.o: src/Scene.cpp
-	g++ -c $(CPP_FLAGS) src/Scene.cpp include/Scene.h
+RECIPES = main.o $(foreach i, $(LIGHTS) $(OBJS) $(CAMS) $(RENDS) $(SRC), $(i).o)
 
-Image.o: src/Image.cpp
-	g++ -c $(CPP_FLAGS) src/Image.cpp include/Image.h
-
-Renderer.o: src/Renderer/Renderer.cpp
-	g++ -c $(CPP_FLAGS) src/Renderer/Renderer.cpp include/Renderer/Renderer.h
-
-NormalRenderer.o: src/Renderer/NormalRenderer.cpp
-	g++ -c $(CPP_FLAGS) src/Renderer/NormalRenderer.cpp include/Renderer/NormalRenderer.h
-
-MapRenderer.o: src/Renderer/MapRenderer.cpp
-	g++ -c $(CPP_FLAGS) src/Renderer/MapRenderer.cpp include/Renderer/MapRenderer.h
-
-DiffuseRenderer.o: src/Renderer/DiffuseRenderer.cpp
-	g++ -c $(CPP_FLAGS) src/Renderer/DiffuseRenderer.cpp include/Renderer/DiffuseRenderer.h
-
-BlinnPhongRenderer.o: src/Renderer/BlinnPhongRenderer.cpp
-	g++ -c $(CPP_FLAGS) src/Renderer/BlinnPhongRenderer.cpp include/Renderer/BlinnPhongRenderer.h
-
-CelRenderer.o: src/Renderer/CelRenderer.cpp
-	g++ -c $(CPP_FLAGS) src/Renderer/CelRenderer.cpp include/Renderer/CelRenderer.h
-
-DefaultRenderer.o: src/Renderer/DefaultRenderer.cpp
-	g++ -c $(CPP_FLAGS) src/Renderer/DefaultRenderer.cpp include/Renderer/DefaultRenderer.h
-
-InputData.o: src/InputData.cpp
-	g++ -c $(CPP_FLAGS) src/InputData.cpp include/InputData.h
-
-OrthogonalCamera.o: src/OrthogonalCamera.cpp
-	g++ -c $(CPP_FLAGS) src/OrthogonalCamera.cpp include/OrthogonalCamera.h
-
-PerspectiveCamera.o: src/PerspectiveCamera.cpp
-	g++ -c $(CPP_FLAGS) src/PerspectiveCamera.cpp include/PerspectiveCamera.h
+main: $(RECIPES)
+	g++ -o bin/main $(RECIPES) -ljson_spirit
 
 clean:
-	rm -f *.o *~ include/*.h.gch include/Renderer/*.h.gch
+	rm -f *.o
+	rm -f src/*h.gch
+	$(foreach i,Light Object Camera Renderer, rm -f src/*.h.gch)

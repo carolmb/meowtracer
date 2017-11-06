@@ -1,4 +1,4 @@
-#include "../../include/Renderer/DiffuseRenderer.h"
+#include "DiffuseRenderer.h"
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
@@ -7,7 +7,7 @@
 #define INF std::numeric_limits<double>::infinity()
 #define PI2 6.28318530718 
 
-Color DiffuseRenderer::getColor(Scene &scene, Ray &initRay, double &x, double &y) {
+Color DiffuseRenderer::getColor(Ray &initRay, double &x, double &y) {
 	int depth = 0;
 	Object* hitObject;
 	Ray ray = initRay;
@@ -15,15 +15,15 @@ Color DiffuseRenderer::getColor(Scene &scene, Ray &initRay, double &x, double &y
 	while (true) {
 		hitObject = 0;
 		double mint = INF;
-		for (int i = 0; i < scene.objects.size(); i++) {
-			double t = scene.objects[i]->hit(ray);
+		for (int i = 0; i < objects.size(); i++) {
+			double t = objects[i]->hit(ray);
 			if (!isnan(t) && t < mint && t > 0) {
 				mint = t;
-				hitObject = scene.objects[i];
+				hitObject = objects[i];
 			}
 		}
 		if (hitObject) {
-			color *= getObjectColor(scene, ray, mint, hitObject);
+			color *= getObjectColor(ray, mint, hitObject);
 			if (depth >= rayCount) {
 				break;
 			} else {
@@ -33,7 +33,7 @@ Color DiffuseRenderer::getColor(Scene &scene, Ray &initRay, double &x, double &y
 				ray = Ray(hitPoint, d);
 			}
 		} else {
-			color *= scene.backgroundColor(x, y);
+			color *= backgroundColor(x, y);
 			break;
 		}
 	}
@@ -49,14 +49,23 @@ Vec3 DiffuseRenderer::randomUnitVec3() {
 	return Vec3(x, y, cost);
 }
 
-Color DiffuseRenderer::getObjectColor(Scene &scene, Ray &ray, double &t, Object* object) {
-	Point3 hitPoint = ray.at(t);
-	Vec3 n = object->getNormal(hitPoint);
-	n.normalize();
-	Color finalColor(0, 0, 0);
-	for (int i = 0; i < scene.lights.size(); i++) {
-		Vec3 dir = -scene.lights[i]->getDirection(hitPoint);
-		finalColor += scene.lights[i]->diffuseColor(object->material, n, dir);
+Color DiffuseRenderer::getLightColor(Light* light, Point3 &hitPoint, 
+    Vec3 &normal, Vec3 &rayDir, Vec3 &lightDir, Object* obj) {
+	Color mat = materials[object->materialID];
+	Vec3 dir = -light->getDirection(hitPoint, normal, ray.getDirection());
+	Color color = scene.lights[i]->getColor(hitPoint, normal, ray.getDirection(), dir);
+	return mat * color * diffuseCoef(normal, dir);
+}
+
+Color DiffuseRenderer::getAmbientColor(Object* obj) {
+	return ambientLight;
+}
+
+double DiffuseRenderer::diffuseCoef(Vec3 &normal, Vec3 &light) {
+	double r = light.dot(normal);
+	if (r > 0) {
+		return fmin(1.0, r);
+	} else {
+		return 0;
 	}
-	return finalColor;
 }

@@ -1,8 +1,8 @@
-#include "../../include/Renderer/Renderer.h"
+#include "Renderer.h"
 #include <iostream>
 #include <cstdlib>
 
-Color* Renderer::render(Scene &scene, int width, int height) {
+Color* Renderer::render(int width, int height) {
 	Color* colors = new Color[width * height];
 	double progress = 0;
 	int totalProgress = width * height;
@@ -14,9 +14,9 @@ Color* Renderer::render(Scene &scene, int width, int height) {
 				double pixely = 1.0 * rand() / RAND_MAX + (height - j - 1);
 				double x = pixelx / (width - 1);
 				double y = pixely / (height - 1);
-				Ray ray = scene.camera->getRay(x, y);
+				Ray ray = camera->getRay(x, y);
 				ray.normalize();
-				c += getColor(scene, ray, x, y) / sampleCount;
+				c += getColor(ray, x, y) / sampleCount;
 			}
 			std::cout << "\rProgress: " << int(++progress * 100 / totalProgress) << '%' << std::flush; 
 			colors[j * width + i] = c;
@@ -24,4 +24,10 @@ Color* Renderer::render(Scene &scene, int width, int height) {
 	}
 	std::cout << std::endl;
 	return colors;
+}
+
+Color Renderer::backgroundColor(double tCol, double tRow)  {
+	Color top = tl.lerp(tr, tCol);
+	Color bottom = bl.lerp(br, tCol);
+	return top.lerp(bottom, tRow);
 }

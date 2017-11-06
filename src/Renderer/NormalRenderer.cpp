@@ -1,17 +1,17 @@
-#include "../../include/Renderer/NormalRenderer.h"
+#include "NormalRenderer.h"
 #include <cmath>
 #include <limits>
 #define INF std::numeric_limits<double>::infinity()
 
-Color NormalRenderer::getColor(Scene &scene, Ray &ray, double &x, double &y) {
+Color NormalRenderer::getColor(Ray &ray, double &x, double &y) {
 	int depth = 0;
 	Object* hitObject = 0;
 	double mint = INF;
-	for (int i = 0; i < scene.objects.size(); i++) {
-		double t = scene.objects[i]->hit(ray);
+	for (int i = 0; i < objects.size(); i++) {
+		double t = objects[i]->hit(ray);
 		if (!isnan(t) && t < mint && t > 0) {
 			mint = t;
-			hitObject = scene.objects[i];
+			hitObject = objects[i];
 		}
 	}
 	if (hitObject) {
@@ -22,6 +22,6 @@ Color NormalRenderer::getColor(Scene &scene, Ray &ray, double &x, double &y) {
 		double b = (n.z + 1) / 2;
 		return Color(r, g, b);
 	} else {
-		return scene.backgroundColor(x, y);
+		return Color(0, 0, 0);
 	}
 }

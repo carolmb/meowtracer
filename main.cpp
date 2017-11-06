@@ -1,12 +1,9 @@
-#ifndef __MAIN__
-#define __MAIN__
-
 #include <iostream>
 #include <string>
 #include <cstdlib>
 #include <ctime>
-#include "include/InputData.h"
-#include "include/Image.h"
+#include "src/InputData.h"
+#include "src/Image.h"
 
 void printScene(std::string &fileName) {
 	InputData data;
@@ -14,7 +11,7 @@ void printScene(std::string &fileName) {
 	std::string outputFile = "ppm/" + fileName + ".ppm";
 	if (data.load(inputFile)) {
 		time_t before = time(NULL);
-		Color* colors = data.renderer->render(data.scene, data.colCount, data.rowCount);
+		Color* colors = data.renderer->render(data.colCount, data.rowCount);
 		time_t after = time(NULL);
 		double seconds = difftime(after, before);
 		std::cout << "Rendering done in " << seconds << " seconds." << std::endl; 
@@ -37,5 +34,3 @@ int main(int argc, char* argv[]) {
 	}
 	return 0;
 }
-
-#endif

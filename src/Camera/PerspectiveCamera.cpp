@@ -1,4 +1,4 @@
-#include "../include/PerspectiveCamera.h"
+#include "PerspectiveCamera.h"
 
 Ray PerspectiveCamera::getRay(double i, double j) { 
 	return Ray(lens, pixelPosition(i, j) - lens); 

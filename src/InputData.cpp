@@ -1,22 +1,10 @@
-#include "../include/InputData.h"
-#include "../include/OrthogonalCamera.h"
-#include "../include/PerspectiveCamera.h"
-#include "../include/Sphere.h"
-#include "../include/Material.h"
-#include "../include/DirectionalLight.h"
-#include "../include/PointLight.h"
-#include "../include/SpotLight.h"
-#include "../include/Renderer/NormalRenderer.h"
-#include "../include/Renderer/MapRenderer.h"
-#include "../include/Renderer/DiffuseRenderer.h"
-#include "../include/Renderer/BlinnPhongRenderer.h"
-#include "../include/Renderer/CelRenderer.h"
-#include <iostream>
-#include <sstream>
-#include <fstream>
-#include <cmath>
+#include "InputData.h"
+#include "Parser/NormalParser.h"
+#include "Parser/MapParser.h"
+#include "Parser/DiffuseParser.h"
+#include "Parser/BlinnPhongParser.h"
+#include "Parser/CelParser.h"
 #include <json_spirit/json_spirit.h>
-#define PI 3.14159265359
 
 std::string clearComments(std::string &input) {
 	int found = input.find_first_of("#");
@@ -62,170 +50,28 @@ bool InputData::load(std::string &fileName) {
 	}
 }
 
-Color parseColor(json_spirit::Value &value) {
-	json_spirit::Array json = value.getArray();
-	double r = json[0].getReal();
-	double g = json[1].getReal();
-	double b = json[2].getReal();
-	return Color(r, g, b);
-}
-
-Vec3 parseVec3(json_spirit::Value &value) {
-	json_spirit::Array arr = value.getArray();
-	double x = arr[0].getReal();
-	double y = arr[1].getReal();
-	double z = arr[2].getReal();
-	return Vec3(x, y, z);
-}
-
-Material* parseMaterial(json_spirit::Value &value) {
+void InputData::parse(std::string &content) {
+	json_spirit::Value value;
+	json_spirit::read(content, value);
 	json_spirit::Object json = value.getObject();
-	Material* m = new Material();
-	if (json.count("AMBIENT")) {
-		m->ambient = parseColor(json["AMBIENT"]);
-	}
-	if (json.count("DIFFUSE")) {
-		m->diffuse = parseColor(json["DIFFUSE"]);
-	}
-	if (json.count("SPECULAR")) {
-		m->specular = parseColor(json["SPECULAR"]);
-	}
-	if (json.count("SHINE")) {
-		m->shininess = json["SHINE"].getReal();
-	}
-	if (json.count("OUTLINECOLOR")) {
-		m->outlineColor = parseColor(json["OUTLINECOLOR"]);
-	}
-	if (json.count("OUTLINEANGLE")) {
-		m->outlineAngle = json["OUTLINEANGLE"].getReal();
-	}
-	if (json.count("COLORS")) {
-		json_spirit::Array arr = json["COLORS"].getArray();
-		for (int i = 0; i < arr.size(); i++) {
-			m->colors.push_back(parseColor(arr[i]));
-		}
-	}
-	if (json.count("INTERVALS")) {
-		json_spirit::Array arr = json["INTERVALS"].getArray();
-		for (int i = 0; i < arr.size(); i++) {
-			m->times.push_back(arr[i].getReal());
-		}
-	}
-	return m;
-}
-
-Light* parseLight(json_spirit::Value &value) {
-	json_spirit::Object json = value.getObject();
-	std::string type = json["TYPE"].getString();
-	Color color = parseColor(json["COLOR"]);
-	if (type == "directional") {
-		Vec3 dir = parseVec3(json["DIRECTION"]);
-		dir.normalize();
-		return new DirectionalLight(color, dir);
-	} else if (type == "point") {
-		Point3 origin = parseVec3(json["ORIGIN"]);
-		return new PointLight(color, origin);
-	} else if (type == "spot") {
-		Point3 origin = parseVec3(json["ORIGIN"]);
-		Vec3 dir = parseVec3(json["DIRECTION"]);
-		double angle = cos(json["ANGLE"].getReal() * PI / 180.0);
-		return new SpotLight(color, origin, dir, angle);
-	} else {
-		return NULL;
-	}
-}
-
-Object* parseObject(json_spirit::Value &value, Scene &scene) {
-	json_spirit::Object json = value.getObject();
-	std::string type = json["TYPE"].getString();
-	Object* obj = 0;
-	if (type == "sphere") {
-		double r = json["RADIUS"].getReal();
-		Vec3 center = parseVec3(json["CENTER"]);
-		obj = new Sphere(center, r);
-	} else {
-		return NULL;
-	}
-	if (json.count("MATERIAL")) {
-		int material = json["MATERIAL"].getInt();
-		obj->material = scene.materials[material];
-	}
-	return obj;
-}
-
-Camera* parseCamera(json_spirit::Value &value) {
-	json_spirit::Object json = value.getObject();
-	std::string type = json["TYPE"].getString();
-	Point3 center = parseVec3(json["CENTER"]);
-	double w = json["WIDTH"].getReal();
-	double h = json["HEIGHT"].getReal();
-	Vec3 hor(w, 0, 0);
-	Vec3 ver(0, h, 0);
-	Point3 p = center - Vec3(w / 2, h / 2, 0);
-	if (type == "perspective") {
-		Point3 viewer = parseVec3(json["VIEWER"]);
-		Point3 lens = center + viewer;
-		return new PerspectiveCamera(hor, ver, p, lens);
-	} else {
-		return new OrthogonalCamera(hor, ver, p);
-	}
-}
-
-Renderer* parseRenderer(json_spirit::Value &value) {
-	json_spirit::Object json = value.getObject();
-	std::string type = json["TYPE"].getString();
-	int samples = json["SAMPLES"].getInt();
+	isBin = json["CODIFICATION"].getString() == "binary";
+	colCount = json["WIDTH"].getInt();
+	rowCount = json["HEIGHT"].getInt();
+	std::string type = json["RENDERER"].getString();
+	RendererParser* rendererParser;
 	if (type == "normal") {
-		return new NormalRenderer(samples);
+		rendererParser = NormalParser();
 	} else if (type == "map") {
-		Color fg = parseColor(json["FOREGROUND"]);
-		Color bg = parseColor(json["BACKGROUND"]);
-		double d = json["MAXDEPTH"].getReal();
-		return new MapRenderer(samples, fg, bg, d);
+		rendererParser = MapParser();
 	} else if (type == "diffuse") {
-		int depth = json["RAYDEPTH"].getInt();
-		return new DiffuseRenderer(samples, depth);
+		rendererParser = DiffuseParser();
 	} else if (type == "blinnphong") {
-		return new BlinnPhongRenderer(samples);
+		rendererParser = BlinnPhongParser();
 	} else if (type == "cel") {
-		return new CelRenderer(samples);
+		rendererParser = CelParser();
 	} else {
 		std::cout << "Renderer type not recognized." << std::endl;
 		return NULL;
 	}
-}
-
-bool InputData::parse(std::string &content) {
-	json_spirit::Value value;
-	json_spirit::read(content, value);
-	json_spirit::Object json = value.getObject();
-
-	outputFile = json["NAME"].getString();
-	outputType = json["TYPE"].getString();
-	isBin = json["CODIFICATION"].getString() == "binary";
-	colCount = json["WIDTH"].getInt();
-	rowCount = json["HEIGHT"].getInt();
-	scene.tl = parseColor(json["UPPER_LEFT"]);
-	scene.tr = parseColor(json["UPPER_RIGHT"]);
-	scene.bl = parseColor(json["LOWER_LEFT"]);
-	scene.br = parseColor(json["LOWER_RIGHT"]);
-	scene.ambientColor = parseColor(json["AMBIENT"]);
-	if (json.count("MATERIALS")) {
-		json_spirit::Array materials = json["MATERIALS"].getArray();
-		for (int i = 0; i < materials.size(); i++) {
-			scene.materials.push_back(parseMaterial(materials[i]));
-		}
-	}
-	if (json.count("LIGHTS")) {
-		json_spirit::Array lights = json["LIGHTS"].getArray();
-		for (int i = 0; i < lights.size(); i++) {
-			scene.lights.push_back(parseLight(lights[i]));
-		}
-	}
-	json_spirit::Array objects = json["OBJECTS"].getArray();
-	for (int i = 0; i < objects.size(); i++) {
-		scene.objects.push_back(parseObject(objects[i], scene));
-	}
-	scene.camera = parseCamera(json["CAMERA"]);
-	renderer = parseRenderer(json["RENDERER"]);
+	renderer = rendererParser->parse(json);
 }

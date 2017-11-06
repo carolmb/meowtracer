@@ -1,50 +1,38 @@
 {
-	// Image spec
+	"NAME": "blinnphong.ppm",
+	"TYPE": "PPM",
 	"CODIFICATION": "binary",
-	"WIDTH": 300,
-	"HEIGHT": 150,
-
-	// Background gradient
-	"BACKGROUND": {
-		"UPPER_LEFT": [1, 1, 1], 
-		"LOWER_LEFT": [0.5, 0.7, 1],
-		"UPPER_RIGHT": [1, 1, 1],
-		"LOWER_RIGHT": [0.5, 0.7, 1]
-	},
-
-	// Renderer type
-	"RENDERER": "blinnphong",
-	"SAMPLES": 32,
-	"RAYDEPTH": 5,
-
-	// Camera spec
+	"WIDTH": 400,
+	"HEIGHT": 200,
+	"UPPER_LEFT": [1, 1, 1], 
+	"LOWER_LEFT": [0.5, 0.7, 1],
+	"UPPER_RIGHT": [1, 1, 1],
+	"LOWER_RIGHT": [0.5, 0.7, 1],
 	"CAMERA": {
 		"TYPE": "perspective",
 		"POSITION": [-2, -1, -1],
 		"HORIZONTAL": [4, 0, 0],
 		"VERTICAL": [0, 2, 0],
-		"LENS": [0, 0, 0]
+		"LENS": [0, 0, 2]
 	},
-
-	// Lights
+	"RENDERER": {
+		"TYPE": "blinnphong",
+		"SAMPLES": 32,
+		"RAYDEPTH": 5
+	},
 	"LIGHTS": [
 		{
-			"TYPE": "point",
+			"TYPE": "directional",
 			"COLOR": [0.6, 0.6, 0.6],
-			"ORIGIN": [0, 10, 10]
+			"DIRECTION": [0, -1, -1]
 		},
 		{
 			"TYPE": "directional",
 			"COLOR": [1, 0.8, 0.5],
-			"DIRECTION": [-2, 1, -0.1]
-		},
-		{
-			"TYPE": "ambient",
-			"COLOR": [0.1, 0.1, 0.1]
+			"DIRECTION": [2, -1, 0.1]
 		}
 	],
-
-	// Rendering materials
+	"AMBIENT": [0.1, 0.1, 0.1],
 	"MATERIALS": [
 		{
 			"DIFFUSE": [1, 1, 0],
@@ -77,8 +65,6 @@
 			"SHINE": 32
 		}
 	],
-
-	// Scene objects
 	"OBJECTS": [
 		{
 			"TYPE": "sphere",
