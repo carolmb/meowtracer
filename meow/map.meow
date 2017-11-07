@@ -10,10 +10,10 @@
 	"LOWER_RIGHT": [0.5, 0.7, 1],
 	"CAMERA": {
 		"TYPE": "perspective",
-		"POSITION": [-2, -1, -1],
-		"HORIZONTAL": [4, 0, 0],
-		"VERTICAL": [0, 2, 0],
-		"LENS": [0, 0, 0]
+		"CENTER": [0, 0, -1],
+		"WIDTH": 4,
+		"HEIGHT": 2,
+		"VIEWER": [0, 0, 2]]
 	},
 	"RENDERER": {
 		"TYPE": "map",

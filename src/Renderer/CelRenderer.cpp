@@ -1,23 +1,23 @@
-#include "../../include/Renderer/CelRenderer.h"
-#include "../../include/Light.h"
+#include "CelRenderer.h"
+#include "../Light/Light.h"
 #include <limits>
 #include <iostream>
-#define INF std::numeric_limits<double>::infinity()
+#define INF std::numeric_limits<float>::infinity()
 
-Color CelRenderer::getObjectColor(Scene &scene, Ray &ray, double &t, Object* object) {
+Color CelRenderer::getObjectColor(Scene &scene, Ray &ray, float &t, Object* object) {
 	Point3 hitPoint = ray.at(t);
 	Vec3 n = object->getNormal(hitPoint);
-	Vec3 v = ray.getDirection();
-	double cos = (-v).dot(n);
+	Vec3 v = -ray.getDirection();
+	float cos = Vec3::Dot(v, n);
 	if (cos < object->material->outlineAngle) {
 		return object->material->outlineColor;
 	}
-	Color c = object->material->ambient * scene.ambientColor;
-	double l = -1;
+	Color c = Vec3::Cross(object->material->ambient, scene.ambientColor);
+	float l = -1;
 	for (int i = 0; i < scene.lights.size(); i++) {
 		Vec3 dir = scene.lights[i]->getDirection(hitPoint);
-		dir.normalize();
-		double cos = dir.dot(n);
+		dir = Vec3::Normalize(dir);
+		float cos = Vec3::Dot(dir, n);
 		if (!intersects(scene, hitPoint, dir)) {
 			l = fmax(l, cos);
 		}

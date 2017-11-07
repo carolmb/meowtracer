@@ -5,8 +5,8 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
-#include "include/InputData.h"
-#include "include/Image.h"
+#include "src/InputData.h"
+#include "src/Image.h"
 
 void printScene(std::string &fileName) {
 	InputData data;
