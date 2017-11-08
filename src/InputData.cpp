@@ -86,22 +86,22 @@ Matrix4 parseTransform(json_spirit::Value &value) {
 		if (json.count("TRANSLATION")) {
 			Vec3 v = parseVec3(json["TRANSLATION"]);
 			Matrix4 t = Matrix4::Translation(v);
-			transform = t * transform;
+			transform = transform * t;
 		} else if (json.count("SCALE")) {
 			Vec3 v = parseVec3(json["SCALE"]);
 			Matrix4 t = Matrix4::Scaling(v);
-			transform = t * transform;
+			transform = transform * t;
 		} else if (json.count("ROTATION")) {
 			Vec3 v = parseVec3(json["ROTATION"]);
 			Matrix4 t = Matrix4::Rotation(v.x, v.y, v.z);
-			transform = t * transform;
+			transform = transform * t;
 		} else if (json.count("MATRIX")) {
 			json_spirit::Array t = json["MATRIX"].getArray();
 			Matrix4 m;
 			for (int j = 0; j < 16; j++) {
 				m[j / 4][j % 4] = t[j].getReal();
 			}
-			transform = m * transform;
+			transform = transform * m;
 		}
 	}
 	return transform;
@@ -147,18 +147,19 @@ Light* parseLight(json_spirit::Value &value) {
 	json_spirit::Object json = value.getObject();
 	std::string type = json["TYPE"].getString();
 	Color color = parseColor(json["COLOR"]);
+	Matrix4 xform = json.count("TRANSFORM") ? parseTransform(json["TRANSFORM"]) : Matrix4::Identity();
 	if (type == "directional") {
 		Vec3 dir = parseVec3(json["DIRECTION"]);
 		dir = Vec3::Normalize(dir);
-		return new DirectionalLight(color, dir);
+		return new DirectionalLight(xform, color, dir);
 	} else if (type == "point") {
 		Point3 origin = parseVec3(json["ORIGIN"]);
-		return new PointLight(color, origin);
+		return new PointLight(xform, color, origin);
 	} else if (type == "spot") {
 		Point3 origin = parseVec3(json["ORIGIN"]);
 		Vec3 dir = parseVec3(json["DIRECTION"]);
 		float angle = cos(json["ANGLE"].getReal() * PI / 180.0);
-		return new SpotLight(color, origin, dir, angle);
+		return new SpotLight(xform, color, origin, dir, angle);
 	} else {
 		return NULL;
 	}
@@ -167,11 +168,17 @@ Light* parseLight(json_spirit::Value &value) {
 Object* parseObject(json_spirit::Value &value, Scene &scene) {
 	json_spirit::Object json = value.getObject();
 	std::string type = json["TYPE"].getString();
+	Matrix4 xform;
+	if (json.count("TRANSFORM")) {
+		xform = parseTransform(json["TRANSFORM"]);
+	} else {
+		xform = Matrix4::Identity();
+	}
 	Object* obj = 0;
 	if (type == "sphere") {
 		float r = json["RADIUS"].getReal();
 		Vec3 center = parseVec3(json["CENTER"]);
-		obj = new Sphere(center, r);
+		obj = new Sphere(xform, center, r);
 	} else {
 		return NULL;
 	}
@@ -179,17 +186,13 @@ Object* parseObject(json_spirit::Value &value, Scene &scene) {
 		int material = json["MATERIAL"].getInt();
 		obj->material = scene.materials[material];
 	}
-	if (json.count("TRANSFORM")) {
-		obj->transform = parseTransform(json["TRANSFORM"]);
-	} else {
-		obj->transform = Matrix4::Identity();
-	}
 	return obj;
 }
 
 Camera* parseCamera(json_spirit::Value &value) {
 	json_spirit::Object json = value.getObject();
 	std::string type = json["TYPE"].getString();
+	Matrix4 xform = json.count("TRANSFORM") ? parseTransform(json["TRANSFORM"]) : Matrix4::Identity();
 	Point3 center = parseVec3(json["CENTER"]);
 	float w = json["WIDTH"].getReal();
 	float h = json["HEIGHT"].getReal();
@@ -199,9 +202,10 @@ Camera* parseCamera(json_spirit::Value &value) {
 	if (type == "perspective") {
 		Point3 viewer = parseVec3(json["VIEWER"]);
 		Point3 lens = center + viewer;
-		return new PerspectiveCamera(hor, ver, p, lens);
+		return new PerspectiveCamera(xform, hor, ver, p, lens);
 	} else if (type == "orthogonal") {
-		return new OrthogonalCamera(hor, ver, p);
+		Vec3 dir = json.count("DIRECTION") ? parseVec3(json["DIRECTION"]) : Vec3(0, 0, -1);
+		return new OrthogonalCamera(xform, hor, ver, p, dir);
 	} else {
 		std::cout << "Camera type not recognized: " << type << std::endl;
 		return NULL;

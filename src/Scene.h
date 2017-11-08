@@ -1,7 +1,8 @@
 #ifndef __SCENE__
 #define __SCENE__
 
-#include "Vec3.h"
+#include "Math/Vec3.h"
+#include "Math/Matrix4.h"
 #include "Camera/Camera.h"
 #include "Object/Object.h"
 #include "Object/Material.h"
@@ -10,6 +11,7 @@
 
 class Scene {
 public:
+  Matrix4 transform;
 	Camera* camera;
 	Color tl, tr, bl, br;
 	std::vector<Object*> objects;

@@ -2,6 +2,7 @@
 #define __SLIGHT__
 
 #include "Light.h"
+#include "../Math/Matrix4.h"
 
 class SpotLight : public Light {
 private:
@@ -9,7 +10,8 @@ private:
   Vec3 direction;
   double angle;
 public:
-  SpotLight(Color &c, Point3 &o, Vec3 d, double a) : Light(c), origin(o), direction(-d), angle(a) {}
+  SpotLight(Matrix4 &xform, Color &c, Point3 &o, Vec3 d, double a) : 
+    Light(c), origin(xform.TransformPoint(o)), direction(-xform.TransformVector(d)), angle(a) {}
   Vec3 getDirection(Point3 &p);
   Color diffuseColor (Material* material, Vec3 &n, Vec3 &l);
   Color specularColor(Material* material, Vec3 &n, Vec3 &l, Vec3 &v);

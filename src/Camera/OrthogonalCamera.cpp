@@ -1,7 +1,7 @@
 #include "OrthogonalCamera.h"
 
 Ray OrthogonalCamera::getRay(float i, float j) { 
-	return Ray(position + horizontal * i + vertical * j, Vec3(0, 0, -1)); 
+	return Ray(position + horizontal * i + vertical * j, direction); 
 }
 
 float OrthogonalCamera::getDepth(Point3 p) {

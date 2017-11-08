@@ -6,7 +6,7 @@
 class DiffuseRenderer : public Renderer {
 protected:
 	int rayCount;
-	Color getObjectColor(Scene &scene, Ray &ray, float &t, Object* object);
+	Color getObjectColor(Scene &scene, Ray &ray, HitRecord &hr, Object* object);
 	Vec3 randomUnitVec3();
 public:
 	DiffuseRenderer (int &s, int &r) : Renderer(s), rayCount(r) {}

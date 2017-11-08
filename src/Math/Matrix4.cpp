@@ -8,6 +8,7 @@ a 4x4 Matrix4 structure.  Used very often for affine vector transformations.
 #include "Matrix4.h"
 #include <cmath>
 #include <cstdlib>
+#include <iostream>
 
 using namespace std;
 
@@ -50,19 +51,6 @@ Matrix4::Matrix4(const Vec3 &V0, const Vec3 &V1, const Vec3 &V2)
     _Entries[3][3] = 1.0f;
 }
 
-#ifdef USE_D3D
-Matrix4::Matrix4(const D3DXMATRIX &M)
-{
-    for(int Row = 0; Row < 4; Row++)
-    {
-        for(int Col = 0; Col < 4; Col++)
-        {
-            _Entries[Row][Col] = M(Row, Col);
-        }
-    }
-}
-#endif
-
 Matrix4& Matrix4::operator = (const Matrix4 &M)
 {
     for(int Row = 0; Row < 4; Row++)
@@ -74,7 +62,44 @@ Matrix4& Matrix4::operator = (const Matrix4 &M)
     }
     return (*this);
 }
-  
+
+void Matrix4::Print() {
+    for (int i = 0; i < 4; i++) {
+        for(int j = 0; j < 4; j++) {
+            std::cout << _Entries[i][j] << " ";
+        }
+        std::cout << std::endl;
+    }
+}
+
+Vec3 Matrix4::Transform(const Vec3 &v, float w) const
+{
+    return Vec3( (v.x * _Entries[0][0] + v.y * _Entries[1][0] + v.z * _Entries[2][0] + _Entries[3][0]) * w,
+                  (v.x * _Entries[0][1] + v.y * _Entries[1][1] + v.z * _Entries[2][1] + _Entries[3][1]) * w,
+                  (v.x * _Entries[0][2] + v.y * _Entries[1][2] + v.z * _Entries[2][2] + _Entries[3][2]) * w);
+}
+
+Point3 Matrix4::TransformPoint(const Point3 &point) const
+{
+    float w = point.x * _Entries[0][3] + point.y * _Entries[1][3] + point.z * _Entries[2][3] + _Entries[3][3];
+    if(w)
+    {
+        const float invW = 1.0f / w;
+        return Transform(point, invW);
+    }
+    else
+    {
+        return Vec3(0, 0, 0);
+    }
+}
+    
+Vec3 Matrix4::TransformVector(const Vec3 &normal) const
+{
+    return Vec3(normal.x * _Entries[0][0] + normal.y * _Entries[1][0] + normal.z * _Entries[2][0],
+                 normal.x * _Entries[0][1] + normal.y * _Entries[1][1] + normal.z * _Entries[2][1],
+                 normal.x * _Entries[0][2] + normal.y * _Entries[1][2] + normal.z * _Entries[2][2]);
+}
+
 Matrix4 Matrix4::Inverse() const
 {
     //
@@ -711,12 +736,6 @@ Vec4 operator * (const Vec4 &Right, const Matrix4 &Left)
                 Right.x * Left[0][1] + Right.y * Left[1][1] + Right.z * Left[2][1] + Right.w * Left[3][1],
                 Right.x * Left[0][2] + Right.y * Left[1][2] + Right.z * Left[2][2] + Right.w * Left[3][2],
                 Right.x * Left[0][3] + Right.y * Left[1][3] + Right.z * Left[2][3] + Right.w * Left[3][3]);
-}
-
-Vec3 operator * (const Vec3 &Right, const Matrix4 &Left) {
-    Vec4 v(Right, 1);
-    v = v * Left;
-    return Vec3(v.x, v.y, v.z);
 }
 
 Matrix4 operator + (const Matrix4 &Left, const Matrix4 &Right)

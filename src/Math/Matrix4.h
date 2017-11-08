@@ -30,6 +30,8 @@ public:
     //
     Matrix4& operator = (const Matrix4 &M);
 
+    void Print();
+
     //
     // Math properties
     //
@@ -40,28 +42,11 @@ public:
     //
     // Vector transforms
     //
-     Vec3 TransformPoint(const Vec3 &point) const
-    {
-        float w = point.x * _Entries[0][3] + point.y * _Entries[1][3] + point.z * _Entries[2][3] + _Entries[3][3];
-        if(w)
-        {
-            const float invW = 1.0f / w;
-            return Vec3( (point.x * _Entries[0][0] + point.y * _Entries[1][0] + point.z * _Entries[2][0] + _Entries[3][0]) * invW,
-                          (point.x * _Entries[0][1] + point.y * _Entries[1][1] + point.z * _Entries[2][1] + _Entries[3][1]) * invW,
-                          (point.x * _Entries[0][2] + point.y * _Entries[1][2] + point.z * _Entries[2][2] + _Entries[3][2]) * invW);
-        }
-        else
-        {
-            return Vec3::Origin;
-        }
-    }
+    Vec3 Transform(const Vec3 &Right, float w = 1) const;
+
+    Point3 TransformPoint(const Point3 &point) const;
     
-     Vec3 TransformNormal(const Vec3 &normal) const
-    {
-        return Vec3(normal.x * _Entries[0][0] + normal.y * _Entries[1][0] + normal.z * _Entries[2][0],
-                     normal.x * _Entries[0][1] + normal.y * _Entries[1][1] + normal.z * _Entries[2][1],
-                     normal.x * _Entries[0][2] + normal.y * _Entries[1][2] + normal.z * _Entries[2][2]);
-    }
+    Vec3 TransformVector(const Vec3 &normal) const;
 
 #ifdef USE_D3D
     operator D3DXMATRIX() const;
@@ -150,6 +135,5 @@ Matrix4 operator * (float &Left, const Matrix4 &Right);
 Matrix4 operator + (const Matrix4 &Left, const Matrix4 &Right);
 Matrix4 operator - (const Matrix4 &Left, const Matrix4 &Right);
 Vec4 operator * (const Vec4 &Right, const Matrix4 &Left);
-Vec3 operator * (const Vec3 &Right, const Matrix4 &Left);
 
 #endif

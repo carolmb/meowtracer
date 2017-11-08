@@ -2,12 +2,13 @@
 #define __PLIGHT__
 
 #include "Light.h"
+#include "../Math/Matrix4.h"
 
 class PointLight : public Light {
 private:
   Point3 origin;
 public:
-  PointLight(Color &c, Point3 &o) : Light(c), origin(o) {}
+  PointLight(Matrix4 &xform, Color &c, Point3 &o) : Light(c), origin(xform.TransformPoint(o)) {}
   Vec3 getDirection(Point3 &p);
 };
 

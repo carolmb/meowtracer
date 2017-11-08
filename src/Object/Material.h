@@ -1,7 +1,7 @@
 #ifndef __MATERIAL__
 #define __MATERIAL__
 
-#include "../Vec3.h"
+#include "../Math/Vec3.h"
 #include <vector>
 
 class Material {

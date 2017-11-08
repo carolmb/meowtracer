@@ -1,7 +1,7 @@
 #ifndef __IMAGE__
 #define __IMAGE__
 
-#include "Vec3.h"
+#include "Math/Vec3.h"
 #include <string>
 
 class Image {

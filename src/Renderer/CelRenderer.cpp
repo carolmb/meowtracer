@@ -4,21 +4,19 @@
 #include <iostream>
 #define INF std::numeric_limits<float>::infinity()
 
-Color CelRenderer::getObjectColor(Scene &scene, Ray &ray, float &t, Object* object) {
-	Point3 hitPoint = ray.at(t);
-	Vec3 n = object->getNormal(hitPoint);
-	Vec3 v = -ray.getDirection();
-	float cos = Vec3::Dot(v, n);
+Color CelRenderer::getObjectColor(Scene &scene, Ray &ray, HitRecord &hr, Object* object) {
+	Vec3 v = -ray.direction;
+	float cos = Vec3::Dot(v, hr.normal);
 	if (cos < object->material->outlineAngle) {
 		return object->material->outlineColor;
 	}
 	Color c = Vec3::Cross(object->material->ambient, scene.ambientColor);
 	float l = -1;
 	for (int i = 0; i < scene.lights.size(); i++) {
-		Vec3 dir = scene.lights[i]->getDirection(hitPoint);
+		Vec3 dir = scene.lights[i]->getDirection(hr.point);
 		dir = Vec3::Normalize(dir);
-		float cos = Vec3::Dot(dir, n);
-		if (!intersects(scene, hitPoint, dir)) {
+		float cos = Vec3::Dot(dir, hr.normal);
+		if (!intersects(scene, hr.point, dir)) {
 			l = fmax(l, cos);
 		}
 	}

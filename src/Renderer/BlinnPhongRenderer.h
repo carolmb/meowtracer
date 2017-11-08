@@ -5,7 +5,7 @@
 
 class BlinnPhongRenderer : public DefaultRenderer {
 protected:
-	Color getObjectColor(Scene &scene, Ray &ray, float &t, Object* object);
+	Color getObjectColor(Scene &scene, Ray &ray, HitRecord &hr, Object* object);
 public:
 	BlinnPhongRenderer(int &s) : DefaultRenderer(s) {}
 };

@@ -5,7 +5,7 @@
 
 class CelRenderer : public DefaultRenderer {
 protected:
-	Color getObjectColor(Scene &scene, Ray &ray, float &t, Object* object);
+	Color getObjectColor(Scene &scene, Ray &ray, HitRecord &hr, Object* object);
 public:
 	CelRenderer(int &s) : DefaultRenderer(s) {}
 };

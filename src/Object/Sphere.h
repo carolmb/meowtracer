@@ -9,10 +9,8 @@ private:
 	double radius;
   Matrix4 invt;
 public:
-	Sphere(Point3 p, double r) : center(p), radius(r) {}
-	double hit(Ray &ray);
-	Vec3 getNormal(Point3 &p);
-  void preprocess();
+	Sphere(Matrix4 &xform, Point3 p, double r);
+	HitRecord hit(Ray &ray);
 };
 
 #endif

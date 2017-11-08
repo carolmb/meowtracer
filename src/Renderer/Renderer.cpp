@@ -4,9 +4,6 @@
 
 Color* Renderer::render(Scene &scene, int width, int height) {
 	Color* colors = new Color[width * height];
-	for(int i = 0; i < scene.objects.size(); i++) {
-		scene.objects[i]->preprocess();
-	}
 	float progress = 0;
 	int totalProgress = width * height;
 	for (int i = 0; i < width; i++) {

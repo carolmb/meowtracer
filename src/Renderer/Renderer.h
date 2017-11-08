@@ -2,8 +2,8 @@
 #define __RENDERER__
 
 #include "../Scene.h"
-#include "../Ray.h"
-#include "../Vec3.h"
+#include "../Math/Ray.h"
+#include "../Math/Vec3.h"
 
 class Renderer {
 private:

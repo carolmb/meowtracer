@@ -8,16 +8,17 @@ Color DefaultRenderer::getColor(Scene &scene, Ray &ray, float &x, float &y) {
 	Object* hitObject;
 	while (true) {
 		hitObject = 0;
-		float mint = INF;
+		HitRecord minhr;
+		minhr.t = INF;
 		for (int i = 0; i < scene.objects.size(); i++) {
-			float t = scene.objects[i]->hit(ray);
-			if (!isnan(t) && t < mint && t > 0) {
-				mint = t;
+			HitRecord hr = scene.objects[i]->hit(ray);
+			if (!isnan(hr.t) && hr.t < minhr.t && hr.t > 0) {
+				minhr = hr;
 				hitObject = scene.objects[i];
 			}
 		}
 		if (hitObject) {
-			return getObjectColor(scene, ray, mint, hitObject);
+			return getObjectColor(scene, ray, minhr, hitObject);
 		} else {
 			return scene.backgroundColor(x, y);
 		}
@@ -27,8 +28,8 @@ Color DefaultRenderer::getColor(Scene &scene, Ray &ray, float &x, float &y) {
 bool DefaultRenderer::intersects(Scene &scene, Point3 &p, Vec3 &l) {
 	Ray ray(p, l);
 	for (int i = 0; i < scene.objects.size(); i++) {
-		float t = scene.objects[i]->hit(ray);
-		if (!isnan(t) && t > 0.00001) {
+		HitRecord hr = scene.objects[i]->hit(ray);
+		if (!isnan(hr.t) && hr.t > 0.00001) {
 			return true;
 		}
 	}

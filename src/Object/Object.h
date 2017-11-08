@@ -1,18 +1,22 @@
 #ifndef __OBJECT__
 #define __OBJECT__
 
-#include "../Ray.h"
-#include "../Vec3.h"
-#include "../Matrix4.h"
+#include "../Math/Ray.h"
+#include "../Math/Vec3.h"
+#include "../Math/Matrix4.h"
 #include "Material.h"
+
+struct HitRecord {
+  double t;
+  Point3 point;
+  Vec3 normal;
+};
 
 class Object {
 public:
   Matrix4 transform;
 	Material* material;
-	virtual double hit(Ray &ray) = 0;
-	virtual Vec3 getNormal(Point3 &p) = 0;
-  virtual void preprocess() = 0;
+	virtual HitRecord hit(Ray &ray) = 0;
 };
 
 #endif

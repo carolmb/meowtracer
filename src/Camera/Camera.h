@@ -1,7 +1,8 @@
 #ifndef __CAMERA__
 #define __CAMERA__
 
-#include "../Ray.h"
+#include "../Math/Ray.h"
+#include "../Math/Matrix4.h"
 
 class Camera {
 protected:
@@ -9,8 +10,10 @@ protected:
 	Vec3 horizontal;
 	Vec3 vertical;
 
-	Camera() : horizontal(Vec3(1, 0, 0)), vertical(Vec3(0, 1, 0)), position(Vec3(0, 0, 0)) {}
-	Camera(Vec3 &h, Vec3 &v, Point3 &pos) : horizontal(h), vertical(v), position(pos) {}
+	Camera(Matrix4 &xform, Vec3 &h, Vec3 &v, Point3 &pos) : 
+    horizontal(xform.TransformVector(h)), 
+    vertical(xform.TransformVector(v)), 
+    position(xform.TransformPoint(pos)) {}
 public:
 	virtual Ray getRay(float i, float j) = 0;
 	virtual float getDepth(Point3 p) = 0;

@@ -10,10 +10,18 @@
 	"LOWER_RIGHT": [0.5, 0.7, 1],
 	"CAMERA": {
 		"TYPE": "perspective",
-		"CENTER": [0, 0, 2],
-		"WIDTH": 4,
+		"CENTER": [0, 0, 0],
+		"WIDTH": 2,
 		"HEIGHT": 2,
-		"VIEWER": [0, 0, 2]
+		"VIEWER": [0, 0, 1],
+		"TRANSFORM": [
+			{
+				"SCALE": [2, 1, 2]
+			},
+			{
+				"TRANSLATION": [0, 0, 1]
+			}
+		]
 	},
 	"RENDERER": {
 		"TYPE": "blinnphong",
@@ -68,33 +76,24 @@
 	"OBJECTS": [
 		{
 			"TYPE": "sphere",
-			"RADIUS": 98,
-			"CENTER": [0, -100, -3],
-			"MATERIAL": 4
-		},
-		{
-			"TYPE": "sphere",
 			"RADIUS": 0.4,
-			"CENTER": [0.3, 0, -1],
-			"MATERIAL": 1
-		},
-		{
-			"TYPE": "sphere",
-			"RADIUS": 0.6,
-			"CENTER": [0, 1, -2],
-			"MATERIAL": 2
-		},
-		{
-			"TYPE": "sphere",
-			"RADIUS": 0.7,
-			"CENTER": [-0.4, 0, -3],
-			"MATERIAL": 3
-		},
-		{
-			"TYPE": "sphere",
-			"RADIUS": 0.5,
 			"CENTER": [-1.2, 1, -2],
-			"MATERIAL": 0
+			"MATERIAL": 0,
+			"TRANSFORM": [
+				{
+					"TRANSLATION": [1.2, -1, 2]
+				},
+				{
+					"SCALE": [2, 1, 1]
+				},
+				{
+					"ROTATION": [0, 0, 45]
+				},
+				{
+					"TRANSLATION": [-1.2, 1, -2]
+				}
+			]
 		}
 	]
 }
+
