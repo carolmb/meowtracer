@@ -2,6 +2,7 @@
 #include "Camera/OrthogonalCamera.h"
 #include "Camera/PerspectiveCamera.h"
 #include "Object/Sphere.h"
+#include "Object/Triangle.h"
 #include "Object/Material.h"
 #include "Light/DirectionalLight.h"
 #include "Light/PointLight.h"
@@ -179,6 +180,11 @@ Object* parseObject(json_spirit::Value &value, Scene &scene) {
 		float r = json["RADIUS"].getReal();
 		Vec3 center = parseVec3(json["CENTER"]);
 		obj = new Sphere(xform, center, r);
+	} else if (type == "triangle") {
+		Vec3 p0 = parseVec3(json["P0"]);
+		Vec3 p1 = parseVec3(json["P1"]);
+		Vec3 p2 = parseVec3(json["P2"]);
+		obj = new Triangle(xform, p0, p1, p2);
 	} else {
 		return NULL;
 	}
@@ -261,6 +267,13 @@ bool InputData::parse(std::string &content) {
 		json_spirit::Array lights = json["LIGHTS"].getArray();
 		for (int i = 0; i < lights.size(); i++) {
 			scene.lights.push_back(parseLight(lights[i]));
+		}
+	}
+	if (json.count("PREFABS")) {
+		json_spirit::Array prefabs = json["PREFABS"].getArray();
+		for (int i = 0; i < prefabs.size(); i++) {
+			// TODO
+			// scene.prefabs.push_back(prefabs[i].getObject());
 		}
 	}
 	json_spirit::Array objects = json["OBJECTS"].getArray();

@@ -7,7 +7,7 @@
 #include "Material.h"
 
 struct HitRecord {
-  double t;
+  float t;
   Point3 point;
   Vec3 normal;
 };

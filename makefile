@@ -13,7 +13,7 @@ bin/main.o: main.cpp
 LIGHTS = Light DirectionalLight PointLight SpotLight
 $(foreach i,$(LIGHTS),$(eval $(call recipe,$(i),Light/)))
 
-OBJS = Sphere
+OBJS = Sphere Triangle
 $(foreach i,$(OBJS),$(eval $(call recipe,$(i),Object/)))
 
 CAMS = OrthogonalCamera PerspectiveCamera

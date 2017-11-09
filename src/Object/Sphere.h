@@ -6,10 +6,10 @@
 class Sphere : public Object {
 private:
 	Point3 center;
-	double radius;
+	float radius;
   Matrix4 invt;
 public:
-	Sphere(Matrix4 &xform, Point3 p, double r);
+	Sphere(Matrix4 &xform, Point3 p, float r);
 	HitRecord hit(Ray &ray);
 };
 

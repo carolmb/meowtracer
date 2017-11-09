@@ -24,7 +24,7 @@ Color DiffuseRenderer::getColor(Scene &scene, Ray &initRay, float &x, float &y) 
 			}
 		}
 		if (hitObject) {
-			color = Vec3::Cross(color, getObjectColor(scene, ray, minhr, hitObject));
+			color = color * getObjectColor(scene, ray, minhr, hitObject);
 			if (depth >= rayCount) {
 				break;
 			} else {
@@ -32,7 +32,7 @@ Color DiffuseRenderer::getColor(Scene &scene, Ray &initRay, float &x, float &y) 
 				ray = Ray(minhr.point, d);
 			}
 		} else {
-			color = Vec3::Cross(color, scene.backgroundColor(x, y));
+			color = color * scene.backgroundColor(x, y);
 			break;
 		}
 	}

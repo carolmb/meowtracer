@@ -105,10 +105,10 @@ Matrix4 Matrix4::Inverse() const
     //
     // Inversion by Cramer's rule.  Code taken from an Intel publication
     //
-    double Result[4][4];
-    double tmp[12]; /* temp array for pairs */
-    double src[16]; /* array of transpose source matrix */
-    double det; /* determinant */
+    float Result[4][4];
+    float tmp[12]; /* temp array for pairs */
+    float src[16]; /* array of transpose source matrix */
+    float det; /* determinant */
     /* transpose matrix */
     for (int i = 0; i < 4; i++)
     {
@@ -538,9 +538,9 @@ Matrix4 Matrix4::Rotation(const Vec3 &Axis, float Angle)
     return Result;
 }
 
-Matrix4 Matrix4::Rotation(float Yaw, float Pitch, float Roll)
+Matrix4 Matrix4::Rotation(float Pitch, float Yaw, float Roll)
 {
-    return RotationY(Yaw) * RotationX(Pitch) * RotationZ(Roll);
+    return RotationX(Pitch) * RotationY(Yaw) * RotationZ(Roll);
 }
 
 Matrix4 Matrix4::Rotation(const Vec3 &Axis, float Angle, const Vec3 &Center)

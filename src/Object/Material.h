@@ -9,10 +9,10 @@ public:
 	Color ambient;
 	Color diffuse;
 	Color specular;
-	double shininess;
+	float shininess;
   std::vector<Color> colors;
-  std::vector<double> times;
-  double outlineAngle;
+  std::vector<float> times;
+  float outlineAngle;
   Color outlineColor;
 	Material() {}
 };

@@ -91,6 +91,7 @@ struct Vec3
 
 Vec3 operator* (const Vec3 &Left, float Right);
 Vec3 operator* (float Left, const Vec3 &Right);
+Vec3 operator* (const Vec3 &Left, const Vec3 &Right);
 Vec3 operator / (const Vec3 &Left, float Right);
 Vec3 operator + (const Vec3 &Left, const Vec3 &Right);
 Vec3 operator - (const Vec3 &Left, const Vec3 &Right);

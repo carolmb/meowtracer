@@ -10,7 +10,7 @@ Color CelRenderer::getObjectColor(Scene &scene, Ray &ray, HitRecord &hr, Object*
 	if (cos < object->material->outlineAngle) {
 		return object->material->outlineColor;
 	}
-	Color c = Vec3::Cross(object->material->ambient, scene.ambientColor);
+	Color c = object->material->ambient * scene.ambientColor;
 	float l = -1;
 	for (int i = 0; i < scene.lights.size(); i++) {
 		Vec3 dir = scene.lights[i]->getDirection(hr.point);

@@ -14,6 +14,6 @@ Color BlinnPhongRenderer::getObjectColor(Scene &scene, Ray &ray, HitRecord &hr, 
 			finalColor += scene.lights[i]->specularColor(object->material, hr, dir, v);
 		}
 	}
-	finalColor += Vec3::Cross(object->material->ambient, scene.ambientColor);
+	finalColor += object->material->ambient * scene.ambientColor;
 	return finalColor;
 }

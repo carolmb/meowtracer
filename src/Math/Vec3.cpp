@@ -223,6 +223,13 @@ Vec3::Vec3(const Vec3 &V)
     return *this;
 }
 
+Vec3 operator* (const Vec3 &Left, const Vec3 &Right)
+{
+    return Vec3(Right.x * Left.x,
+                Right.y * Left.y,
+                Right.z * Left.z);
+}
+
  Vec3 operator* (const Vec3 &Left, float Right)
 {
     return Vec3(Left.x * Right,

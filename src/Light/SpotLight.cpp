@@ -10,7 +10,7 @@ Color SpotLight::diffuseColor (Material* material, Vec3 &n, Vec3 &l) {
     Vec3 d = Vec3::Normalize(l);
     float a = Vec3::Dot(l, direction) / l.Length();
     if (a >= angle) {
-      return Vec3::Cross(material->diffuse, color) * fmin(1.0, r * a);
+      return (material->diffuse * color) * fmin(1.0, r * a);
     }
   }
   return Color(0, 0, 0);
@@ -23,7 +23,7 @@ Color SpotLight::specularColor(Material* material, Vec3 &n, Vec3 &l, Vec3 &v) {
   if (r > 0) {
     float a = Vec3::Dot(l, direction) / l.Length();
     if (a >= angle) {
-      return Vec3::Cross(material->specular, color) * fmin(1.0, pow(r * a, material->shininess));
+      return (material->specular * color) * fmin(1.0, pow(r * a, material->shininess));
     }
   }
   return Color(0, 0, 0);

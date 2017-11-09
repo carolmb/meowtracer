@@ -4,8 +4,8 @@
 #include <cmath>
 using namespace std;
 
-int toInt(double a) {
-    a = max(min(sqrt(a), 1.0), 0.0);
+int toInt(float a) {
+    a = max(min(sqrt(a), 1.0f), 0.0f);
     return rint(a * 255);
 }
 
