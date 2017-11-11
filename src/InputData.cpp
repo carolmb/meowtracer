@@ -94,7 +94,7 @@ Matrix4 parseTransform(json_spirit::Value &value) {
 			transform = transform * t;
 		} else if (json.count("ROTATION")) {
 			Vec3 v = parseVec3(json["ROTATION"]);
-			Matrix4 t = Matrix4::Rotation(v.x, v.y, v.z);
+			Matrix4 t = Matrix4::Rotation(v.x * PI/180, v.y * PI/180, v.z * PI/180);
 			transform = transform * t;
 		} else if (json.count("MATRIX")) {
 			json_spirit::Array t = json["MATRIX"].getArray();

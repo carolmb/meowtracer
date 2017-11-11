@@ -17,20 +17,30 @@ Triangle::Triangle(Matrix4 xform, Point3 &p0, Point3 &p1, Point3 &p2, bool c) {
 
 HitRecord Triangle::hit(Ray &ray) {
   HitRecord hr;
+  hr.t = NAN;
 
   Vec3 pvec = Vec3::Cross(ray.direction, e1);
   float det = Vec3::Dot(e0, pvec);
-  if (det < E && (culling || det > -E)) {
-    hr.t = NAN;
-  } else {
-    det = 1.0 / det;
+  if (det < E && (culling || det > -E))
+    return hr;
 
-    Vec3 tvec = ray.origin - origin;
-    Vec3 qvec = Vec3::Cross(tvec, pvec);
+  det = 1.0 / det;
 
-    hr.t = Vec3::Dot(e1, qvec) * det;
-    hr.normal = normal;
-    hr.point = ray.at(hr.t);
-  }
+  Vec3 tvec = ray.origin - origin;
+
+  float u = Vec3::Dot(tvec, pvec) * det;
+  if (u < 0 || u > 1) 
+    return hr;
+
+  Vec3 qvec = Vec3::Cross(tvec, pvec);
+  float v = Vec3::Dot(ray.direction, qvec) * det;
+
+  if (v < 0 || u + v > 1)
+    return hr;
+
+  hr.t = Vec3::Dot(e1, qvec) * det;
+  hr.normal = normal;
+  hr.point = ray.at(hr.t);
+  
   return hr;
 }
