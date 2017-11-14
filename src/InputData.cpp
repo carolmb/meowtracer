@@ -180,6 +180,14 @@ Object* parseObject(json_spirit::Value &value, Scene &scene) {
 		float r = json["RADIUS"].getReal();
 		Vec3 center = parseVec3(json["CENTER"]);
 		obj = new Sphere(xform, center, r);
+	} else if (type == "ellipsoid") {
+		Vec3 center = parseVec3(json["CENTER"]);
+		Vec3 axis = parseVec3(json["AXIS"]);
+		Matrix4 t = Matrix4::Translation(center);
+		xform = t * xform;
+		Matrix4 s = Matrix4::Scaling(axis);
+		xform = s * xform;
+		obj = new Sphere(xform, Vec3(0, 0, 0), 1);
 	} else if (type == "triangle") {
 		Vec3 p0 = parseVec3(json["P0"]);
 		Vec3 p1 = parseVec3(json["P1"]);
@@ -209,7 +217,7 @@ Camera* parseCamera(json_spirit::Value &value) {
 		Point3 viewer = parseVec3(json["VIEWER"]);
 		Point3 lens = center + viewer;
 		return new PerspectiveCamera(xform, hor, ver, p, lens);
-	} else if (type == "orthogonal") {
+	} else if (type == "parallel") {
 		Vec3 dir = json.count("DIRECTION") ? parseVec3(json["DIRECTION"]) : Vec3(0, 0, -1);
 		return new OrthogonalCamera(xform, hor, ver, p, dir);
 	} else {

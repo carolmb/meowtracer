@@ -21,11 +21,9 @@
 	},
 	"LIGHTS": [
 		{
-			"TYPE": "spot",
+			"TYPE": "point",
 			"COLOR": [0.6, 0.6, 0.6],
-			"ORIGIN": [0, 1.5, -0.5],
-			"DIRECTION": [0, -1, -0.1],
-			"ANGLE": 45
+			"ORIGIN": [0, 1.5, -0.5]
 		}
 	],
 	"AMBIENT": [0.1, 0.1, 0.1],

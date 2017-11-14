@@ -1,5 +1,5 @@
 {
-	"NAME": "blinnphong.ppm",
+	"NAME": "triangles.ppm",
 	"TYPE": "PPM",
 	"CODIFICATION": "binary",
 	"WIDTH": 400,
@@ -9,12 +9,10 @@
 	"UPPER_RIGHT": [1, 1, 1],
 	"LOWER_RIGHT": [0.5, 0.7, 1],
 	"CAMERA": {
-		"TYPE": "perspective",
-		"CENTER": [0, 0, 0],
+		"TYPE": "parallel",
+		"CENTER": [0, 0, 1],
 		"WIDTH": 4,
 		"HEIGHT": 2,
-		"VIEWER": [0, 0, 2],
-		"DIRECTION": [-1, 0, -1],
 		"TRANSFORM": []
 	},
 	"RENDERER": {
@@ -64,52 +62,20 @@
 	],
 	"OBJECTS": [
 		{
-			"TYPE": "sphere",
-			"RADIUS": 98,
-			"CENTER": [0, -100, -3],
-			"MATERIAL": 4
-		},
-		{
-			"TYPE": "sphere",
-			"RADIUS": 0.4,
-			"CENTER": [0.3, 0, -1],
-			"MATERIAL": 1
-		},
-		{
-			"TYPE": "sphere",
-			"RADIUS": 0.6,
-			"CENTER": [0, 1, -2],
-			"MATERIAL": 2
-		},
-		{
-			"TYPE": "sphere",
-			"RADIUS": 0.7,
-			"CENTER": [0, 0, 0],
-			"MATERIAL": 3,
-			"TRANSFORM": [
-				{
-					"SCALE": [2, 1, 2]
-				},
-				{
-					"ROTATION": [0, 0, 45]
-				},
-				{
-					"TRANSLATION": [-0.4, 0, -3]
-				}
-			]
-		},
-		{
-			"TYPE": "ellipsoid",
-			"RADIUS": 0.5,
-			"CENTER": [0, 0, 0],
-			"AXIS": [1, 0.5, 1],
+			"TYPE": "triangle",
+			"P0": [0, 0, 0],
+			"P1": [0.5, 0, 0],
+			"P2": [0, 0.5, 0],
 			"MATERIAL": 0,
 			"TRANSFORM": [
 				{
 					"ROTATION": [0, 0, 45]
 				},
 				{
-					"TRANSLATION": [-1.2, 1, -2]
+					"SCALE": [2, 1, 1]
+				},
+				{
+					"TRANSLATION": [0, 0.5, 0]
 				}
 			]
 		},
@@ -119,14 +85,7 @@
 			"P1": [0.5, 0, 0],
 			"P2": [0, 0.5, 0],
 			"MATERIAL": 0,
-			"TRANSFORM": [
-				{
-					"ROTATION": [0, -45, 0]
-				},
-				{
-					"TRANSLATION": [1, 0, -1]
-				}
-			]
+			"TRANSFORM": []
 		}
 	]
 }
