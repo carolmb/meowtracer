@@ -12,7 +12,7 @@
 #include <fstream>
 
 // Print progress to console while loading (large models)
-#define OBJL_CONSOLE_OUTPUT
+// #define OBJL_CONSOLE_OUTPUT
 
 // Namespace: OBJL
 //
