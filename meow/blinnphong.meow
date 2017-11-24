@@ -14,7 +14,6 @@
 		"WIDTH": 4,
 		"HEIGHT": 2,
 		"VIEWER": [0, 0, 2],
-		"DIRECTION": [-1, 0, -1],
 		"TRANSFORM": []
 	},
 	"RENDERER": {
@@ -106,7 +105,7 @@
 			"MATERIAL": 0,
 			"TRANSFORM": [
 				{
-					"ROTATION": [0, 0, 45]
+					"ROTATION": [0, 0, 0]
 				},
 				{
 					"TRANSLATION": [-1.2, 1, -2]

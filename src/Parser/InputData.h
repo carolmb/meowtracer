@@ -1,8 +1,8 @@
 #ifndef __INPUTDATA__
 #define __INPUTDATA__
 
-#include "Scene.h"
-#include "Renderer/Renderer.h"
+#include "../Scene.h"
+#include "../Renderer/Renderer.h"
 #include <string>
 
 class InputData {

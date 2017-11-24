@@ -13,6 +13,7 @@
 		"CENTER": [0, 0, 1],
 		"WIDTH": 4,
 		"HEIGHT": 2,
+		"DIRECTION": [-1, 0, -1],
 		"TRANSFORM": []
 	},
 	"RENDERER": {

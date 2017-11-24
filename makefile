@@ -1,6 +1,6 @@
 all: main
 
-CPP_FLAGS= -O3
+CPP_FLAGS= -O3 -std=c++11
 
 define recipe
 bin/$(1).o: src/$(2)$(1).cpp src/$(2)$(1).h
@@ -25,17 +25,22 @@ $(foreach i,$(RENDS),$(eval $(call recipe,$(i),Renderer/)))
 MATH = Vec3 Vec4 Matrix4
 $(foreach i,$(MATH),$(eval $(call recipe,$(i),Math/)))
 
-SRC = InputData Image Scene
+PARSER = InputData MathParser SceneParser ObjectParser
+$(foreach i,$(PARSER),$(eval $(call recipe,$(i),Parser/)))
+
+SRC = Image Scene
 $(foreach i,$(SRC),$(eval $(call recipe,$(i),./)))
 
-RECIPES = bin/main.o $(foreach i, $(MATH) $(SRC) $(LIGHTS) $(OBJS) $(CAMS) $(RENDS), bin/$(i).o)
+RECIPES = bin/main.o $(foreach i, $(MATH) $(SRC) $(PARSER) $(LIGHTS) $(OBJS) $(CAMS) $(RENDS), bin/$(i).o)
+
+FOLDERS = Math Parser Light Object Camera Renderer
 
 main: $(RECIPES)
 	g++ -o main $(RECIPES) -ljson_spirit
 	rm -f src/*h.gch
-	$(foreach i,Math Light Object Camera Renderer, rm -f src/$(i)/*.h.gch)
+	$(foreach i,$(FOLDERS), rm -f src/$(i)/*.h.gch)
 
 clean:
 	rm -f bin/*.o
 	rm -f src/*h.gch
-	$(foreach i,Math Light Object Camera Renderer, rm -f src/$(i)/*.h.gch)
+	$(foreach i,$(FOLDERS), rm -f src/$(i)/*.h.gch)

@@ -5,7 +5,7 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
-#include "src/InputData.h"
+#include "src/Parser/InputData.h"
 #include "src/Image.h"
 
 void printScene(std::string &fileName) {

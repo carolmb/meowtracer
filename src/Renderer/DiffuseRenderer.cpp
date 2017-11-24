@@ -18,7 +18,7 @@ Color DiffuseRenderer::getColor(Scene &scene, Ray &initRay, float &x, float &y) 
 		minhr.t = INF;
 		for (int i = 0; i < scene.objects.size(); i++) {
 			HitRecord hr = scene.objects[i]->hit(ray);
-			if (!isnan(hr.t) && hr.t < minhr.t && hr.t > 0) {
+			if (!std::isnan(hr.t) && hr.t < minhr.t && hr.t > 0) {
 				minhr = hr;
 				hitObject = scene.objects[i];
 			}

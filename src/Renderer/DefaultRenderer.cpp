@@ -12,7 +12,7 @@ Color DefaultRenderer::getColor(Scene &scene, Ray &ray, float &x, float &y) {
 		minhr.t = INF;
 		for (int i = 0; i < scene.objects.size(); i++) {
 			HitRecord hr = scene.objects[i]->hit(ray);
-			if (!isnan(hr.t) && hr.t < minhr.t && hr.t > 0) {
+			if (!std::isnan(hr.t) && hr.t < minhr.t && hr.t > 0) {
 				minhr = hr;
 				hitObject = scene.objects[i];
 			}
@@ -30,7 +30,7 @@ bool DefaultRenderer::intersects(Scene &scene, Point3 &p, Vec3 &l) {
 	Ray ray(p, dir);
 	for (int i = 0; i < scene.objects.size(); i++) {
 		HitRecord hr = scene.objects[i]->hit(ray);
-		if (!isnan(hr.t) && hr.t < -0.00001) {
+		if (!std::isnan(hr.t) && hr.t < -0.00001) {
 			return true;
 		}
 	}

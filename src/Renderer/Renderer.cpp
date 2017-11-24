@@ -6,6 +6,7 @@ Color* Renderer::render(Scene &scene, int width, int height) {
 	Color* colors = new Color[width * height];
 	float progress = 0;
 	int totalProgress = width * height;
+	int progressi = 0;
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < height; j++) {
 			Color c(0, 0, 0);
@@ -18,7 +19,11 @@ Color* Renderer::render(Scene &scene, int width, int height) {
 				ray.normalize();
 				c += getColor(scene, ray, x, y) / sampleCount;
 			}
-			std::cout << "\rProgress: " << int(++progress * 100 / totalProgress) << '%' << std::flush; 
+			int newProgress = int(++progress * 100 / totalProgress);
+			if (newProgress != progressi) {
+				progressi = newProgress;
+				std::cout << "\rProgress: " << progressi << '%' << std::flush; 
+			}
 			colors[j * width + i] = c;
 		}
 	}
