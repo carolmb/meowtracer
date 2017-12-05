@@ -63,7 +63,7 @@ Tree* accelerate(std::vector<Object*> &objects, Vec3 bounds[2], int depth) {
 				objs2.push_back(objects[o]);
 			}
 		tree->children[i] = accelerate(objs2, bounds2, depth - 1);
-		std::cout << objs2.size() << std::endl;
+		//std::cout << objs2.size() << std::endl;
 	}
 	return tree;
 }
