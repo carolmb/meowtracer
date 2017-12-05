@@ -39,32 +39,15 @@
       ],
       "INTERVALS": [-0.5, -0.2, 0.5, 0.75],
       "AMBIENT": [0, 0, 0]
-    },
-    {
-      "OUTLINEANGLE": 0.05,
-      "OUTLINECOLOR": [0, 0, 0],
-      "COLORS": [
-        [0, 0, 0.1],
-        [0.1, 0.1, 0.1],
-        [0.2, 0.2, 0.1]
-      ],
-      "INTERVALS": [0.3, 0.7],
-      "AMBIENT": [0.1, 0.1, 0.1]
     }
   ],
   "OBJECTS": [
-    {
-      "TYPE": "sphere",
-      "RADIUS": 98,
-      "CENTER": [0, -100, -3],
-      "MATERIAL": 1
-    },
     {
       "TYPE": "obj",
       "FILE": "bunny.obj",
       "TRANSFORM": [
         {
-          "TRANSLATION": [0.025, -0.08, 0.8]
+          "TRANSLATION": [0.025, -0.08, 0.7]
         }
       ],
       "MATERIAL": 0

@@ -10,6 +10,7 @@
 #include "../Light/DirectionalLight.h"
 #include "../Light/PointLight.h"
 #include "../Light/SpotLight.h"
+#include "../Light/AreaLight.h"
 
 Light* parseLight(json_spirit::Value &value) {
   json_spirit::Object json = value.getObject();
@@ -28,6 +29,12 @@ Light* parseLight(json_spirit::Value &value) {
     Vec3 dir = parseVec3(json["DIRECTION"]);
     float angle = cos(json["ANGLE"].getReal() * PI / 180.0);
     return new SpotLight(xform, color, origin, dir, angle);
+  } else if (type == "area") {
+    Point3 origin = parseVec3(json["ORIGIN"]);
+    Vec3 dir = parseVec3(json["DIRECTION"]);
+    float angle = cos(json["ANGLE"].getReal() * PI / 180.0);
+    float size = json["SIZE"].getReal();
+    return new AreaLight(xform, color, origin, dir, angle, size);
   } else {
     return NULL;
   }

@@ -32,28 +32,15 @@
       "SPECULAR": [1, 1, 1],
       "AMBIENT": [1, 1, 0],
       "SHINE": 16
-    },
-    {
-      "DIFFUSE": [0, 1, 0],
-      "SPECULAR": [1, 1, 1],
-      "AMBIENT": [0, 0, 0],
-      "SHINE": 32
     }
   ],
   "OBJECTS": [
-    {
-      "TYPE": "sphere",
-      "RADIUS": 98,
-      "CENTER": [0, -100, -3],
-      "MATERIAL": 1
-    },
     {
       "TYPE": "obj",
       "FILE": "bunny.obj",
       "TRANSFORM": [
         {
-          "SCALE": [1.5, 1.5, 1.5],
-          "TRANSLATION": [0.025, -0.1, 0.8]
+          "TRANSLATION": [0.025, -0.08, 0.7]
         }
       ],
       "MATERIAL": 0

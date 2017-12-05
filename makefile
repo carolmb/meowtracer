@@ -10,7 +10,7 @@ endef
 bin/main.o: main.cpp
 	g++ -c $(CPP_FLAGS) main.cpp -o bin/main.o
 
-LIGHTS = Light DirectionalLight PointLight SpotLight
+LIGHTS = Light DirectionalLight PointLight SpotLight AreaLight
 $(foreach i,$(LIGHTS),$(eval $(call recipe,$(i),Light/)))
 
 OBJS = Sphere Triangle
