@@ -1,31 +1,14 @@
 #include "SpotLight.h"
 #include <iostream>
 
-Vec3 SpotLight::getDirection(Point3 &p) {
-  return origin - p;
+Vec3 SpotLight::getDirection(LightHit &lh) {
+  return origin - lh.rayHit.point;
 }
 
-Color SpotLight::diffuseColor (Material* material, HitRecord &hr, Vec3 &l) {
-  float r = Vec3::Dot(l, hr.normal);
-  if (r > 0) {
-    Vec3 d = Vec3::Normalize(l);
-    float a = Vec3::Dot(l, direction) / l.Length();
-    if (a >= angle) {
-      return (material->diffuse * color) * fmin(1.0, r * a);
-    }
-  }
-  return Color(0, 0, 0);
-}
-
-Color SpotLight::specularColor(Material* material, HitRecord &hr, Vec3 &l, Vec3 &v) {
-  Vec3 half = l - v;
-  half = Vec3::Normalize(half);
-  float r = Vec3::Dot(half, hr.normal);
-  if (r > 0) {
-    float a = Vec3::Dot(l, direction) / l.Length();
-    if (a >= angle) {
-      return (material->specular * color) * fmin(1.0, pow(r * a, material->shininess));
-    }
-  }
-  return Color(0, 0, 0);
+float SpotLight::getIntensity(Vec3 &obj, Vec3 &light) {
+  float a = Vec3::Dot(obj, light) / obj.Length() / light.Length();
+  if (a < angle)
+    return 0;
+  else
+    return a;
 }

@@ -4,13 +4,24 @@
 #include "../Scene.h"
 #include "../Math/Ray.h"
 #include "../Math/Vec3.h"
+#include <limits>
+#define INF std::numeric_limits<float>::infinity()
+
+struct Tree {
+  Tree* children[8];
+  Vec3 bounds[2];
+  std::vector<Object*> objects;
+};
 
 class Renderer {
-private:
+protected:
 	int sampleCount;
+  Tree* tree;
 public:
 	Renderer(int &s) : sampleCount(s) {}
 	Color* render(Scene &scene, int width, int height);
+  RayHit getHit(std::vector<Object*> objects, Ray& ray);
+  RayHit getHit(Ray& ray);
 	virtual Color getColor(Scene &scene, Ray &ray, float &x, float &y) = 0;
 };
 

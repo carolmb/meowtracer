@@ -1,13 +1,12 @@
 #ifndef __BPRENDER__
 #define __BPRENDER__
 
-#include "DefaultRenderer.h"
+#include "Renderer.h"
 
-class BlinnPhongRenderer : public DefaultRenderer {
-protected:
-	Color getObjectColor(Scene &scene, Ray &ray, HitRecord &hr, Object* object);
+class BlinnPhongRenderer : public Renderer {
 public:
-	BlinnPhongRenderer(int &s) : DefaultRenderer(s) {}
+	BlinnPhongRenderer(int &s) : Renderer(s) {}
+  Color getColor(Scene &scene, Ray &ray, float &x, float &y);
 };
 
 #endif

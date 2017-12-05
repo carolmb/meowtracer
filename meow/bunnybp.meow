@@ -1,0 +1,62 @@
+{
+  "CODIFICATION": "binary",
+  "WIDTH": 300,
+  "HEIGHT": 150,
+  "UPPER_LEFT": [1, 1, 1], 
+  "LOWER_LEFT": [0.5, 0.7, 1],
+  "UPPER_RIGHT": [1, 1, 1],
+  "LOWER_RIGHT": [0.5, 0.7, 1],
+  "CAMERA": {
+    "TYPE": "perspective",
+    "CENTER": [0, 0, -1],
+    "WIDTH": 4,
+    "HEIGHT": 2,
+    "VIEWER": [0, 0, 2]
+  },
+  "RENDERER": {
+    "TYPE": "blinnphong",
+    "SAMPLES": 1,
+    "RAYDEPTH": 5
+  },
+  "LIGHTS": [
+    {
+      "TYPE": "directional",
+      "COLOR": [0.6, 0.6, 0.6],
+      "DIRECTION": [-1, -1, -1]
+    }
+  ],
+  "AMBIENT": [0.1, 0.1, 0.1],
+  "MATERIALS": [
+    {
+      "DIFFUSE": [1, 1, 0],
+      "SPECULAR": [1, 1, 1],
+      "AMBIENT": [1, 1, 0],
+      "SHINE": 16
+    },
+    {
+      "DIFFUSE": [0, 1, 0],
+      "SPECULAR": [1, 1, 1],
+      "AMBIENT": [0, 0, 0],
+      "SHINE": 32
+    }
+  ],
+  "OBJECTS": [
+    {
+      "TYPE": "sphere",
+      "RADIUS": 98,
+      "CENTER": [0, -100, -3],
+      "MATERIAL": 1
+    },
+    {
+      "TYPE": "obj",
+      "FILE": "bunny.obj",
+      "TRANSFORM": [
+        {
+          "SCALE": [1.5, 1.5, 1.5],
+          "TRANSLATION": [0.025, -0.1, 0.8]
+        }
+      ],
+      "MATERIAL": 0
+    }
+  ]
+}

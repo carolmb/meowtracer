@@ -9,7 +9,7 @@ private:
 public:
 	DirectionalLight(Matrix4 &xform, Color &c, Vec3 &dir) : 
     Light(c), direction(-xform.TransformVector(dir)) {}
-	Vec3 getDirection(Point3 &p);
+	virtual Vec3 getDirection(LightHit& lh);
 };
 
 #endif

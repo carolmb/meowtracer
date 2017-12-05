@@ -11,7 +11,7 @@ private:
   bool culling;
 public:
   Triangle(Matrix4 xform, Point3 &p0, Point3 &p1, Point3 &p2, bool c = false);
-  HitRecord hit(Ray &ray);
+  RayHit hit(Ray &ray);
 };
 
 #endif

@@ -2,6 +2,7 @@
 #include "../Renderer/NormalRenderer.h"
 #include "../Renderer/MapRenderer.h"
 #include "../Renderer/DiffuseRenderer.h"
+#include "../Renderer/DieletricRenderer.h"
 #include "../Renderer/BlinnPhongRenderer.h"
 #include "../Renderer/CelRenderer.h"
 #include "../Camera/OrthogonalCamera.h"
@@ -73,6 +74,9 @@ Renderer* parseRenderer(json_spirit::Value &value) {
     return new BlinnPhongRenderer(samples);
   } else if (type == "cel") {
     return new CelRenderer(samples);
+  } else if (type == "dieletric") {
+    int depth = json["RAYDEPTH"].getInt();
+    return new DieletricRenderer(samples, depth);
   } else {
     std::cout << "Renderer type not recognized: " << type << std::endl;
     return NULL;

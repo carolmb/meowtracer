@@ -1,13 +1,12 @@
 #ifndef __CRENDER__
 #define __CRENDER__
 
-#include "DefaultRenderer.h"
+#include "Renderer.h"
 
-class CelRenderer : public DefaultRenderer {
-protected:
-	Color getObjectColor(Scene &scene, Ray &ray, HitRecord &hr, Object* object);
+class CelRenderer : public Renderer {
 public:
-	CelRenderer(int &s) : DefaultRenderer(s) {}
+	CelRenderer(int &s) : Renderer(s) {}
+  Color getColor(Scene &scene, Ray &ray, float &x, float &y);
 };
 
 #endif

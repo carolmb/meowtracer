@@ -1,11 +1,12 @@
 #include "Sphere.h"
+#include "../Renderer/RendererUtil.h"
 #include <iostream>
 #include <cmath>
 
 Sphere::Sphere(Matrix4 &xform, Point3 p, float rad) : center(p), radius(rad) {	
 	Matrix4 translation = Matrix4::Translation(center);
 	Matrix4 scaling = Matrix4::Scaling(radius);
-	transform = scaling * translation;	
+	transform = scaling * translation;
 	transform = transform * xform;
 	invt = transform.Inverse();
 
@@ -19,9 +20,9 @@ Sphere::Sphere(Matrix4 &xform, Point3 p, float rad) : center(p), radius(rad) {
   bounds[0].x = (r[0][3] - sqrt(pow(r[0][3],2) - (r[3][3]*r[0][0])) ) / r[3][3]; 
 }
 
-HitRecord Sphere::hit(Ray &ray) {
-	HitRecord hr;
-	if (!hitsBox(ray)) {
+RayHit Sphere::hit(Ray &ray) {
+	RayHit hr;
+	if (hitsBox(bounds, ray) < 0) {
 		hr.t = NAN;
 		return hr;
 	}

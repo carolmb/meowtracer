@@ -9,7 +9,7 @@ private:
   Point3 origin;
 public:
   PointLight(Matrix4 &xform, Color &c, Point3 &o) : Light(c), origin(xform.TransformPoint(o)) {}
-  Vec3 getDirection(Point3 &p);
+  Vec3 getDirection(LightHit &lh);
 };
 
 #endif

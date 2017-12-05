@@ -12,9 +12,8 @@ private:
 public:
   SpotLight(Matrix4 &xform, Color &c, Point3 &o, Vec3 d, float a) : 
     Light(c), origin(xform.TransformPoint(o)), direction(-xform.TransformVector(d)), angle(a) {}
-  Vec3 getDirection(Point3 &p);
-  Color diffuseColor (Material* material, HitRecord &hr, Vec3 &l);
-  Color specularColor(Material* material, HitRecord &hr, Vec3 &l, Vec3 &v);
+  Vec3 getDirection(LightHit &lh);
+  float getIntensity(Vec3 &obj, Vec3 &light);
 
 };
 

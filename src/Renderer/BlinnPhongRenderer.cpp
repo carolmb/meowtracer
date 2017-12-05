@@ -1,19 +1,25 @@
 #include "BlinnPhongRenderer.h"
 #include "../Light/Light.h"
+#include "RendererUtil.h"
 #include <limits>
 #include <iostream>
 #define INF std::numeric_limits<float>::infinity()
 
-Color BlinnPhongRenderer::getObjectColor(Scene &scene, Ray &ray, HitRecord &hr, Object* object) {
-	Vec3 v = ray.direction;
-	Color finalColor(0, 0, 0);
-	for (int i = 0; i < scene.lights.size(); i++) {
-		Vec3 dir = scene.lights[i]->getDirection(hr.point);
-		if (!intersects(scene, hr.point, dir)) {
-			finalColor += scene.lights[i]->diffuseColor(object->material, hr, dir);
-			finalColor += scene.lights[i]->specularColor(object->material, hr, dir, v);
+Color BlinnPhongRenderer::getColor(Scene &scene, Ray &r, float &x, float &y) {
+	RayHit hr = getHit(r);
+	if (hr.object) {
+		LightHit lh(r.direction, hr);
+		Color finalColor(0, 0, 0);
+		for (int i = 0; i < scene.lights.size(); i++) {
+			lh.lightDir = scene.lights[i]->getDirection(lh);
+			if (!intersects(scene, hr.point, lh.lightDir)) {
+				finalColor += scene.lights[i]->diffuseColor(lh);
+				finalColor += scene.lights[i]->specularColor(lh);
+			}
 		}
+		finalColor += hr.object->material->ambient * scene.ambientColor;
+		return finalColor;
+	} else {
+		return scene.backgroundColor(x, y);
 	}
-	finalColor += object->material->ambient * scene.ambientColor;
-	return finalColor;
 }

@@ -5,15 +5,22 @@
 #include "../Object/Object.h"
 #include <cmath>
 
+struct LightHit {
+  RayHit& rayHit;
+  Vec3& rayDir;
+  Vec3 lightDir;
+  LightHit(Vec3 &rd, RayHit &rh) : rayDir(rd), rayHit(rh) {}
+};
+
 class Light {
 public:
 	Color color;
 	Light(Color &c) : color(c) {}
 
-	virtual Color diffuseColor (Material* material, HitRecord &hr, Vec3 &l);
-	virtual Color specularColor(Material* material, HitRecord &hr, Vec3 &l, Vec3 &v);
-
-	virtual Vec3 getDirection(Point3 &point) = 0;
+	virtual Color diffuseColor (LightHit &lh);
+	virtual Color specularColor(LightHit &lh);
+	virtual Vec3 getDirection(LightHit& lh) = 0;
+  virtual float getIntensity(LightHit& lh) { return 1; }
 
 };
 

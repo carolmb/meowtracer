@@ -15,6 +15,7 @@ public:
   float outlineAngle;
   Color outlineColor;
 	Material() {}
+  
 };
 
 #endif

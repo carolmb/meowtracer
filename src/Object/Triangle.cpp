@@ -1,19 +1,21 @@
 #include "Triangle.h"
+#include "../Renderer/RendererUtil.h"
 #include <iostream>
 #include <cmath>
 #define E 0.0000001
 
 float max3( float a, float b, float c ) {
-   float max = ( a < b ) ? b : a;
-   return ( ( max < c ) ? c : max );
+  float max = ( a < b ) ? b : a;
+  return ( ( max < c ) ? c : max );
 }
 
-float min3(float x, float y, float z) {
-  return x < y ? (x < z ? x : z) : (y < z ? y : z);
+float min3(float a, float b, float c) {
+  float min = ( a > b ) ? b : a;
+  return ( ( min > c ) ? c : min );
 }
 
 Triangle::Triangle(Matrix4 xform, Point3 &p0, Point3 &p1, Point3 &p2, bool c) {
-  culling = c;
+  culling = !c;
   p0 = xform.TransformPoint(p0);
   p1 = xform.TransformPoint(p1);
   p2 = xform.TransformPoint(p2);
@@ -22,15 +24,16 @@ Triangle::Triangle(Matrix4 xform, Point3 &p0, Point3 &p1, Point3 &p2, bool c) {
   e1 = p2 - p0;
   origin = p0;
   normal = Vec3::Cross(e0, e1);
+  normal = Vec3::Normalize(normal);
 
   bounds[0] = Vec3(min3(p0.x, p1.x, p2.x), min3(p0.y, p1.y, p2.y), min3(p0.z, p1.z, p2.z));
   bounds[1] = Vec3(max3(p0.x, p1.x, p2.x), max3(p0.y, p1.y, p2.y), max3(p0.z, p1.z, p2.z));
 }
 
-HitRecord Triangle::hit(Ray &ray) {
-  HitRecord hr;
+RayHit Triangle::hit(Ray &ray) {
+  RayHit hr;
   hr.t = NAN;
-  if (!hitsBox(ray)) {
+  if (hitsBox(bounds, ray) < 0) {
     return hr;
   }
 

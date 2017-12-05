@@ -14,29 +14,26 @@
     "VIEWER": [0, 0, 2]
   },
   "RENDERER": {
-    "TYPE": "blinnphong",
+    "TYPE": "diffuse",
     "SAMPLES": 1,
     "RAYDEPTH": 5
   },
   "LIGHTS": [
     {
-      "TYPE": "point",
-      "COLOR": [0.6, 0.6, 0.6],
-      "ORIGIN": [0, 10, 10]
-    },
-    {
       "TYPE": "directional",
-      "COLOR": [1, 0.8, 0.5],
-      "DIRECTION": [-2, 1, -0.1]
+      "COLOR": [0.6, 0.6, 0.6],
+      "DIRECTION": [-1, -1, -1]
     }
   ],
   "AMBIENT": [0.1, 0.1, 0.1],
   "MATERIALS": [
     {
-      "DIFFUSE": [1, 0, 1],
-      "SPECULAR": [1, 1, 1],
-      "AMBIENT": [1, 1, 1],
-      "SHINE": 16
+      "DIFFUSE": [1, 1, 0],
+      "AMBIENT": [1, 1, 0]
+    },
+    {
+      "DIFFUSE": [0, 1, 0],
+      "AMBIENT": [0, 0, 0]
     }
   ],
   "OBJECTS": [
@@ -44,15 +41,15 @@
       "TYPE": "sphere",
       "RADIUS": 98,
       "CENTER": [0, -100, -3],
-      "MATERIAL": 0
+      "MATERIAL": 1
     },
     {
       "TYPE": "obj",
       "FILE": "bunny.obj",
       "TRANSFORM": [
-        { 
-          "SCALE": [4, 4, 4],
-          "TRANSLATION": [0.025, -0.1, 0.75]
+        {
+          "SCALE": [1.5, 1.5, 1.5],
+          "TRANSLATION": [0.025, -0.1, 0.8]
         }
       ],
       "MATERIAL": 0

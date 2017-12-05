@@ -11,7 +11,7 @@ private:
   Matrix4 transform;
 public:
 	Sphere(Matrix4 &xform, Point3 p, float r);
-	HitRecord hit(Ray &ray);
+	RayHit hit(Ray &ray);
 };
 
 #endif
