@@ -7,47 +7,36 @@
 Tree* accelerate(std::vector<Object*> &objects, Vec3 bounds[2], int depth);
 
 void clusterBounds(std::vector<Object*> &objects, Vec3 bounds[2]) {
-	bounds[0] = Vec3(-INF, -INF, -INF);
-	bounds[1] = Vec3(INF, INF, INF);
+	bounds[0] = Vec3(INF, INF, INF);
+	bounds[1] = Vec3(-INF, -INF, -INF);
 	for (int i = 0; i < objects.size(); i++) {
 		Vec3 obj[2] = objects[i]->bounds;
-		bounds[0].x = fmin(bounds[0].x, obj[0].x);
-		bounds[0].y = fmin(bounds[0].y, obj[0].y);
-		bounds[0].z = fmin(bounds[0].z, obj[0].z);
-		bounds[1].x = fmax(bounds[1].x, obj[1].x);
-		bounds[1].y = fmax(bounds[1].y, obj[1].y);
-		bounds[1].z = fmax(bounds[1].z, obj[1].z);
+		bounds[0] = Vec3::Minimize(bounds[0], obj[0]);
+		bounds[1] = Vec3::Maximize(bounds[1], obj[1]);
 	}
 }
 
 Tree* accelerate(std::vector<Object*> &objects, Vec3 bounds[2], int depth) {
-	Tree *tree = new Tree;
-	tree->objects = objects;
-	return tree;
-
-	/*
 	if (objects.size() == 0)
 		return 0;
 
 	Tree* tree = new Tree;
+		for (int i = 0; i < 8; i++)
+			tree->children[i] = 0;
 
 	if (objects.size() == 1) {
 		tree->bounds[0] = objects[0]->bounds[0];
 		tree->bounds[1] = objects[0]->bounds[1];
+
 		return tree;
+	} else {
+		Vec3 cbounds[2];
+		clusterBounds(objects, cbounds);
+		bounds[0] = Vec3::Maximize(bounds[0], cbounds[0]);
+		bounds[1] = Vec3::Minimize(bounds[1], cbounds[1]);
+		tree->bounds[0] = bounds[0];
+		tree->bounds[1] = bounds[1];
 	}
-
-	Vec3 cbounds[2];
-	clusterBounds(objects, cbounds);
-	bounds[0].x = fmax(cbounds[0].x, bounds[0].x);
-	bounds[0].y = fmax(cbounds[0].y, bounds[0].y);
-	bounds[0].z = fmax(cbounds[0].z, bounds[0].z);
-	bounds[1].x = fmin(cbounds[1].x, bounds[1].x);
-	bounds[1].y = fmin(cbounds[1].y, bounds[1].y);
-	bounds[1].z = fmin(cbounds[1].z, bounds[1].z);
-
-	tree->bounds[0] = bounds[0];
-	tree->bounds[1] = bounds[1];
 
 	if (depth == 0) {
 		tree->objects = objects;
@@ -68,19 +57,21 @@ Tree* accelerate(std::vector<Object*> &objects, Vec3 bounds[2], int depth) {
 	v[7] = middle;
 	for (int i = 0; i < 8; i++) {
 		std::vector<Object*> objs2;
-		Vec3 b[2] = {v[i], v[i] + size};
+		Vec3 bounds2[2] = {v[i], v[i] + size / 2};
 		for (int o = 0; o < objects.size(); o++)
-			if (hitsBox(objects[o]->bounds, b))
+			if (hitsBox(objects[o]->bounds, bounds2)) {
 				objs2.push_back(objects[o]);
-		tree->children[i] = accelerate(objs2, b, depth - 1);
+			}
+		tree->children[i] = accelerate(objs2, bounds2, depth - 1);
+		std::cout << objs2.size() << std::endl;
 	}
-	return tree;*/
+	return tree;
 }
 
 Color* Renderer::render(Scene &scene, int width, int height) {
 	Vec3 b[2];
 	clusterBounds(scene.objects, b);
-	tree = accelerate(scene.objects, b, 1);
+	tree = accelerate(scene.objects, b, 2);
 
 	Color* colors = new Color[width * height];
 	float progress = 0;
@@ -134,29 +125,29 @@ RayHit Renderer::getHit(std::vector<Object*> objects, Ray& ray) {
 }
 
 RayHit Renderer::getHit(Ray& r) {
-	return getHit(tree->objects, r);
-	/*
 	RayHit minhr;
 	minhr.t = INF;
+	if (!tree)
+		return minhr;
 
 	std::stack<Tree*> trees;
 	trees.push(tree);
 	while (!trees.empty()) {
 		Tree* tree = trees.top();
 		trees.pop();
-		if (hitsBox(tree->bounds, r) >= 0) {
+		if (hitsBox(tree->bounds, r)) {
 			if (tree->objects.size() > 0) {
 				RayHit hr = getHit(tree->objects, r);
 				if (!std::isnan(hr.t) && hr.t < minhr.t && hr.t > 0) {
 					minhr = hr;
 				}
-			}
-			for (int i = 0; i < 8; i++) {
-				if (tree->children[i])
-					trees.push(tree->children[i]);
+			} else {
+				for (int i = 0; i < 8; i++) {
+					if (tree->children[i])
+						trees.push(tree->children[i]);
+				}
 			}
 		}
 	}
 	return minhr;
-	*/
 }

@@ -22,7 +22,7 @@ Sphere::Sphere(Matrix4 &xform, Point3 p, float rad) : center(p), radius(rad) {
 
 RayHit Sphere::hit(Ray &ray) {
 	RayHit hr;
-	if (hitsBox(bounds, ray) < 0) {
+	if (!hitsBox(bounds, ray)) {
 		hr.t = NAN;
 		return hr;
 	}

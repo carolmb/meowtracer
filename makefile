@@ -1,6 +1,6 @@
 all: main
 
-CPP_FLAGS= -O3 -std=c++11
+CPP_FLAGS= -g -std=c++11
 
 define recipe
 bin/$(1).o: src/$(2)$(1).cpp src/$(2)$(1).h

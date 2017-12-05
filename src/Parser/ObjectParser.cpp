@@ -66,8 +66,10 @@ void parseObjFile(json_spirit::Object &json, Matrix4 &xform, Scene &scene) {
     Vec3 v2 = parseObjVertex(loader, i+1);
     Vec3 v3 = parseObjVertex(loader, i+2);
     Object* triangle = new Triangle(xform, v1, v2, v3);
-    triangle->material = m;
-    scene.objects.push_back(triangle);
+    if (triangle->bounds[0].Valid() && triangle->bounds[1].Valid()) {
+      triangle->material = m;
+      scene.objects.push_back(triangle);
+    }
   }
 }
 

@@ -46,7 +46,9 @@ bool InputData::parse(std::string &content) {
     if (type == "obj") {
       parseObjFile(json, xform, scene);
     } else {
-      scene.objects.push_back(parseObject(json, xform, type, scene));
+      Object* obj = parseObject(json, xform, type, scene);
+      if (obj->bounds[0].Valid() && obj->bounds[1].Valid())
+        scene.objects.push_back(obj);
     }
   }
   scene.camera = parseCamera(json["CAMERA"]);

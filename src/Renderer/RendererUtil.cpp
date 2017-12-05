@@ -25,7 +25,7 @@ bool intersects(Scene &scene, Point3 &p, Vec3 &l) {
   return false;
 }
 
-int hitsBox(Vec3 bounds[2], Ray &r) {
+bool hitsBox(Vec3 bounds[2], Ray &r) {
   float tmin, tmax, tymin, tymax, tzmin, tzmax; 
  
   tmin = (bounds[r.sign[0]].x - r.origin.x) * r.invdir.x; 
@@ -34,7 +34,7 @@ int hitsBox(Vec3 bounds[2], Ray &r) {
   tymax = (bounds[1-r.sign[1]].y - r.origin.y) * r.invdir.y; 
 
   if ((tmin > tymax) || (tymin > tmax)) 
-      return -1; 
+      return false; 
   if (tymin > tmin) 
       tmin = tymin; 
   if (tymax < tmax) 
@@ -44,7 +44,7 @@ int hitsBox(Vec3 bounds[2], Ray &r) {
   tzmax = (bounds[1-r.sign[2]].z - r.origin.z) * r.invdir.z; 
 
   if ((tmin > tzmax) || (tzmin > tmax)) 
-      return -1; 
+      return false; 
   /*
   if (tzmin > tmin) 
       tmin = tzmin; 
