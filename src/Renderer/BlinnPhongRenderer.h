@@ -5,7 +5,7 @@
 
 class BlinnPhongRenderer : public Renderer {
 public:
-	BlinnPhongRenderer(int &s) : Renderer(s) {}
+	BlinnPhongRenderer(int s, int d) : Renderer(s, d) {}
   Color getColor(Scene &scene, Ray &ray, float &x, float &y);
 };
 

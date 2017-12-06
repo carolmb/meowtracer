@@ -2,6 +2,8 @@
 #include "../Renderer/RendererUtil.h"
 #include <iostream>
 #include <cmath>
+#include <ctgmath>
+#define PI 3.14159265359
 
 Sphere::Sphere(Matrix4 &xform, Point3 p, float rad) : center(p), radius(rad) {	
 	Matrix4 translation = Matrix4::Translation(center);
@@ -14,7 +16,6 @@ Sphere::Sphere(Matrix4 &xform, Point3 p, float rad) : center(p), radius(rad) {
 	Matrix4 s = Matrix4::Identity();
 	s[3][3] = -1;
 	Matrix4 si = s.Inverse();
-
 
 	Matrix4 &m = transform;
 	Matrix4 mt = m.Transpose();
@@ -49,10 +50,19 @@ RayHit Sphere::hit(Ray &ray) {
 		float t1 = (-b - sqrtdelta) / (2 * a);
 		float t2 = (-b + sqrtdelta) / (2 * a);
 		hr.t = std::min(t1, t2);
-		hr.point = ray.at(hr.t);
-		hr.normal = tRay.at(hr.t);
-		hr.normal = transform.TransformVector(hr.normal);
-		hr.normal = Vec3::Normalize(hr.normal);
+		if (hr.t >= 0) {
+			hr.point = ray.at(hr.t);
+			hr.normal = tRay.at(hr.t);
+
+			float x = hr.normal.x, y = hr.normal.y, z = hr.normal.z;
+			float tetha = atan(sqrt(x*x + y*y) / z);
+			float phi = atan(y / x);
+			hr.texture = material->texture(tetha / (2 * PI), phi / (2 * PI), hr.normal);
+			//std::cout << x << " " << y << " " << z << " " << tetha / PI * 180 << " " << phi / PI * 180 << std::endl;
+
+			hr.normal = transform.TransformVector(hr.normal);
+			hr.normal = Vec3::Normalize(hr.normal);
+		}
 	} else {
 		hr.t = NAN;
 	}

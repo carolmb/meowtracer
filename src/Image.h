@@ -9,6 +9,7 @@ class Image {
 	int height;
 	Color *colors;
 public:
+  Image (std::string &fileName);
 	Image (int w, int h) : width(w), height(h) {}
 	Image (int w, int h, Color* crls) : width(w), height(h), colors(crls) {}
 

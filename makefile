@@ -19,7 +19,7 @@ $(foreach i,$(OBJS),$(eval $(call recipe,$(i),Object/)))
 CAMS = OrthogonalCamera PerspectiveCamera
 $(foreach i,$(CAMS),$(eval $(call recipe,$(i),Camera/)))
 
-RENDS = RendererUtil Renderer NormalRenderer MapRenderer DiffuseRenderer DieletricRenderer CelRenderer BlinnPhongRenderer
+RENDS = RendererUtil Renderer NormalRenderer MapRenderer DiffuseRenderer DielectricRenderer CelRenderer BlinnPhongRenderer
 $(foreach i,$(RENDS),$(eval $(call recipe,$(i),Renderer/)))
 
 MATH = Vec3 Vec4 Matrix4

@@ -9,6 +9,35 @@ int toInt(float a) {
     return rint(a * 255);
 }
 
+float toFloat(int a) {
+    return a * a / 255;
+}
+
+Image::Image(std::string& fileName) {
+    std::ifstream file;
+    file.open(fileName.c_str());
+    std::string cod;
+    int m;
+    file >> cod >> width >> height >> m;
+    size_t len = width * height;
+    colors = new Color[len];
+    if (cod == "P3") {
+        for (int i = 0; i < len; i++) {
+            int red, green, blue;
+            file >> red >> green >> blue;
+            colors[i] = Color(toFloat(red), toFloat(green), toFloat(blue));
+        }
+    } else {
+        char* ccolors = new char[len * 3];
+        file.read(ccolors, len * 3);
+        for (int i = 0; i < len; i++) {
+            int red = ccolors[i*3], green = ccolors[i*3+1], blue = ccolors[i*3+2];
+            colors[i] = Color(toFloat(red + 255), toFloat(green + 255), toFloat(blue + 255));
+        }
+        delete[] ccolors;
+    }
+}
+
 void Image::save(std::string &fileName) {
     std::ofstream file;
     file.open (fileName.c_str());

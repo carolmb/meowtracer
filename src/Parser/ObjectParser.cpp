@@ -47,6 +47,7 @@ Object* parseObject(json_spirit::Object &json, Matrix4 &xform, std::string &type
   } else if (type == "triangle") {
     obj = parseTriangle(json, xform);
   } else {
+    std::cout << "Object type not recognized: " << type << std::endl;
     return NULL;
   }
   if (json.count("MATERIAL")) {
@@ -75,7 +76,28 @@ void parseObjFile(json_spirit::Object &json, Matrix4 &xform, Scene &scene) {
 
 Material* parseMaterial(json_spirit::Value &value) {
   json_spirit::Object json = value.getObject();
-  Material* m = new Material();
+  Material* m;
+  if (json.count("TEXTURE")) {
+    json_spirit::Object texture = json["TEXTURE"].getObject();
+    std::string type = texture["TYPE"].getString();
+    if (type == "checkers") {
+      Color c1 = parseColor(texture["COLOR1"]);
+      Color c2 = parseColor(texture["COLOR2"]);
+      int rx = texture["REPEATX"].getInt();
+      int ry = texture["REPEATY"].getInt();
+      m = new CheckersMaterial(c1, c2, rx, ry);
+    } else if (type == "image") {
+
+
+    } else if (type == "perlin") {
+
+    } else {
+      std::cout << "Texture type not recognized: " << type << std::endl;
+      m = new Material();
+    }
+  } else {
+    m = new Material();
+  }
   if (json.count("AMBIENT")) {
     m->ambient = parseColor(json["AMBIENT"]);
   }

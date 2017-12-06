@@ -2,7 +2,7 @@
 #include "../Renderer/NormalRenderer.h"
 #include "../Renderer/MapRenderer.h"
 #include "../Renderer/DiffuseRenderer.h"
-#include "../Renderer/DieletricRenderer.h"
+#include "../Renderer/DielectricRenderer.h"
 #include "../Renderer/BlinnPhongRenderer.h"
 #include "../Renderer/CelRenderer.h"
 #include "../Camera/OrthogonalCamera.h"
@@ -36,6 +36,7 @@ Light* parseLight(json_spirit::Value &value) {
     float size = json["SIZE"].getReal();
     return new AreaLight(xform, color, origin, dir, angle, size);
   } else {
+    std::cout << "Light type not recognized: " << type << std::endl;
     return NULL;
   }
 }
@@ -67,23 +68,24 @@ Renderer* parseRenderer(json_spirit::Value &value) {
   json_spirit::Object json = value.getObject();
   std::string type = json["TYPE"].getString();
   int samples = json["SAMPLES"].getInt();
+  int treeDepth = json.count("TREEDEPTH") ? json["TREEDEPTH"].getInt() : 0;
   if (type == "normal") {
-    return new NormalRenderer(samples);
+    return new NormalRenderer(samples, treeDepth);
   } else if (type == "map") {
     Color fg = parseColor(json["FOREGROUND"]);
     Color bg = parseColor(json["BACKGROUND"]);
     float d = json["MAXDEPTH"].getReal();
-    return new MapRenderer(samples, fg, bg, d);
+    return new MapRenderer(samples, treeDepth, fg, bg, d);
   } else if (type == "diffuse") {
     int depth = json["RAYDEPTH"].getInt();
-    return new DiffuseRenderer(samples, depth);
+    return new DiffuseRenderer(samples, treeDepth, depth);
   } else if (type == "blinnphong") {
-    return new BlinnPhongRenderer(samples);
+    return new BlinnPhongRenderer(samples, treeDepth);
   } else if (type == "cel") {
-    return new CelRenderer(samples);
+    return new CelRenderer(samples, treeDepth);
   } else if (type == "dieletric") {
     int depth = json["RAYDEPTH"].getInt();
-    return new DieletricRenderer(samples, depth);
+    return new DielectricRenderer(samples, treeDepth, depth);
   } else {
     std::cout << "Renderer type not recognized: " << type << std::endl;
     return NULL;

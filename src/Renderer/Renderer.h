@@ -16,9 +16,10 @@ struct Tree {
 class Renderer {
 protected:
 	int sampleCount;
+  int treeDepth;
   Tree* tree;
 public:
-	Renderer(int &s) : sampleCount(s) {}
+	Renderer(int s, int d) : sampleCount(s), treeDepth(d) {}
 	Color* render(Scene &scene, int width, int height);
   RayHit getHit(std::vector<Object*> objects, Ray& ray);
   RayHit getHit(Ray& ray);

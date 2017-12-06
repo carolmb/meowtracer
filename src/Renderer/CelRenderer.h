@@ -5,7 +5,7 @@
 
 class CelRenderer : public Renderer {
 public:
-	CelRenderer(int &s) : Renderer(s) {}
+	CelRenderer(int s, int d) : Renderer(s, d) {}
   Color getColor(Scene &scene, Ray &ray, float &x, float &y);
 };
 

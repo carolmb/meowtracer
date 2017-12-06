@@ -71,7 +71,7 @@ Tree* accelerate(std::vector<Object*> &objects, Vec3 bounds[2], int depth) {
 Color* Renderer::render(Scene &scene, int width, int height) {
 	Vec3 b[2];
 	clusterBounds(scene.objects, b);
-	tree = accelerate(scene.objects, b, 2);
+	tree = accelerate(scene.objects, b, treeDepth);
 
 	Color* colors = new Color[width * height];
 	float progress = 0;

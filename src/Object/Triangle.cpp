@@ -40,15 +40,16 @@ RayHit Triangle::hit(Ray &ray) {
   Vec3 pvec = Vec3::Cross(ray.direction, e1);
   float det = Vec3::Dot(e0, pvec);
 
+  float u, v;
   if (culling) {
     if (det < E)
       return hr;
     Vec3 tvec = ray.origin - origin;
-    float u = Vec3::Dot(tvec, pvec);
+    u = Vec3::Dot(tvec, pvec);
     if (u < 0 || u > det)
       return hr;
     Vec3 qvec = Vec3::Cross(tvec, e0);
-    float v = Vec3::Dot(ray.direction, qvec);
+    v = Vec3::Dot(ray.direction, qvec);
     if (v < 0 || u + v > det)
       return hr;
     hr.t = Vec3::Dot(e1, qvec) / det;
@@ -58,16 +59,17 @@ RayHit Triangle::hit(Ray &ray) {
 
     float inv_det = 1.0 / det;
     Vec3 tvec = ray.origin - origin;
-    float u = Vec3::Dot(tvec, pvec) * inv_det;
+    u = Vec3::Dot(tvec, pvec) * inv_det;
     if (u < 0 || u > 1)
       return hr;
 
     Vec3 qvec = Vec3::Cross(tvec, e0);
-    float v = Vec3::Dot(ray.direction, qvec) * inv_det;
+    v = Vec3::Dot(ray.direction, qvec) * inv_det;
     if (v < 0 || u + v > 1)
       return hr;
     hr.t = Vec3::Dot(e1, qvec) * inv_det;
   }
+  hr.texture = material->texture(u, v, hr.point);
   hr.normal = normal;
   return hr;
 }

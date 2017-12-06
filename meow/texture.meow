@@ -1,0 +1,75 @@
+{
+	"CODIFICATION": "binary",
+	"WIDTH": 400,
+	"HEIGHT": 200,
+	"UPPER_LEFT": [1, 1, 1],
+	"LOWER_LEFT": [0.5, 0.7, 1],
+	"UPPER_RIGHT": [1, 1, 1],
+	"LOWER_RIGHT": [0.5, 0.7, 1],
+	"CAMERA": {
+		"TYPE": "perspective",
+    "CENTER": [0, 0, -1],
+    "WIDTH": 4,
+    "HEIGHT": 2,
+    "VIEWER": [0, 0, 2]
+	},
+	"RENDERER": {
+		"TYPE": "blinnphong",
+		"SAMPLES": 16,
+		"RAYDEPTH": 4,
+		"TREEDEPTH": 0
+	},
+	"LIGHTS": [
+		{
+			"TYPE": "directional",
+			"COLOR": [0.8, 0.8, 0.8],
+			"DIRECTION": [8, -7, 0]
+		},
+		{
+			"TYPE": "directional",
+			"COLOR": [0.5, 0.5, 0.5],
+			"DIRECTION": [-20, -10, -15]
+		}
+	],
+	"AMBIENT": [0.4, 0.4, 0.4],
+	"MATERIALS": [
+		{
+			"AMBIENT": [0.1, 0.1, 0.1],
+			"SHINE": 64,
+			"TEXTURE": {
+				"TYPE": "checkers",
+				"COLOR1": [1, 0, 0],
+				"COLOR2": [0, 0, 1],
+				"REPEATX": 6,
+				"REPEATY": 6
+			}
+		},
+    {
+      "SPECULAR": [0, 0, 0],
+      "AMBIENT": [0.1, 0.1, 0.1],
+      "SHINE": 64
+    }
+	],
+	"OBJECTS": [
+		{
+			"TYPE": "sphere",
+			"RADIUS": 0.5,
+			"CENTER": [0, 0, 0],
+			"MATERIAL": 0,
+			"TRANSFORM": [
+				{
+					"ROTATION": [105, 0, 0]
+				},
+				{
+					"TRANSLATION": [0, 0, -1]
+				}
+			]
+		},
+		{
+			"TYPE": "sphere",
+			"RADIUS": 100,
+			"CENTER": [0, -100.5, -1],
+			"MATERIAL": 1
+		}
+	]
+}

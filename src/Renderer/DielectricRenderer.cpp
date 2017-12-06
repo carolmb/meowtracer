@@ -1,9 +1,10 @@
-#include "DieletricRenderer.h"
+#include "DielectricRenderer.h"
 #include "RendererUtil.h"
 
-Color DieletricRenderer::getColor(Scene &scene, Ray &initRay, float &x, float &y) {
+Color DielectricRenderer::getColor(Scene &scene, Ray &initRay, float &x, float &y) {
   int depth = 0;
   Ray ray = initRay;
+  Object* obj = 0;
   Color color(1, 1, 1);
   while (true) {
     RayHit minhr = getHit(ray);
@@ -15,6 +16,7 @@ Color DieletricRenderer::getColor(Scene &scene, Ray &initRay, float &x, float &y
         Point3 d = minhr.normal + randomUnitVec3();
         
         ray = Ray(minhr.point, d);
+        depth++;
       }
     } else {
       color = color * scene.backgroundColor(x, y);
@@ -24,7 +26,7 @@ Color DieletricRenderer::getColor(Scene &scene, Ray &initRay, float &x, float &y
   return color;
 }
 
-Color DieletricRenderer::getObjectColor(Scene &scene, Ray &ray, RayHit &hr) {
+Color DielectricRenderer::getObjectColor(Scene &scene, Ray &ray, RayHit &hr) {
   Vec3& v = ray.direction;
   Color finalColor(0, 0, 0);
   LightHit lh(ray.direction, hr);

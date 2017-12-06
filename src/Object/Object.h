@@ -19,6 +19,7 @@ struct RayHit {
   float t;
   Point3 point;
   Vec3 normal;
+  Color texture;
   Object* object = 0;
 };
 
