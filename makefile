@@ -13,7 +13,7 @@ bin/main.o: main.cpp
 LIGHTS = Light DirectionalLight PointLight SpotLight AreaLight
 $(foreach i,$(LIGHTS),$(eval $(call recipe,$(i),Light/)))
 
-OBJS = Sphere Triangle
+OBJS = Material Sphere Triangle
 $(foreach i,$(OBJS),$(eval $(call recipe,$(i),Object/)))
 
 CAMS = OrthogonalCamera PerspectiveCamera
@@ -22,7 +22,7 @@ $(foreach i,$(CAMS),$(eval $(call recipe,$(i),Camera/)))
 RENDS = RendererUtil Renderer NormalRenderer MapRenderer DiffuseRenderer DielectricRenderer CelRenderer BlinnPhongRenderer
 $(foreach i,$(RENDS),$(eval $(call recipe,$(i),Renderer/)))
 
-MATH = Vec3 Vec4 Matrix4
+MATH = Vec3 Vec4 Matrix4 Perlin
 $(foreach i,$(MATH),$(eval $(call recipe,$(i),Math/)))
 
 PARSER = InputData MathParser SceneParser ObjectParser

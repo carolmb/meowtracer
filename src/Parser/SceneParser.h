@@ -7,7 +7,7 @@
 #include "../Camera/Camera.h"
 #include "../Light/Light.h"
 
-Light* parseLight(json_spirit::Value &value);
+void parseLight(Scene &scene, json_spirit::Value &value);
 Camera* parseCamera(json_spirit::Value &value);
 Renderer* parseRenderer(json_spirit::Value &value);
 

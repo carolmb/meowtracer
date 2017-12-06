@@ -28,7 +28,7 @@ bool InputData::parse(std::string &content) {
   if (json.count("LIGHTS")) {
     json_spirit::Array lights = json["LIGHTS"].getArray();
     for (int i = 0; i < lights.size(); i++) {
-      scene.lights.push_back(parseLight(lights[i]));
+      parseLight(scene, lights[i]);
     }
   }
   if (json.count("PREFABS")) {

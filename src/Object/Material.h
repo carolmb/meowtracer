@@ -29,14 +29,15 @@ private:
 public:
   CheckersMaterial(Color &c1, Color &c2, int rx, int ry) : 
     color1(c1), color2(c2), repeatx(rx), repeaty(ry) {}
-  Color texture(float u, float v, Point3 &p) {
-    int x = rint(floor(u * repeatx));
-    int y = rint(floor(v * repeaty));
-    if ((x + y) % 2)
-      return color1;
-    else
-      return color2;
-  }
+  Color texture(float u, float v, Point3 &p);
+};
+
+class PerlinMaterial : public Material {
+private:
+  float scale;
+public:
+  PerlinMaterial(float s) : scale(s) {}
+  Color texture(float u, float v, Point3 &p);
 };
 
 class ImageMaterial : public Material {

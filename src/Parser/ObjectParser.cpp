@@ -87,10 +87,11 @@ Material* parseMaterial(json_spirit::Value &value) {
       int ry = texture["REPEATY"].getInt();
       m = new CheckersMaterial(c1, c2, rx, ry);
     } else if (type == "image") {
-
-
+      std::string fileName = "meow/" + texture["FILE"].getString();
+      m = new ImageMaterial(fileName);
     } else if (type == "perlin") {
-
+      float scale = texture["SCALE"].getReal();
+      m = new PerlinMaterial(scale);
     } else {
       std::cout << "Texture type not recognized: " << type << std::endl;
       m = new Material();

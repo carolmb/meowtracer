@@ -1,0 +1,76 @@
+{
+  "NAME": "blinnphong.ppm",
+  "TYPE": "PPM",
+  "CODIFICATION": "binary",
+  "WIDTH": 400,
+  "HEIGHT": 200,
+  "UPPER_LEFT": [1, 1, 1], 
+  "LOWER_LEFT": [0.5, 0.7, 1],
+  "UPPER_RIGHT": [1, 1, 1],
+  "LOWER_RIGHT": [0.5, 0.7, 1],
+  "CAMERA": {
+    "TYPE": "perspective",
+    "CENTER": [0, 0, -1],
+    "WIDTH": 4,
+    "HEIGHT": 2,
+    "VIEWER": [0, 0, 2]
+  },
+  "RENDERER": {
+    "TYPE": "blinnphong",
+    "SAMPLES": 16
+  },
+  "LIGHTS": [
+    {
+      "TYPE": "grid",
+      "COLOR": [0.6, 0.6, 0.6],
+      "HORIZONTAL": [0, 0, 1],
+      "VERTICAL": [1, 0, 0],
+      "ORIGIN": [-0.5, 1.5, -0.5],
+      "DIRECTION": [0, -1, -0.1],
+      "ANGLE": 45,
+      "GRIDX": 4,
+      "GRIDY": 4
+    }
+  ],
+  "AMBIENT": [0.1, 0.1, 0.1],
+  "MATERIALS": [
+    {
+      "DIFFUSE": [1, 1, 0],
+      "SPECULAR": [1, 1, 1],
+      "AMBIENT": [1, 1, 0],
+      "SHINE": 16
+    },
+    {
+      "DIFFUSE": [1, 1, 1],
+      "SPECULAR": [0, 0, 0],
+      "AMBIENT": [0, 0, 0],
+      "SHINE": 32
+    }
+  ],
+  "OBJECTS": [
+    {
+      "TYPE": "sphere",
+      "RADIUS": 98,
+      "CENTER": [0, -100, -3],
+      "MATERIAL": 1
+    },
+    {
+      "TYPE": "sphere",
+      "RADIUS": 0.5,
+      "CENTER": [0, 0, -1],
+      "MATERIAL": 0
+    },
+    {
+      "TYPE": "sphere",
+      "RADIUS": 0.3,
+      "CENTER": [0.5, 0.7, -1],
+      "MATERIAL": 0
+    },
+    {
+      "TYPE": "sphere",
+      "RADIUS": 0.5,
+      "CENTER": [-1, 0.5, -1],
+      "MATERIAL": 0
+    }
+  ]
+}

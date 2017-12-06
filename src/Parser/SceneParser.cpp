@@ -1,4 +1,5 @@
 #include "SceneParser.h"
+#include "../Scene.h"
 #include "../Renderer/NormalRenderer.h"
 #include "../Renderer/MapRenderer.h"
 #include "../Renderer/DiffuseRenderer.h"
@@ -12,7 +13,8 @@
 #include "../Light/SpotLight.h"
 #include "../Light/AreaLight.h"
 
-Light* parseLight(json_spirit::Value &value) {
+void parseLight(Scene& scene, json_spirit::Value &value) {
+  Light* light;
   json_spirit::Object json = value.getObject();
   std::string type = json["TYPE"].getString();
   Color color = parseColor(json["COLOR"]);
@@ -20,25 +22,40 @@ Light* parseLight(json_spirit::Value &value) {
   if (type == "directional") {
     Vec3 dir = parseVec3(json["DIRECTION"]);
     dir = Vec3::Normalize(dir);
-    return new DirectionalLight(xform, color, dir);
+    light = new DirectionalLight(xform, color, dir);
   } else if (type == "point") {
     Point3 origin = parseVec3(json["ORIGIN"]);
-    return new PointLight(xform, color, origin);
+    light = new PointLight(xform, color, origin);
   } else if (type == "spot") {
     Point3 origin = parseVec3(json["ORIGIN"]);
     Vec3 dir = parseVec3(json["DIRECTION"]);
     float angle = cos(json["ANGLE"].getReal() * PI / 180.0);
-    return new SpotLight(xform, color, origin, dir, angle);
+    light = new SpotLight(xform, color, origin, dir, angle);
   } else if (type == "area") {
     Point3 origin = parseVec3(json["ORIGIN"]);
     Vec3 dir = parseVec3(json["DIRECTION"]);
     float angle = cos(json["ANGLE"].getReal() * PI / 180.0);
     float size = json["SIZE"].getReal();
-    return new AreaLight(xform, color, origin, dir, angle, size);
+    light = new AreaLight(xform, color, origin, dir, angle, size);
+  } else if (type == "grid") {
+    int gridX = json["GRIDX"].getInt();
+    int gridY = json["GRIDY"].getInt();
+    Vec3 h = parseVec3(json["HORIZONTAL"]) / gridX;
+    Vec3 v = parseVec3(json["VERTICAL"]) / gridY;
+    Point3 o = parseVec3(json["ORIGIN"]) + h / 2 + v / 2;
+    Vec3 dir = parseVec3(json["DIRECTION"]);
+    float angle = cos(json["ANGLE"].getReal() * PI / 180.0);
+    color /= gridX * gridY;
+    for(int i = 0; i < gridX; i++)
+      for(int j = 0; j < gridY; j++) {
+        Point3 origin = o + h * i + v * j;
+        scene.lights.push_back(new SpotLight(xform, color, origin, dir, angle));
+      }
+    return;
   } else {
     std::cout << "Light type not recognized: " << type << std::endl;
-    return NULL;
   }
+  scene.lights.push_back(light);
 }
 
 Camera* parseCamera(json_spirit::Value &value) {

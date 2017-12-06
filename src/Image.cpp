@@ -10,11 +10,19 @@ int toInt(float a) {
 }
 
 float toFloat(int a) {
-    return a * a / 255;
+    float af = a * 1.0 / 255;
+    return af * af;
+}
+
+Image::Image(int w, int h) : width(w), height(h) {
+    colors = new Color[w * h];
+    for (int i = w * h - 1; i >= 0; i--) {
+        colors[i] = Color(rand() % 2, rand() % 2, rand() % 2);
+    }
 }
 
 Image::Image(std::string& fileName) {
-    std::ifstream file;
+    std::ifstream file; 
     file.open(fileName.c_str());
     std::string cod;
     int m;
@@ -28,13 +36,11 @@ Image::Image(std::string& fileName) {
             colors[i] = Color(toFloat(red), toFloat(green), toFloat(blue));
         }
     } else {
-        char* ccolors = new char[len * 3];
-        file.read(ccolors, len * 3);
         for (int i = 0; i < len; i++) {
-            int red = ccolors[i*3], green = ccolors[i*3+1], blue = ccolors[i*3+2];
-            colors[i] = Color(toFloat(red + 255), toFloat(green + 255), toFloat(blue + 255));
+            unsigned char red, green, blue;
+            file >> red >> green >> blue;
+            colors[i] = Color(toFloat(red), toFloat(green), toFloat(blue));
         }
-        delete[] ccolors;
     }
 }
 
@@ -68,4 +74,10 @@ void Image::saveBin(std::string &fileName) {
     	file << r << g << b;
     }
 	file.close();
+}
+
+Color& Image::at(int i, int j) { 
+    if (i >= width || j >= height)
+        exit(-1);
+    return colors[j * width + i]; 
 }
