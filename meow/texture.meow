@@ -46,7 +46,7 @@
 				"COLOR1": [1, 0, 0],
 				"COLOR2": [0, 0, 1],
 				"REPEATX": 6,
-				"REPEATY": 6
+				"REPEATY": 4
 			}
 		},
 		{
@@ -80,7 +80,7 @@
 			"MATERIAL": 1,
 			"TRANSFORM": [
 				{
-					"ROTATION": [90, 0, 0]
+					"ROTATION": [0, 90, 0]
 				},
 				{
 					"TRANSLATION": [-0.8, -0.1, -1]
@@ -94,7 +94,7 @@
 			"MATERIAL": 2,
 			"TRANSFORM": [
 				{
-					"ROTATION": [90, 0, 0]
+					"ROTATION": [0, 90, 0]
 				},
 				{
 					"TRANSLATION": [0, -0.1, -1]
@@ -108,7 +108,7 @@
 			"MATERIAL": 3,
 			"TRANSFORM": [
 				{
-					"ROTATION": [90, 90, 0]
+					"ROTATION": [0, 90, 0]
 				},
 				{
 					"TRANSLATION": [0.8, -0.1, -1]

@@ -10,7 +10,9 @@ Color CheckersMaterial::texture(float u, float v, Point3 &p) {
       return color2;
   */
   int x = floor(u * repeatx);
-  int y = floor(v * repeaty * 2);
+  int y = repeaty - floor(v * repeaty);
+  x = ((x % repeatx) + repeatx) % repeatx;
+  y = ((y % repeaty) + repeaty) % repeaty;
   if ((x + y) % 2)
     return color1;
   else
@@ -18,8 +20,11 @@ Color CheckersMaterial::texture(float u, float v, Point3 &p) {
 }
 
 Color ImageMaterial::texture(float u, float v, Point3 &p) {
-  int x = rint(v * image.width);
-  int y = rint(u * image.height);
+  int x = rint(u * image.width);
+  int y = image.height - rint(v * image.height);
+  x = ((x % image.width) + image.width) % image.width;
+  y = ((y % image.height) + image.height) % image.height;
+  //std::cout << x % image.width << " " << y % image.height << std::endl;
   return image.at(x % image.width, y % image.height);
 }
 

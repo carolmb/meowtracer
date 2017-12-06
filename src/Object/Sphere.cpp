@@ -55,10 +55,20 @@ RayHit Sphere::hit(Ray &ray) {
 			hr.normal = tRay.at(hr.t);
 
 			float x = hr.normal.x, y = hr.normal.y, z = hr.normal.z;
-			float tetha = atan(sqrt(x*x + y*y) / z);
-			float phi = atan(y / x);
-			hr.texture = material->texture(tetha / (2 * PI), phi / (2 * PI), hr.normal);
+			//float tetha = acos(z);
+			//float phi = atan(y / x);
+			//hr.texture = material->texture(tetha / (2 * PI), phi / (2 * PI), hr.normal);
 			//std::cout << x << " " << y << " " << z << " " << tetha / PI * 180 << " " << phi / PI * 180 << std::endl;
+
+			float phi = atan2(z, x);
+    	float theta = asin(y);
+	    float u = 1-(phi + PI) / (2*PI);
+	    float v = (theta + PI/2) / PI;
+	    hr.texture = material->texture(u, v, hr.normal);
+
+			//float u = x / 2 + 0.5;
+			//float v = y / 2 + 0.5;
+			//hr.texture = material->texture(u, v, hr.normal);
 
 			hr.normal = transform.TransformVector(hr.normal);
 			hr.normal = Vec3::Normalize(hr.normal);

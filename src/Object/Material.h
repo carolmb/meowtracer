@@ -12,6 +12,7 @@ public:
 	Color diffuse = Color(1, 1, 1);
 	Color specular = Color(1, 1, 1);
 	float shininess = 1;
+  float ref = 0;
   std::vector<Color> colors;
   std::vector<float> times;
   float outlineAngle = 0;

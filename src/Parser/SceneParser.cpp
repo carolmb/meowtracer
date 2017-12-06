@@ -100,7 +100,7 @@ Renderer* parseRenderer(json_spirit::Value &value) {
     return new BlinnPhongRenderer(samples, treeDepth);
   } else if (type == "cel") {
     return new CelRenderer(samples, treeDepth);
-  } else if (type == "dieletric") {
+  } else if (type == "dielectric") {
     int depth = json["RAYDEPTH"].getInt();
     return new DielectricRenderer(samples, treeDepth, depth);
   } else {

@@ -77,7 +77,5 @@ void Image::saveBin(std::string &fileName) {
 }
 
 Color& Image::at(int i, int j) { 
-    if (i >= width || j >= height)
-        exit(-1);
     return colors[j * width + i]; 
 }
