@@ -34,11 +34,11 @@ Triangle::Triangle(Matrix4 xform, Point3 &p0, Point3 &p1, Point3 &p2, bool c) {
 }
 
 void Triangle::setNormals(Vec3& n1, Vec3& n2, Vec3& n3)  {
-  //Vec3 n = (n1 + n2 + n3) * 1 / 3;
-  //n1 = n2 = n3 = n;
-  normals[0] = Vec3::Normalize(n1); 
-  normals[1] = Vec3::Normalize(n2); 
-  normals[2] = Vec3::Normalize(n3);
+  if (n1.Valid() && n2.Valid() && n3.Valid()) {
+    normals[0] = n1; 
+    normals[1] = n2; 
+    normals[2] = n3;
+  }
 }
 
 void Triangle::setTexture(float t[6]) {

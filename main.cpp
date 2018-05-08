@@ -8,16 +8,20 @@
 #include "src/Parser/InputData.h"
 #include "src/Image.h"
 
-void printScene(std::string &fileName) {
+using std::string;
+using std::cout;
+using std::endl;
+
+void printScene(string &fileName) {
 	InputData data;
-	std::string inputFile = "meow/" + fileName + ".meow";
-	std::string outputFile = "ppm/" + fileName + ".ppm";
+	string inputFile = "meow/" + fileName + ".meow";
+	string outputFile = "ppm/" + fileName + ".ppm";
 	if (data.load(inputFile)) {
 		time_t before = time(NULL);
 		Color* colors = data.renderer->render(data.scene, data.colCount, data.rowCount);
 		time_t after = time(NULL);
 		double seconds = difftime(after, before);
-		std::cout << "Rendering done in " << seconds << " seconds." << std::endl; 
+		cout << "Rendering done in " << seconds << " seconds." << endl; 
 		Image img(data.colCount, data.rowCount, colors);
 		if (data.isBin) {
 			img.saveBin(outputFile);
@@ -30,10 +34,10 @@ void printScene(std::string &fileName) {
 int main(int argc, char* argv[]) {
 	srand (time(NULL));
 	if (argc > 1) {
-		std::string fileName = argv[1];
+		string fileName = argv[1];
 		printScene(fileName);
 	} else {
-		std::cout << "File name must be specified." << std::endl;
+		cout << "File name must be specified." << endl;
 	}
 	return 0;
 }

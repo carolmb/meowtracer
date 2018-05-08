@@ -7,6 +7,11 @@
 #include <fstream>
 #include <cmath>
 
+using std::string;
+using std::cout;
+using std::endl;
+using std::ifstream;
+
 bool InputData::parse(std::string &content) {
   json_spirit::Value value;
   json_spirit::read(content, value);
@@ -32,13 +37,6 @@ bool InputData::parse(std::string &content) {
       parseLight(scene, lights[i]);
     }
   }
-  if (json.count("PREFABS")) {
-    json_spirit::Array prefabs = json["PREFABS"].getArray();
-    for (int i = 0; i < prefabs.size(); i++) {
-      // TODO
-      // scene.prefabs.push_back(prefabs[i].getObject());
-    }
-  }
   json_spirit::Array objects = json["OBJECTS"].getArray();
   for (int i = 0; i < objects.size(); i++) {
     json_spirit::Object json = objects[i].getObject();
@@ -57,14 +55,6 @@ bool InputData::parse(std::string &content) {
   return true;
 }
 
-std::string clearComments(std::string &input) {
-	int found = input.find_first_of("#");
-	if (found != std::string::npos) {
-		input = input.substr(0, found);
-	}
-	return input;
-}
-
 bool isEmpty(std::string input) {
 	for(int i = 0; i < input.size(); i++) {
 		if (input[i] != ' ')
@@ -74,11 +64,10 @@ bool isEmpty(std::string input) {
 }
 
 std::string readInput(std::ifstream &file) {
-	std::string input;
-	std::string cleanInput = "";
+	string input;
+	string cleanInput = "";
 	while(!file.eof()) {
 		getline(file, input);
-		clearComments(input);
 		if (!isEmpty(input)) {
 			cleanInput += input + "\n";
 		}
@@ -87,16 +76,16 @@ std::string readInput(std::ifstream &file) {
 }
 
 bool InputData::load(std::string &fileName) {
-	std::ifstream file(fileName.c_str(), std::ifstream::in);
+	ifstream file(fileName.c_str(), std::ifstream::in);
 	if (file.is_open()) {
-		std::string content = readInput(file);
+		string content = readInput(file);
 		if (parse(content)) {
 			return true;
 		} else {
-			std::cout << "File not valid." << std::endl;
+			cout << "File not valid." << endl;
 			return false;
 		}
 	} else {
-		std::cout << "File does not exist." << std::endl;
+		cout << "File does not exist." << endl;
 	}
 }
