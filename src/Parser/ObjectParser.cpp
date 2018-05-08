@@ -2,7 +2,6 @@
 #include "../Object/Sphere.h"
 #include "../Object/Triangle.h"
 #include "../Object/Material.h"
-#include "OBJ_Loader.h"
 #include <string>
 
 #if __cplusplus <= 199711L
@@ -32,12 +31,6 @@ Object* parseTriangle(json_spirit::Object &json, Matrix4 &xform) {
   return new Triangle(xform, p0, p1, p2);
 }
 
-Vec3 parseObjVertex(objl::Loader &loader, int _i) {
-  uint i = loader.LoadedIndices[_i];
-  objl::Vertex v = loader.LoadedVertices[i];
-  return Vec3(v.Position.X, v.Position.Y, v.Position.Z);
-}
-
 Object* parseObject(json_spirit::Object &json, Matrix4 &xform, std::string &type, Scene &scene) {
   Object* obj = 0;
   if (type == "sphere") {
@@ -55,23 +48,6 @@ Object* parseObject(json_spirit::Object &json, Matrix4 &xform, std::string &type
     obj->material = scene.materials[material];
   }
   return obj;
-}
-
-void parseObjFile(json_spirit::Object &json, Matrix4 &xform, Scene &scene) {
-  std::string fileName = json["FILE"].getString();
-  objl::Loader loader;
-  loader.LoadFile("meow/" + fileName);
-  Material* m = scene.materials[json["MATERIAL"].getInt()];
-  for(int i = 0; i < loader.LoadedIndices.size(); i += 3) {
-    Vec3 v1 = parseObjVertex(loader, i);
-    Vec3 v2 = parseObjVertex(loader, i+1);
-    Vec3 v3 = parseObjVertex(loader, i+2);
-    Object* triangle = new Triangle(xform, v1, v2, v3);
-    if (triangle->bounds[0].Valid() && triangle->bounds[1].Valid()) {
-      triangle->material = m;
-      scene.objects.push_back(triangle);
-    }
-  }
 }
 
 Material* parseMaterial(json_spirit::Value &value) {

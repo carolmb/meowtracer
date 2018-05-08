@@ -7,7 +7,6 @@
 #include "../Object/Material.h"
 
 Object* parseObject(json_spirit::Object &json, Matrix4 &xform, std::string &type, Scene &scene);
-void parseObjFile(json_spirit::Object &json, Matrix4 &xform, Scene &scene);
 Material* parseMaterial(json_spirit::Value &value);
 
 #endif

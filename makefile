@@ -1,6 +1,6 @@
 all: main
 
-CPP_FLAGS= -g -std=c++11
+CPP_FLAGS= -g -std=c++11 -O3
 
 define recipe
 bin/$(1).o: src/$(2)$(1).cpp src/$(2)$(1).h
@@ -25,7 +25,7 @@ $(foreach i,$(RENDS),$(eval $(call recipe,$(i),Renderer/)))
 MATH = Vec3 Vec4 Matrix4 Perlin
 $(foreach i,$(MATH),$(eval $(call recipe,$(i),Math/)))
 
-PARSER = InputData MathParser SceneParser ObjectParser
+PARSER = InputData MathParser SceneParser ObjectParser ModelParser
 $(foreach i,$(PARSER),$(eval $(call recipe,$(i),Parser/)))
 
 SRC = Image Scene

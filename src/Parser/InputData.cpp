@@ -1,6 +1,7 @@
 #include "InputData.h"
 #include "SceneParser.h"
 #include "ObjectParser.h"
+#include "ModelParser.h"
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -44,7 +45,7 @@ bool InputData::parse(std::string &content) {
     Matrix4 xform = json.count("TRANSFORM") ? parseTransform(json["TRANSFORM"]) : Matrix4::Identity();
     std::string type = json["TYPE"].getString();
     if (type == "obj") {
-      parseObjFile(json, xform, scene);
+      parseModel(json, xform, scene);
     } else {
       Object* obj = parseObject(json, xform, type, scene);
       if (obj->bounds[0].Valid() && obj->bounds[1].Valid())
