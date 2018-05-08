@@ -54,6 +54,7 @@ bool InputData::parse(std::string &content) {
   }
   scene.camera = parseCamera(json["CAMERA"]);
   renderer = parseRenderer(json["RENDERER"]);
+  return true;
 }
 
 std::string clearComments(std::string &input) {

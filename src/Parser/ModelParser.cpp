@@ -1,6 +1,6 @@
 #include "ModelParser.h"
 #include "../Object/Triangle.h"
-#include "ObjLoader.h"
+#include "OBJ_Loader.h"
 #include <string>
 
 Vec3 parseVertex(objl::Loader &loader, int _i) {

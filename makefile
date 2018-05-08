@@ -22,7 +22,7 @@ $(foreach i,$(CAMS),$(eval $(call recipe,$(i),Camera/)))
 RENDS = RendererUtil Renderer NormalRenderer MapRenderer DiffuseRenderer DielectricRenderer CelRenderer BlinnPhongRenderer
 $(foreach i,$(RENDS),$(eval $(call recipe,$(i),Renderer/)))
 
-MATH = Vec3 Vec4 Matrix4 Perlin
+MATH = Vec2 Vec3 Vec4 Matrix4 Perlin
 $(foreach i,$(MATH),$(eval $(call recipe,$(i),Math/)))
 
 PARSER = InputData MathParser SceneParser ObjectParser ModelParser
