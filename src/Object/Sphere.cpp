@@ -22,11 +22,11 @@ Sphere::Sphere(Matrix4 &xform, Point3 p, float rad) : center(p), radius(rad) {
 
 	Matrix4 r = mt * si * m;
 	bounds[0].z = (r[2][3] + sqrt(pow(r[2][3],2) - (r[3][3]*r[2][2])) ) * 1.0 / r[3][3]; 
-  bounds[1].z = (r[2][3] - sqrt(pow(r[2][3],2) - (r[3][3]*r[2][2])) ) * 1.0 / r[3][3]; 
-  bounds[0].y = (r[1][3] + sqrt(pow(r[1][3],2) - (r[3][3]*r[1][1])) ) * 1.0 / r[3][3]; 
-  bounds[1].y = (r[1][3] - sqrt(pow(r[1][3],2) - (r[3][3]*r[1][1])) ) * 1.0 / r[3][3]; 
-  bounds[0].x = (r[0][3] + sqrt(pow(r[0][3],2) - (r[3][3]*r[0][0])) ) * 1.0 / r[3][3]; 
-  bounds[1].x = (r[0][3] - sqrt(pow(r[0][3],2) - (r[3][3]*r[0][0])) ) * 1.0 / r[3][3];
+	bounds[1].z = (r[2][3] - sqrt(pow(r[2][3],2) - (r[3][3]*r[2][2])) ) * 1.0 / r[3][3]; 
+	bounds[0].y = (r[1][3] + sqrt(pow(r[1][3],2) - (r[3][3]*r[1][1])) ) * 1.0 / r[3][3]; 
+	bounds[1].y = (r[1][3] - sqrt(pow(r[1][3],2) - (r[3][3]*r[1][1])) ) * 1.0 / r[3][3]; 
+	bounds[0].x = (r[0][3] + sqrt(pow(r[0][3],2) - (r[3][3]*r[0][0])) ) * 1.0 / r[3][3]; 
+	bounds[1].x = (r[0][3] - sqrt(pow(r[0][3],2) - (r[3][3]*r[0][0])) ) * 1.0 / r[3][3];
 }
 
 RayHit Sphere::hit(Ray &ray) {

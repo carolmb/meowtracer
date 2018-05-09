@@ -33,37 +33,27 @@
 	],
 	"AMBIENT": [0.4, 0.4, 0.4],
 	"MATERIALS": [
-    {
-      "SPECULAR": [0, 0, 0],
-      "AMBIENT": [0.1, 0.1, 0.1],
-      "SHINE": 64
-    },
+	    {
+	      "SPECULAR": [0, 0, 0],
+	      "AMBIENT": [0.1, 0.1, 0.1],
+	      "SHINE": 64
+	    }
+    ],
+    "TEXTURES": [
 		{
-			"AMBIENT": [0.1, 0.1, 0.1],
-			"SHINE": 64,
-			"TEXTURE": {
-				"TYPE": "checkers",
-				"COLOR1": [1, 0, 0],
-				"COLOR2": [0, 0, 1],
-				"REPEATX": 6,
-				"REPEATY": 4
-			}
+			"TYPE": "checkers",
+			"COLOR1": [1, 0, 0],
+			"COLOR2": [0, 0, 1],
+			"REPEATX": 6,
+			"REPEATY": 4
 		},
 		{
-			"AMBIENT": [0.1, 0.1, 0.1],
-			"SHINE": 64,
-			"TEXTURE": {
-				"TYPE": "perlin",
-				"SCALE": 1
-			}
+			"TYPE": "perlin",
+			"SCALE": 1
 		},
 		{
-			"AMBIENT": [0.1, 0.1, 0.1],
-			"SHINE": 64,
-			"TEXTURE": {
-				"TYPE": "image",
-				"FILE": "texture.ppm"
-			}
+			"TYPE": "image",
+			"FILE": "texture.ppm"
 		}
 	],
 	"OBJECTS": [
@@ -77,7 +67,8 @@
 			"TYPE": "sphere",
 			"RADIUS": 0.4,
 			"CENTER": [0, 0, 0],
-			"MATERIAL": 1,
+			"MATERIAL": 0,
+			"TEXTURE": 0,
 			"TRANSFORM": [
 				{
 					"ROTATION": [0, 90, 0]
@@ -91,7 +82,8 @@
 			"TYPE": "sphere",
 			"RADIUS": 0.4,
 			"CENTER": [0, 0, 0],
-			"MATERIAL": 2,
+			"MATERIAL": 0,
+			"TEXTURE": 1,
 			"TRANSFORM": [
 				{
 					"ROTATION": [0, 90, 0]
@@ -105,7 +97,8 @@
 			"TYPE": "sphere",
 			"RADIUS": 0.4,
 			"CENTER": [0, 0, 0],
-			"MATERIAL": 3,
+			"MATERIAL": 0,
+			"TEXTURE": 2,
 			"TRANSFORM": [
 				{
 					"ROTATION": [0, 90, 0]
@@ -114,6 +107,6 @@
 					"TRANSLATION": [0.8, -0.1, -1]
 				}
 			]
-		},
+		}
 	]
 }

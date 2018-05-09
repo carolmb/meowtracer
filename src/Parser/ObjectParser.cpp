@@ -4,6 +4,11 @@
 #include "../Object/Material.h"
 #include <string>
 
+using std::vector;
+using std::cout;
+using std::endl;
+using std::string;
+
 #if __cplusplus <= 199711L
   #error This library needs at least a C++11 compliant compiler
 #endif
@@ -31,7 +36,7 @@ Object* parseTriangle(json_spirit::Object &json, Matrix4 &xform) {
   return new Triangle(xform, p0, p1, p2);
 }
 
-Object* parseObject(json_spirit::Object &json, Matrix4 &xform, std::string &type, Scene &scene) {
+Object* parseObject(json_spirit::Object &json, Matrix4 &xform, string &type, Scene &scene) {
   Object* obj = 0;
   if (type == "sphere") {
     obj = parseSphere(json, xform);
@@ -40,7 +45,7 @@ Object* parseObject(json_spirit::Object &json, Matrix4 &xform, std::string &type
   } else if (type == "triangle") {
     obj = parseTriangle(json, xform);
   } else {
-    std::cout << "Object type not recognized: " << type << std::endl;
+    cout << "Object type not recognized: " << type << endl;
     return NULL;
   }
   if (json.count("MATERIAL")) {
@@ -56,7 +61,7 @@ Object* parseObject(json_spirit::Object &json, Matrix4 &xform, std::string &type
 
 Texture* parseTexture(json_spirit::Value &value) {
   json_spirit::Object json = value.getObject();
-  std::string type = json["TYPE"].getString();
+  string type = json["TYPE"].getString();
   if (type == "checkers") {
     Color c1 = parseColor(json["COLOR1"]);
     Color c2 = parseColor(json["COLOR2"]);
@@ -64,13 +69,13 @@ Texture* parseTexture(json_spirit::Value &value) {
     int ry = json["REPEATY"].getInt();
     return new CheckersTexture(c1, c2, rx, ry);
   } else if (type == "image") {
-    std::string fileName = "meow/" + json["FILE"].getString();
+    string fileName = "meow/" + json["FILE"].getString();
     return new ImageTexture(fileName);
   } else if (type == "perlin") {
     float scale = json["SCALE"].getReal();
     return new PerlinTexture(scale);
   } else {
-    std::cout << "Texture type not recognized: " << type << std::endl;
+    cout << "Texture type not recognized: " << type << endl;
     return NULL;
   }
 }

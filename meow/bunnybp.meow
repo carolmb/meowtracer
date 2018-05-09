@@ -49,12 +49,12 @@
         }
       ],
       "MATERIAL": 0
-    //},
-    //{
-    //  "TYPE": "sphere",
-    //  "RADIUS": 98,
-    //  "CENTER": [0, -98, -3],
-    //  "MATERIAL": 1
+    },
+    {
+      "TYPE": "sphere",
+      "RADIUS": 98,
+      "CENTER": [0, -98, -3],
+      "MATERIAL": 1
     }
   ]
 }

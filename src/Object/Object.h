@@ -14,7 +14,7 @@ class Object {
 public:
   Vec3 bounds[2];
   Material* material;
-  Texture* texture;
+  Texture* texture = 0;
   virtual RayHit hit(Ray &ray) = 0;
 };
 
