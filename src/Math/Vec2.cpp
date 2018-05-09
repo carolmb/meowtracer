@@ -27,6 +27,11 @@ Vec2::Vec2(const Vec2 &V)
     y = V.y;
 }
 
+bool Vec2::Valid() const
+{
+    return ((x == x) && (y == y));
+}
+
 Vec2& Vec2::operator = (const Vec2 &V)
 {
     x = V.x;

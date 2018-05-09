@@ -26,8 +26,7 @@ Triangle::Triangle(Matrix4 xform, Point3 &p0, Point3 &p1, Point3 &p2, bool c) {
   normals[0] = Vec3::Cross(e1, e2);
   normals[0] = Vec3::Normalize(normals[0]);
   normals[1] = normals[2] = normals[0];
-  tx[0] = tx[1] = ty[0] = ty[1] = 0;
-  tx[2] = ty[2] = 0;
+  tex[0] = tex[1] = tex[2] = Vec2(0, 0);
 
   bounds[0] = Vec3(min3(p0.x, p1.x, p2.x), min3(p0.y, p1.y, p2.y), min3(p0.z, p1.z, p2.z));
   bounds[1] = Vec3(max3(p0.x, p1.x, p2.x), max3(p0.y, p1.y, p2.y), max3(p0.z, p1.z, p2.z));
@@ -41,9 +40,12 @@ void Triangle::setNormals(Vec3& n1, Vec3& n2, Vec3& n3)  {
   }
 }
 
-void Triangle::setTexture(float t[6]) {
-  tx[0] = t[0]; tx[1] = t[2]; tx[2] = t[4];
-  ty[0] = t[1]; ty[1] = t[3]; ty[2] = t[5];
+void Triangle::setTexUVs(Vec2& t1, Vec2& t2, Vec2& t3) {
+  if (t1.Valid() && t2.Valid() && t3.Valid()) {
+    tex[0] = t1; 
+    tex[1] = t2; 
+    tex[2] = t3;
+  }
 }
 
 RayHit Triangle::hit(Ray &ray) {
@@ -89,9 +91,7 @@ RayHit Triangle::hit(Ray &ray) {
 
   }
   double w = 1 - u - v;
-  double x = tx[0] * w + tx[1] * u + tx[2] * v; 
-  double y = ty[0] * w + ty[1] * u + ty[2] * v; 
-  hr.texture = material->texture(x, y, hr.point);
+  hr.uv = tex[0] * w + tex[1] * u + tex[2] * v;
   hr.normal = normals[0] * w + normals[1] * u + normals[2] * v;
   return hr;
 }

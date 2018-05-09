@@ -16,6 +16,9 @@ struct Vec2
     Vec2(const Vec2 &V);
     Vec2(float _x, float _y);
 
+    // Check
+    bool Valid() const;
+
     //
     // Assignment
     //

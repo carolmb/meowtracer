@@ -7,8 +7,7 @@ Color Light::diffuseColor (LightHit &lh) {
     float a = getIntensity(lh);
     if (a > 0) {
       Color &diff = lh.rayHit.object->material->diffuse;
-      Color &tex = lh.rayHit.texture;
-      return (tex * diff * color) * fmin(1.0, r * a);
+      return (diff * color) * fmin(1.0, r * a);
     }
   }
   return Color(0, 0, 0);
@@ -23,8 +22,7 @@ Color Light::specularColor(LightHit &lh) {
     if (a > 0) {
       float s = lh.rayHit.object->material->shininess;
       Color &spec = lh.rayHit.object->material->specular;
-      Color &tex = lh.rayHit.texture;
-      return (tex * spec * color) * fmin(1.0, pow(r * a, s));
+      return (spec * color) * fmin(1.0, pow(r * a, s));
     }
   }
   return Color(0, 0, 0);

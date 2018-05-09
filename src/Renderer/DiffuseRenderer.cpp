@@ -30,5 +30,6 @@ Color DiffuseRenderer::getObjectColor(Scene &scene, Ray &ray, RayHit &hr) {
 		Vec3 dir = scene.lights[i]->getDirection(lh);
 		finalColor += scene.lights[i]->diffuseColor(lh);
 	}
+	finalColor = finalColor * hr.getTexture();
 	return finalColor;
 }

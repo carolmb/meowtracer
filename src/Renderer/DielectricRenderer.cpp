@@ -82,6 +82,7 @@ Color DielectricRenderer::getObjectColor(Scene &scene, Ray &ray, RayHit &hr) {
       finalColor += scene.lights[i]->diffuseColor(lh);
       finalColor += scene.lights[i]->specularColor(lh);
     }
+    finalColor = finalColor * hr.getTexture();
   }
   return finalColor;
 }

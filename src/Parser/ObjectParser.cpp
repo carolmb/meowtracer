@@ -47,34 +47,37 @@ Object* parseObject(json_spirit::Object &json, Matrix4 &xform, std::string &type
     int material = json["MATERIAL"].getInt();
     obj->material = scene.materials[material];
   }
+  if (json.count("TEXTURE")) {
+    int texture = json["TEXTURE"].getInt();
+    obj->texture = scene.textures[texture];
+  }
   return obj;
+}
+
+Texture* parseTexture(json_spirit::Value &value) {
+  json_spirit::Object json = value.getObject();
+  std::string type = json["TYPE"].getString();
+  if (type == "checkers") {
+    Color c1 = parseColor(json["COLOR1"]);
+    Color c2 = parseColor(json["COLOR2"]);
+    int rx = json["REPEATX"].getInt();
+    int ry = json["REPEATY"].getInt();
+    return new CheckersTexture(c1, c2, rx, ry);
+  } else if (type == "image") {
+    std::string fileName = "meow/" + json["FILE"].getString();
+    return new ImageTexture(fileName);
+  } else if (type == "perlin") {
+    float scale = json["SCALE"].getReal();
+    return new PerlinTexture(scale);
+  } else {
+    std::cout << "Texture type not recognized: " << type << std::endl;
+    return NULL;
+  }
 }
 
 Material* parseMaterial(json_spirit::Value &value) {
   json_spirit::Object json = value.getObject();
-  Material* m;
-  if (json.count("TEXTURE")) {
-    json_spirit::Object texture = json["TEXTURE"].getObject();
-    std::string type = texture["TYPE"].getString();
-    if (type == "checkers") {
-      Color c1 = parseColor(texture["COLOR1"]);
-      Color c2 = parseColor(texture["COLOR2"]);
-      int rx = texture["REPEATX"].getInt();
-      int ry = texture["REPEATY"].getInt();
-      m = new CheckersMaterial(c1, c2, rx, ry);
-    } else if (type == "image") {
-      std::string fileName = "meow/" + texture["FILE"].getString();
-      m = new ImageMaterial(fileName);
-    } else if (type == "perlin") {
-      float scale = texture["SCALE"].getReal();
-      m = new PerlinMaterial(scale);
-    } else {
-      std::cout << "Texture type not recognized: " << type << std::endl;
-      m = new Material();
-    }
-  } else {
-    m = new Material();
-  }
+  Material* m = new Material();
   if (json.count("AMBIENT")) {
     m->ambient = parseColor(json["AMBIENT"]);
   }

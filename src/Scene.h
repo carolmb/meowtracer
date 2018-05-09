@@ -6,19 +6,26 @@
 #include "Camera/Camera.h"
 #include "Object/Object.h"
 #include "Object/Material.h"
+#include "Object/Texture.h"
 #include "Light/Light.h"
 #include <vector>
+
+using std::vector;
 
 class Scene {
 public:
   Matrix4 transform;
-	Camera* camera;
-	Color tl, tr, bl, br;
-	std::vector<Object*> objects;
-	std::vector<Material*> materials;
-	std::vector<Light*> lights;
+  Camera* camera;
+  Color tl, tr, bl, br;
+
+  vector<Object*> objects;
+  vector<Material*> materials;
+  vector<Texture*> textures;
+
+  vector<Light*> lights;
   Color ambientColor;
-	Color backgroundColor(float tCol, float tRow);
+
+  Color backgroundColor(float tCol, float tRow);
 };
 
 #endif

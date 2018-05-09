@@ -61,10 +61,10 @@ RayHit Sphere::hit(Ray &ray) {
 			//std::cout << x << " " << y << " " << z << " " << tetha / PI * 180 << " " << phi / PI * 180 << std::endl;
 
 			float phi = atan2(z, x);
-    	float theta = asin(y);
-	    float u = 1-(phi + PI) / (2*PI);
-	    float v = (theta + PI/2) / PI;
-	    hr.texture = material->texture(u, v, hr.normal);
+	    	float theta = asin(y);
+		    float u = 1-(phi + PI) / (2*PI);
+		    float v = (theta + PI/2) / PI;
+		    hr.uv = Vec2(u, v);
 
 			//float u = x / 2 + 0.5;
 			//float v = y / 2 + 0.5;

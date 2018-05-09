@@ -17,7 +17,7 @@ Color BlinnPhongRenderer::getColor(Scene &scene, Ray &r, float &x, float &y) {
 				finalColor += scene.lights[i]->specularColor(lh);
 			}
 		}
-		finalColor += hr.object->material->ambient * scene.ambientColor;
+		finalColor = (finalColor * hr.getTexture()) + hr.object->material->ambient * scene.ambientColor;
 		return finalColor;
 	} else {
 		return scene.backgroundColor(x, y);

@@ -25,6 +25,12 @@ bool InputData::parse(std::string &content) {
   scene.bl = parseColor(json["LOWER_LEFT"]);
   scene.br = parseColor(json["LOWER_RIGHT"]);
   scene.ambientColor = parseColor(json["AMBIENT"]);
+  if (json.count("TEXTURES")) {
+    json_spirit::Array textures = json["TEXTURES"].getArray();
+    for (int i = 0; i < textures.size(); i++) {
+      scene.textures.push_back(parseTexture(textures[i]));
+    }
+  }
   if (json.count("MATERIALS")) {
     json_spirit::Array materials = json["MATERIALS"].getArray();
     for (int i = 0; i < materials.size(); i++) {

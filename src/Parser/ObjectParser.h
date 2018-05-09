@@ -5,8 +5,10 @@
 #include "../Scene.h"
 #include "../Object/Object.h"
 #include "../Object/Material.h"
+#include "../Object/Texture.h"
 
 Object* parseObject(json_spirit::Object &json, Matrix4 &xform, std::string &type, Scene &scene);
 Material* parseMaterial(json_spirit::Value &value);
+Texture* parseTexture(json_spirit::Value &value);
 
 #endif
