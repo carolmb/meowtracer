@@ -1,34 +1,11 @@
 #include "ObjLoader.h"
 #include <fstream>
 
-using std::vector;
 using std::string;
 using std::ifstream;
 using std::cout;
 using std::endl;
 using std::stof;
-
-inline Vec2 toVec2(vector<string> &words) {
-	return Vec2(stof(words[1]), stof(words[2]));
-}
-
-inline Vec3 toVec3(vector<string> &words) {
-	return Vec3(stof(words[1]), stof(words[2]), stof(words[3]));
-}
-
-void getWords(const string& s, vector<string>& v) {
-	string buff {""};
-	for(auto c : s) {
-		if (c != ' ') {
-			buff += c; 
-		} else if (buff != "") {
-			v.push_back(buff); 
-			buff = ""; 
-		}
-	}
-	if(buff != "") 
-		v.push_back(buff);
-}
 
 void getIDs(const string& word, vector<int>& v) {
 	string buff {""};
@@ -85,6 +62,7 @@ string ObjLoader::load(string &name) {
 
 	string line;
 	string meshName = "";
+	string mat = "";
 	for(row = 0; std::getline(file, line); row++) {
 		vector<string> words;
 		getWords(line, words);
@@ -96,7 +74,8 @@ string ObjLoader::load(string &name) {
 			if (meshName == "") {
 				meshName = words.size() > 1 ? words[1] : "unnamed";
 			} else {
-				meshes.push_back(Mesh(meshName, vertices, coords, normals, colors, texUVs));
+				Material* m = materialLoader.getMaterial(mat);
+				meshes.push_back(Mesh(meshName, m, vertices, coords, normals, colors, texUVs));
 				clear();
 				meshName = words.size() > 1 ? words[1] : "unnamed";
 			}
@@ -114,7 +93,7 @@ string ObjLoader::load(string &name) {
 		} else if (words[0] == "vt") {
 			// Texture
 			if (words.size() < 3)
-				return "Not enough texture coordiantes.";
+				return "Not enough texture coordinates.";
 			texUVs.push_back(toVec2(words));
 		} else if (words[0] == "vc") {
 			// Color
@@ -126,9 +105,19 @@ string ObjLoader::load(string &name) {
 			string err = loadFace(words);
 			if (err != "")
 				return err;
+		} else if (words[0] == "usemtl") {
+			// Set material
+			if (!vertices.empty()) {
+				Material* m = materialLoader.getMaterial(mat);
+				meshes.push_back(Mesh(meshName, m, vertices, coords, normals, colors, texUVs));
+				clear();
+			}
+			mat = words[1];
+		} else if (words[0] == "mtllib") {
+			// Load materials
+			materialLoader.load(words[1]);
 		}
 	}
-
 	return "";
 }
 

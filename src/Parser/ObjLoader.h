@@ -1,8 +1,7 @@
 #ifndef __OBJLOADER__
 #define __OBJLOADER__
 
-#include "../Math/Vec3.h"
-#include "../Math/Vec2.h"
+#include "MaterialLoader.h"
 #include <string>
 #include <vector>
 #include <cmath>
@@ -21,13 +20,14 @@ struct Vertex {
 
 struct Mesh {
 	string name;
+	Material* material;
 	vector<Vertex> vertices;
 	vector<Vec3> coords;
 	vector<Vec3> normals;
 	vector<Vec3> colors;
 	vector<Vec2> texUVs; 
-	Mesh(string& ns, vector<Vertex> &v, vector<Vec3> &p, vector<Vec3> &n, vector<Vec3> &c, vector<Vec2> &t) 
-		: name(ns), vertices(v), coords(p), normals(n), colors(c), texUVs(t) {}
+	Mesh(string& ns, Material* mat, vector<Vertex> &v, vector<Vec3> &p, vector<Vec3> &n, vector<Vec3> &c, vector<Vec2> &t) 
+		: name(ns), material(mat), vertices(v), coords(p), normals(n), colors(c), texUVs(t) {}
 };
 
 class ObjLoader {
@@ -40,13 +40,14 @@ private:
 
 public:
 
+	MaterialLoader materialLoader;
 	vector<Mesh> meshes;
 
 	vector<Vertex> vertices;
 	vector<Vec3> coords;
 	vector<Vec3> normals;
 	vector<Vec3> colors;
-	vector<Vec2> texUVs; 
+	vector<Vec2> texUVs;
 
 	ObjLoader(string &name);
 
