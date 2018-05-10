@@ -6,11 +6,10 @@ Vec3 SpotLight::getDirection(LightHit &lh) {
 }
 
 float SpotLight::getIntensity(LightHit& lh) {
-  float a = Vec3::Dot(lh.lightDir, direction) / lh.lightDir.Length();
-  if (a < angle) {
+  float cos = Vec3::Dot(lh.lightDir, direction) / lh.lightDir.Length();
+  if (cos < angle) {
     return 0;
-  }
-  else {
-    return a;
+  } else {
+    return (cos - angle) / (1 - angle);
   }
 }

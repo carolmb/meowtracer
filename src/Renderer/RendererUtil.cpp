@@ -14,11 +14,10 @@ Vec3 randomUnitVec3(float radius) {
 }
 
 bool intersects(Scene &scene, Point3 &p, Vec3 &l) {
-  Vec3 dir = -l;
-  Ray ray(p, dir);
+  Ray ray(p, l);
   for (int i = 0; i < scene.objects.size(); i++) {
     RayHit hr = scene.objects[i]->hit(ray);
-    if (!std::isnan(hr.t) && hr.t < -0.00001) {
+    if (!std::isnan(hr.t) && hr.t > 0.00001 && hr.t <= 1) {
       return true;
     }
   }

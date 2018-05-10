@@ -20,7 +20,7 @@ public:
 	virtual Color diffuseColor (LightHit &lh);
 	virtual Color specularColor(LightHit &lh);
 	virtual Vec3 getDirection(LightHit& lh) = 0;
-  virtual float getIntensity(LightHit& lh) { return 1; }
+	virtual float getIntensity(LightHit& lh) { return 1; }
 
 };
 

@@ -91,6 +91,7 @@ RayHit Triangle::hit(Ray &ray) {
 
   }
   double w = 1 - u - v;
+  hr.point = ray.at(hr.t);
   hr.uv = tex[0] * w + tex[1] * u + tex[2] * v;
   hr.normal = normals[0] * w + normals[1] * u + normals[2] * v;
   return hr;
