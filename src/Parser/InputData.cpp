@@ -20,11 +20,11 @@ bool InputData::parse(std::string &content) {
   isBin = json["CODIFICATION"].getString() == "binary";
   colCount = json["WIDTH"].getInt();
   rowCount = json["HEIGHT"].getInt();
-  scene.tl = parseColor(json["UPPER_LEFT"]);
-  scene.tr = parseColor(json["UPPER_RIGHT"]);
-  scene.bl = parseColor(json["LOWER_LEFT"]);
-  scene.br = parseColor(json["LOWER_RIGHT"]);
-  scene.ambientColor = parseColor(json["AMBIENT"]);
+  scene.tl = json.count("UPPER_LEFT") ? parseColor(json["UPPER_LEFT"]) : Vec3(1, 1, 1);
+  scene.tr = json.count("UPPER_RIGHT") ? parseColor(json["UPPER_RIGHT"]) : Vec3(1, 1, 1);
+  scene.bl = json.count("LOWER_LEFT") ? parseColor(json["LOWER_LEFT"]) : Vec3(1, 1, 1);
+  scene.br = json.count("LOWER_RIGHT") ? parseColor(json["LOWER_RIGHT"]) : Vec3(1, 1, 1);
+  scene.ambientColor = json.count("AMBIENT") ? parseColor(json["AMBIENT"]) : Vec3(0, 0, 0);
   if (json.count("TEXTURES")) {
     json_spirit::Array textures = json["TEXTURES"].getArray();
     for (int i = 0; i < textures.size(); i++) {

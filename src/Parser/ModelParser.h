@@ -5,6 +5,7 @@
 #include "../Scene.h"
 #include "../Object/Object.h"
 #include "../Object/Material.h"
+#include "../Object/Texture.h"
 
 void parseModel(json_spirit::Object &json, Matrix4 &xform, Scene &scene);
 

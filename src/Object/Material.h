@@ -12,12 +12,17 @@ struct Material {
 	Color ambient = Color(1, 1, 1);
 	Color diffuse = Color(1, 1, 1);
 	Color specular = Color(1, 1, 1);
+	Color emissive = Color(0, 0, 0);
+
+	int illum = 0;
 	float shininess = 1;
-  float ref = 0;
-  vector<Color> colors;
-  vector<float> times;
-  float outlineAngle = 0;
-  Color outlineColor = Color(0, 0, 0);
+	float ref = 0;
+	float opacity = 1;
+	
+	vector<Color> colors;
+	vector<float> times;
+	float outlineAngle = 0;
+	Color outlineColor = Color(0, 0, 0);
 
 };
 

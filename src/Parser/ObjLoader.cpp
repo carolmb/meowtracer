@@ -5,50 +5,6 @@ using std::string;
 using std::ifstream;
 using std::cout;
 using std::endl;
-using std::stof;
-
-void getIDs(const string& word, vector<int>& v) {
-	string buff {""};
-	for(auto c : word) {
-		if (c != '/') {
-			buff += c; 
-		} else {
-			v.push_back(buff == "" ? 0 : stoi(buff));
-			buff = ""; 
-		}
-	}
-	v.push_back(buff == "" ? 0 : stoi(buff));
-	while (v.size() < 4)
-		v.push_back(0);
-}
-
-void ObjLoader::clear() {
-	coords.clear();
-	normals.clear();
-	colors.clear();
-	texUVs.clear();
-	vertices.clear();
-	normals.push_back(Vec3(NAN, NAN, NAN));
-	texUVs.push_back(Vec2(0, 0));
-	colors.push_back(Vec3(1, 1, 1));
-}
-
-string ObjLoader::loadFace(vector<string> &words) {
-	if (words.size() < 4)
-		return "Not enough face vertices.";
-	vector<vector<int>> vert(0);
-	for (uint i = 1; i < words.size(); i ++) {
-		vector<int> ids;
-		getIDs(words[i], ids);
-		vert.push_back(ids);
-	}
-	for (uint i = 0; i < vert.size() - 2; i += 2) {
-		vertices.push_back(Vertex(vert[i][0], vert[i][2], vert[i][1], vert[i][3]));
-		vertices.push_back(Vertex(vert[i+1][0], vert[i+1][2], vert[i+1][1], vert[i+1][3]));
-		vertices.push_back(Vertex(vert[i+2][0], vert[i+2][2], vert[i+2][1], vert[i+2][3]));
-	}
-	return "";
-}
 
 string ObjLoader::load(string &name) {
 	string objFile = "meow/" + name;
@@ -57,9 +13,7 @@ string ObjLoader::load(string &name) {
 		cout << "Could not load OBJ: " << objFile;
 		return "";
 	}
-
-	clear();
-
+	mesh.clear();
 	string line;
 	string meshName = "";
 	string mat = "";
@@ -71,46 +25,46 @@ string ObjLoader::load(string &name) {
 
 		if (words[0] == "g" || words[0] == "o") {
 			// Object / Group
-			if (meshName == "") {
-				meshName = words.size() > 1 ? words[1] : "unnamed";
-			} else {
-				Material* m = materialLoader.getMaterial(mat);
-				meshes.push_back(Mesh(meshName, m, vertices, coords, normals, colors, texUVs));
-				clear();
-				meshName = words.size() > 1 ? words[1] : "unnamed";
+			if (meshName != "") {
+				mesh.name = meshName;
+				mesh.material = materialLoader.getMaterial(mat);
+				meshes.push_back(mesh);
+				mesh.clear();
 			}
+			meshName = words.size() > 1 ? words[1] : "unnamed";
 		} else if (words[0] == "v") {
 			// Coordinates
 			if (words.size() < 4)
 				return "Not enough vertex coordinates.";
-			coords.push_back(toVec3(words));
+			mesh.coords.push_back(toVec3(words));
 		} else if (words[0] == "vn") {
 			// Normal
 			if (words.size() < 4)
 				return "Not enough normal components.";
 			Vec3 n = toVec3(words);
-			normals.push_back(Vec3::Normalize(n));
+			mesh.normals.push_back(Vec3::Normalize(n));
 		} else if (words[0] == "vt") {
 			// Texture
 			if (words.size() < 3)
 				return "Not enough texture coordinates.";
-			texUVs.push_back(toVec2(words));
+			mesh.texUVs.push_back(toVec2(words));
 		} else if (words[0] == "vc") {
 			// Color
 			if (words.size() < 4)
 				return "Not enough color components.";
-			colors.push_back(toVec3(words));
+			mesh.colors.push_back(toVec3(words));
 		} else if (words[0] == "f") {
 			// Face
-			string err = loadFace(words);
+			string err = mesh.loadFace(words);
 			if (err != "")
 				return err;
 		} else if (words[0] == "usemtl") {
 			// Set material
-			if (!vertices.empty()) {
-				Material* m = materialLoader.getMaterial(mat);
-				meshes.push_back(Mesh(meshName, m, vertices, coords, normals, colors, texUVs));
-				clear();
+			if (!mesh.vertices.empty()) {
+				mesh.name = meshName;
+				mesh.material = materialLoader.getMaterial(mat);
+				meshes.push_back(mesh);
+				mesh.clear();
 			}
 			mat = words[1];
 		} else if (words[0] == "mtllib") {
@@ -118,6 +72,9 @@ string ObjLoader::load(string &name) {
 			materialLoader.load(words[1]);
 		}
 	}
+	mesh.name = meshName;
+	mesh.material = materialLoader.getMaterial(mat);
+	meshes.push_back(mesh);
 	return "";
 }
 

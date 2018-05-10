@@ -8,11 +8,13 @@ using std::ifstream;
 using std::vector;
 using std::string;
 using std::map;
+using std::stoi;
+using std::stof;
 
 void getWords(const string& s, vector<string>& v) {
 	string buff {""};
 	for(auto c : s) {
-		if (c != ' ') {
+		if (c != ' ' and c != '\t') {
 			buff += c; 
 		} else if (buff != "") {
 			v.push_back(buff); 
@@ -33,30 +35,38 @@ void MaterialLoader::load(string& name) {
 	if (!file.is_open()) {
 		cout << "Could not load MTL: " << objFile;
 	}
-/*
 	Material mat;
 	string matName = "";
-	for(row = 0; std::getline(file, line); row++) {
+	string line;
+	while (std::getline(file, line)) {
 		vector<string> words;
 		getWords(line, words);
 		if (words.size() == 0)
 			continue;
-
 		if (words[0] == "newmtl") {
-			if (matName == "") {
-				matName = words.size() > 1 ? words[1] : "unnamed";
-			} else {
-				Material* m = new Material(mat);
-				materials[matName] = m;
-				clear();
-				matName = words.size() > 1 ? words[1] : "unnamed";
+			if (matName != "") {
+				materials[matName] = new Material(mat);
+				mat = Material();
 			}
+			matName = words[1];
 		} else if (words[0] == "Ka") {
 			mat.diffuse = toVec3(words);
-		} else if (words[1] == "Ks") {
+		} else if (words[0] == "Kd") {
+			mat.ambient = toVec3(words);
+		} else if (words[0] == "Ks") {
 			mat.specular = toVec3(words);
+		} else if (words[0] == "Ke") {
+			mat.emissive = toVec3(words);
+		} else if (words[0] == "illum") {
+			mat.illum = stoi(words[1]);
+		} else if (words[0] == "Ni") {
+			mat.ref = stof(words[1]);
+		} else if (words[0] == "Ns") {
+			mat.shininess = stof(words[1]);
+		} else if (words[0] == "d") {
+			mat.opacity = stof(words[1]);
 		}
 	}
-*/
+	materials[matName] = new Material(mat);
 }
 

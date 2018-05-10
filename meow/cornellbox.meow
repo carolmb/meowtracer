@@ -1,0 +1,43 @@
+{
+  "CODIFICATION": "binary",
+  "WIDTH": 200,
+  "HEIGHT": 200,
+  "CAMERA": {
+    "TYPE": "perspective",
+    "CENTER": [0, 1, 1],
+    "WIDTH": 2,
+    "HEIGHT": 2,
+    "VIEWER": [0, 0, 4]
+  },
+  "RENDERER": {
+    "TYPE": "blinnphong",
+    "SAMPLES": 1,
+    "RAYDEPTH": 5
+  },
+  "LIGHTS": [
+    {
+      "TYPE": "directional",
+      "COLOR": [1, 1, 1],
+      "DIRECTION": [0, -1, 0]
+    }
+  ],
+  "AMBIENT": [0.1, 0.1, 0.1],
+  "MATERIALS": [
+    {
+      "DIFFUSE": [0.8, 0, 1],
+      "SPECULAR": [0.4, 0.4, 0.4],
+      "AMBIENT": [0.2, 0.2, 0.2],
+      "SHINE": 32
+    },
+    {
+      "DIFFUSE": [0, 1, 0],
+      "AMBIENT": [0, 0, 0]
+    }
+  ],
+  "OBJECTS": [
+    {
+      "TYPE": "obj",
+      "FILE": "CornellBox-Empty-RG.obj"
+    }
+  ]
+}

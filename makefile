@@ -25,7 +25,7 @@ $(foreach i,$(RENDS),$(eval $(call recipe,$(i),Renderer/)))
 MATH = Vec2 Vec3 Vec4 Matrix4 Perlin
 $(foreach i,$(MATH),$(eval $(call recipe,$(i),Math/)))
 
-PARSER = InputData MathParser SceneParser ObjectParser ModelParser MaterialLoader ObjLoader
+PARSER = InputData MathParser SceneParser ObjectParser ModelParser MaterialLoader ObjLoader Mesh
 $(foreach i,$(PARSER),$(eval $(call recipe,$(i),Parser/)))
 
 SRC = Image Scene
