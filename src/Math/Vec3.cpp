@@ -223,6 +223,13 @@ Vec3::Vec3(const Vec3 &V)
     return *this;
 }
 
+float Vec3::AngleBetween(Vec3& left, Vec3& right) 
+{
+    float angle = Dot(left, right);
+    angle /= (left.Length() * right.Length());
+    return acosf(angle);
+}
+
 Vec3 operator* (const Vec3 &Left, const Vec3 &Right)
 {
     return Vec3(Right.x * Left.x,

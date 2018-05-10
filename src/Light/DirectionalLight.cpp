@@ -1,5 +1,7 @@
 #include "DirectionalLight.h"
 
-Vec3 DirectionalLight::getDirection(LightHit &lh) {
-	return direction;
+LightHit DirectionalLight::getHit(Vec3& rd, RayHit& rh) {
+	LightHit lh(rd, rh);
+	lh.lightDir = direction;
+	return lh;
 }

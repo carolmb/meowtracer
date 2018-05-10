@@ -13,12 +13,12 @@ Vec3 randomUnitVec3(float radius) {
   return Vec3(x * radius, y * radius, cost * radius);
 }
 
-bool intersects(Scene &scene, Point3 &p, Vec3 &l) {
-  Vec3 dir = -l;
-  Ray ray(p, dir);
+bool intersects(Scene &scene, LightHit& lh) {
+  Vec3 dir = -lh.lightDir;
+  Ray ray(lh.rayHit.point, dir);
   for (int i = 0; i < scene.objects.size(); i++) {
-    RayHit hr = scene.objects[i]->hit(ray);
-    if (!std::isnan(hr.t) && hr.t < -0.00001) {
+    RayHit rh = scene.objects[i]->hit(ray);
+    if (!std::isnan(rh.t) && rh.t < -0.00001 && rh.t > -lh.length) {
       return true;
     }
   }

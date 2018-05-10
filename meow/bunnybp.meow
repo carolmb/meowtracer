@@ -1,7 +1,7 @@
 {
   "CODIFICATION": "binary",
-  "WIDTH": 400,
-  "HEIGHT": 200,
+  "WIDTH": 200,
+  "HEIGHT": 100,
   "UPPER_LEFT": [1, 1, 1], 
   "LOWER_LEFT": [0.5, 0.7, 1],
   "UPPER_RIGHT": [1, 1, 1],
@@ -20,9 +20,12 @@
   },
   "LIGHTS": [
     {
-      "TYPE": "directional",
-      "COLOR": [0.6, 0.6, 0.6],
-      "DIRECTION": [-1, -1, -1]
+      "TYPE": "point",
+      "COLOR": [1, 1, 1],
+      "ORIGIN": [0, 1, 0],
+      "DIRECTION": [0, -1, 0],
+      "ANGLE": 45,
+      "SIZE": 0.5
     }
   ],
   "AMBIENT": [0.1, 0.1, 0.1],

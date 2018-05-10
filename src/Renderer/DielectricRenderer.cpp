@@ -72,17 +72,16 @@ Color DielectricRenderer::getColor(Scene &scene, Ray &initRay, float &x, float &
   return color;
 }
 
-Color DielectricRenderer::getObjectColor(Scene &scene, Ray &ray, RayHit &hr) {
+Color DielectricRenderer::getObjectColor(Scene &scene, Ray &ray, RayHit &rh) {
   Vec3& v = ray.direction;
   Color finalColor(0, 0, 0);
-  LightHit lh(ray.direction, hr);
   for (int i = 0; i < scene.lights.size(); i++) {
-    lh.lightDir = scene.lights[i]->getDirection(lh);
-    if (!intersects(scene, hr.point, lh.lightDir)) {
+    LightHit lh = scene.lights[i]->getHit(ray.direction, rh);
+    if (!intersects(scene, lh)) {
       finalColor += scene.lights[i]->diffuseColor(lh);
       finalColor += scene.lights[i]->specularColor(lh);
     }
-    finalColor = finalColor * hr.getTexture();
+    finalColor = finalColor * rh.getTexture();
   }
   return finalColor;
 }

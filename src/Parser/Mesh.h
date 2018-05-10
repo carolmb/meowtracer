@@ -17,6 +17,9 @@ struct Vertex {
 	int normal;
 	int tex;
 	int color;
+
+	Vertex() {}
+	
 	Vertex(int p, int n, int t, int c) 
 		: coord(p), normal(n), tex(t), color(c) {}
 };

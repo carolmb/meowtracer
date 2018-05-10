@@ -16,9 +16,12 @@
   },
   "LIGHTS": [
     {
-      "TYPE": "directional",
+      "TYPE": "point",
       "COLOR": [1, 1, 1],
-      "DIRECTION": [0, -1, 0]
+      "ORIGIN": [0, 1.8, 0],
+      "DIRECTION": [0, -1, 0],
+      "ANGLE": 45,
+      "SIZE": 0.5
     }
   ],
   "AMBIENT": [0.1, 0.1, 0.1],
@@ -28,16 +31,17 @@
       "SPECULAR": [0.4, 0.4, 0.4],
       "AMBIENT": [0.2, 0.2, 0.2],
       "SHINE": 32
-    },
-    {
-      "DIFFUSE": [0, 1, 0],
-      "AMBIENT": [0, 0, 0]
     }
   ],
   "OBJECTS": [
     {
       "TYPE": "obj",
       "FILE": "CornellBox-Empty-RG.obj"
+    },
+    {
+      "TYPE": "obj",
+      "FILE": "bunny_smooth.obj",
+      "MATERIAL": 0
     }
   ]
 }

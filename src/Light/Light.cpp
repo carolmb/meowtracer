@@ -3,6 +3,8 @@
 
 Color Light::diffuseColor (LightHit &lh) {
   float r = Vec3::Dot(lh.lightDir, lh.rayHit.normal);
+  lh.rayHit.normal.Print();
+  std::cout << std::endl;
   if (r > 0) {
     float a = getIntensity(lh);
     if (a > 0) {

@@ -49,10 +49,10 @@ void Triangle::setTexUVs(Vec2& t1, Vec2& t2, Vec2& t3) {
 }
 
 RayHit Triangle::hit(Ray &ray) {
-  RayHit hr;
-  hr.t = NAN;
+  RayHit rh;
+  rh.t = NAN;
   if (!hitsBox(bounds, ray)) {
-    return hr;
+    return rh;
   }
 
   Vec3 e2vec = Vec3::Cross(ray.direction, e2);
@@ -61,37 +61,39 @@ RayHit Triangle::hit(Ray &ray) {
   float u, v;
   if (culling) {
     if (det < E)
-      return hr;
+      return rh;
 
     Vec3 tvec = ray.origin - origin;
     u = Vec3::Dot(tvec, e2vec);
     if (u < 0 || u > det)
-      return hr;
+      return rh;
     Vec3 e1vec = Vec3::Cross(tvec, e1);
     v = Vec3::Dot(ray.direction, e1vec);
     if (v < 0 || u + v > det)
-      return hr;
-    hr.t = Vec3::Dot(e2, e1vec) / det;
+      return rh;
+    rh.t = Vec3::Dot(e2, e1vec) / det;
 
   } else {
     if (det > -E && det < E)
-      return hr;
+      return rh;
 
     float inv_det = 1.0 / det;
     Vec3 tvec = ray.origin - origin;
     u = Vec3::Dot(tvec, e2vec) * inv_det;
     if (u < 0 || u > 1)
-      return hr;
+      return rh;
 
     Vec3 e1vec = Vec3::Cross(tvec, e1);
     v = Vec3::Dot(ray.direction, e1vec) * inv_det;
     if (v < 0 || u + v > 1)
-      return hr;
-    hr.t = Vec3::Dot(e2, e1vec) * inv_det;
+      return rh;
+    rh.t = Vec3::Dot(e2, e1vec) * inv_det;
 
   }
   double w = 1 - u - v;
-  hr.uv = tex[0] * w + tex[1] * u + tex[2] * v;
-  hr.normal = normals[0] * w + normals[1] * u + normals[2] * v;
-  return hr;
+  rh.uv = tex[0] * w + tex[1] * u + tex[2] * v;
+  rh.normal = normals[0] * w + normals[1] * u + normals[2] * v;
+  rh.normal.Print();
+  std::cout << std::endl;
+  return rh;
 }

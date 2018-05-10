@@ -23,13 +23,12 @@ Color DiffuseRenderer::getColor(Scene &scene, Ray &initRay, float &x, float &y) 
 	return color;
 }
 
-Color DiffuseRenderer::getObjectColor(Scene &scene, Ray &ray, RayHit &hr) {
+Color DiffuseRenderer::getObjectColor(Scene &scene, Ray &ray, RayHit &rh) {
 	Color finalColor(0, 0, 0);
 	for (int i = 0; i < scene.lights.size(); i++) {
-		LightHit lh(ray.direction, hr);
-		Vec3 dir = scene.lights[i]->getDirection(lh);
+		LightHit lh = scene.lights[i]->getHit(ray.direction, rh);
 		finalColor += scene.lights[i]->diffuseColor(lh);
 	}
-	finalColor = finalColor * hr.getTexture();
+	finalColor = finalColor * rh.getTexture();
 	return finalColor;
 }

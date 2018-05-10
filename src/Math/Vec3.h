@@ -87,6 +87,7 @@ struct Vec3
      //static bool WithinRect(const Vec3 &Pt, const Rectangle3f &Rect);
      static Vec3 SphericalFromCartesian(const Vec3 &Cartesian);
      static Vec3 CartesianFromSpherical(const Vec3 &Spherical);
+     static float AngleBetween(Vec3& left, Vec3& right);
 };
 
 Vec3 operator* (const Vec3 &Left, float Right);

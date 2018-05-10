@@ -6,10 +6,13 @@
 class DirectionalLight : public Light {
 private:
 	Vec3 direction;
+	Point3 origin;
 public:
 	DirectionalLight(Matrix4 &xform, Color &c, Vec3 &dir) : 
-    Light(c), direction(-xform.TransformVector(dir)) {}
-	virtual Vec3 getDirection(LightHit& lh);
+    		Light(c), direction(-xform.TransformVector(dir)) {
+    	direction = Vec3::Normalize(direction);
+    }
+	LightHit getHit(Vec3& rd, RayHit& rh);
 };
 
 #endif
