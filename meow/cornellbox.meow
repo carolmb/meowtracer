@@ -1,7 +1,7 @@
 {
   "CODIFICATION": "binary",
-  "WIDTH": 200,
-  "HEIGHT": 200,
+  "WIDTH": 100,
+  "HEIGHT": 100,
   "UPPER_LEFT": [1, 1, 1], 
   "LOWER_LEFT": [0.5, 0.7, 1],
   "UPPER_RIGHT": [1, 1, 1],
@@ -9,30 +9,31 @@
   "CAMERA": {
     "TYPE": "perspective",
     "CENTER": [0, 1, 1],
-    "WIDTH": 2,
-    "HEIGHT": 2,
-    "VIEWER": [0, 0, 4]
+    "WIDTH": 1.9,
+    "HEIGHT": 1.9,
+    "VIEWER": [0, 0, 3]
   },
   "RENDERER": {
     "TYPE": "blinnphong",
-    "SAMPLES": 1,
+    "SAMPLES": 32,
     "RAYDEPTH": 5
   },
   "LIGHTS": [
     {
-      "TYPE": "spot",
-      "COLOR": [1, 1, 1],
+      "TYPE": "sphere",
+      "COLOR": [0.8, 0.8, 0.5],
       "DIRECTION": [0, -1, 0],
-      "ORIGIN": [0, 1, 0],
-      "ANGLE": 60
+      "ORIGIN": [0, 1.8, 0],
+      "ANGLE": 60,
+      "SIZE": 0.3
     }
   ],
-  "AMBIENT": [0.1, 0.1, 0.1],
+  "AMBIENT": [0.05, 0.05, 0.02],
   "MATERIALS": [
     {
       "DIFFUSE": [0.8, 0, 1],
       "SPECULAR": [0.4, 0.4, 0.4],
-      "AMBIENT": [0.2, 0.2, 0.2],
+      "AMBIENT": [0.1, 0.1, 0.1],
       "SHINE": 32
     },
     {
@@ -44,6 +45,11 @@
     {
       "TYPE": "obj",
       "FILE": "cornellbox.obj"
+    },
+    {
+      "TYPE": "obj",
+      "FILE": "bunny_smooth.obj",
+      "MATERIAL": 0
     }
   ]
 }

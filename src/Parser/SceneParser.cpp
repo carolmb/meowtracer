@@ -11,7 +11,7 @@
 #include "../Light/DirectionalLight.h"
 #include "../Light/PointLight.h"
 #include "../Light/SpotLight.h"
-#include "../Light/AreaLight.h"
+#include "../Light/SphereLight.h"
 
 void parseLight(Scene& scene, json_spirit::Value &value) {
   Light* light;
@@ -31,12 +31,12 @@ void parseLight(Scene& scene, json_spirit::Value &value) {
     Vec3 dir = parseVec3(json["DIRECTION"]);
     float angle = cos(json["ANGLE"].getReal() * PI / 180.0);
     light = new SpotLight(xform, color, origin, dir, angle);
-  } else if (type == "area") {
+  } else if (type == "sphere") {
     Point3 origin = parseVec3(json["ORIGIN"]);
     Vec3 dir = parseVec3(json["DIRECTION"]);
     float angle = cos(json["ANGLE"].getReal() * PI / 180.0);
     float size = json["SIZE"].getReal();
-    light = new AreaLight(xform, color, origin, dir, angle, size);
+    light = new SphereLight(xform, color, origin, dir, angle, size);
   } else if (type == "grid") {
     int gridX = json["GRIDX"].getInt();
     int gridY = json["GRIDY"].getInt();
