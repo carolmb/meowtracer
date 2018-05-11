@@ -10,7 +10,6 @@ T getElement(vector<T> &v, int i, int off = 0) {
 	int n = v.size() - off;
 	if (i < 0) {
 		i = (-i - 1) % n;
-		cout << n - 1 - i << " " << v.size() << endl;
 		return v[n - 1 - i];
 	} else {
 		return v[i - off];
@@ -66,16 +65,17 @@ void Mesh::clear() {
 string Mesh::loadFace(vector<string> &words) {
 	if (words.size() < 4)
 		return "Not enough face vertices.";
-	vector<vector<int>> vert(0);
+	vector<Vertex> vert(0);
 	for (uint i = 1; i < words.size(); i ++) {
 		vector<int> ids;
 		getIDs(words[i], ids);
-		vert.push_back(ids);
+		vert.push_back(Vertex(ids[0], ids[2], ids[1], ids[3]));
 	}
-	for (uint i = 0; i < vert.size() - 2; i += 2) {
-		vertices.push_back(Vertex(vert[i][0], vert[i][2], vert[i][1], vert[i][3]));
-		vertices.push_back(Vertex(vert[i+1][0], vert[i+1][2], vert[i+1][1], vert[i+1][3]));
-		vertices.push_back(Vertex(vert[i+2][0], vert[i+2][2], vert[i+2][1], vert[i+2][3]));
+	Vertex orig = vert[0];
+	for(int i = 2; i < vert.size(); i++) {
+		vertices.push_back(orig);
+		vertices.push_back(vert[i - 1]);
+		vertices.push_back(vert[i]);
 	}
 	return "";
 }

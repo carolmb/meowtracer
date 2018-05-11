@@ -50,9 +50,9 @@ void MaterialLoader::load(string& name) {
 			}
 			matName = words[1];
 		} else if (words[0] == "Ka") {
-			mat.diffuse = toVec3(words);
-		} else if (words[0] == "Kd") {
 			mat.ambient = toVec3(words);
+		} else if (words[0] == "Kd") {
+			mat.diffuse = toVec3(words);
 		} else if (words[0] == "Ks") {
 			mat.specular = toVec3(words);
 		} else if (words[0] == "Ke") {

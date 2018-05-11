@@ -2,6 +2,10 @@
   "CODIFICATION": "binary",
   "WIDTH": 200,
   "HEIGHT": 200,
+  "UPPER_LEFT": [1, 1, 1], 
+  "LOWER_LEFT": [0.5, 0.7, 1],
+  "UPPER_RIGHT": [1, 1, 1],
+  "LOWER_RIGHT": [0.5, 0.7, 1],
   "CAMERA": {
     "TYPE": "perspective",
     "CENTER": [0, 1, 1],
@@ -16,9 +20,11 @@
   },
   "LIGHTS": [
     {
-      "TYPE": "directional",
+      "TYPE": "spot",
       "COLOR": [1, 1, 1],
-      "DIRECTION": [0, -1, 0]
+      "DIRECTION": [0, -1, 0],
+      "ORIGIN": [0, 1, 0],
+      "ANGLE": 60
     }
   ],
   "AMBIENT": [0.1, 0.1, 0.1],
@@ -37,7 +43,7 @@
   "OBJECTS": [
     {
       "TYPE": "obj",
-      "FILE": "CornellBox-Empty-RG.obj"
+      "FILE": "cornellbox.obj"
     }
   ]
 }

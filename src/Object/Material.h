@@ -9,9 +9,9 @@ using std::vector;
 
 struct Material {
 
-	Color ambient = Color(1, 1, 1);
-	Color diffuse = Color(1, 1, 1);
-	Color specular = Color(1, 1, 1);
+	Color ambient = Color(0, 0, 0);
+	Color diffuse = Color(0, 0, 0);
+	Color specular = Color(0, 0, 0);
 	Color emissive = Color(0, 0, 0);
 
 	int illum = 0;

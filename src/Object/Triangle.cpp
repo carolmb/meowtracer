@@ -88,7 +88,6 @@ RayHit Triangle::hit(Ray &ray) {
     if (v < 0 || u + v > 1)
       return hr;
     hr.t = Vec3::Dot(e2, e1vec) * inv_det;
-
   }
   double w = 1 - u - v;
   hr.point = ray.at(hr.t);
