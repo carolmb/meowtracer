@@ -23,7 +23,11 @@ void parseModel(json_spirit::Object &json, Matrix4 &xform, Scene &scene) {
         Vec3 n1 = mesh.getNormal(i);
         Vec3 n2 = mesh.getNormal(i+1);
         Vec3 n3 = mesh.getNormal(i+2);
+        Color c1 = mesh.getColor(i);
+        Color c2 = mesh.getColor(i+1);
+        Color c3 = mesh.getColor(i+2);
         triangle.setNormals(n1, n2, n3);
+        triangle.setRadiosity(c1, c2, c3);
         triangle.texture = tex;
         triangle.material = meshMat;
         scene.objects.push_back(new Triangle(triangle));

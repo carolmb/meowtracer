@@ -29,6 +29,14 @@ Sphere::Sphere(Matrix4 &xform, Point3 p, float rad) : center(p), radius(rad) {
 	bounds[1].x = (r[0][3] - sqrt(pow(r[0][3],2) - (r[3][3]*r[0][0])) ) * 1.0 / r[3][3];
 }
 
+Color Sphere::radiosity(Vec2& uv) {
+	return Color(0, 0, 0);
+}
+
+Vec2 Sphere::texUV(Vec2& uv) {
+	return uv;
+}
+
 RayHit Sphere::hit(Ray &ray) {
 	RayHit hr;
 	if (!hitsBox(bounds, ray)) {

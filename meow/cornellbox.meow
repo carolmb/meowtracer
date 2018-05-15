@@ -1,7 +1,7 @@
 {
   "CODIFICATION": "binary",
-  "WIDTH": 100,
-  "HEIGHT": 100,
+  "WIDTH": 200,
+  "HEIGHT": 200,
   "UPPER_LEFT": [1, 1, 1], 
   "LOWER_LEFT": [0.5, 0.7, 1],
   "UPPER_RIGHT": [1, 1, 1],
@@ -14,13 +14,12 @@
     "VIEWER": [0, 0, 3]
   },
   "RENDERER": {
-    "TYPE": "blinnphong",
-    "SAMPLES": 32,
-    "RAYDEPTH": 5
+    "TYPE": "radiosity",
+    "SAMPLES": 1
   },
   "LIGHTS": [
     {
-      "TYPE": "sphere",
+      "TYPE": "point",
       "COLOR": [0.8, 0.8, 0.5],
       "DIRECTION": [0, -1, 0],
       "ORIGIN": [0, 1.8, 0],

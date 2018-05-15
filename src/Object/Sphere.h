@@ -12,6 +12,8 @@ private:
 public:
 	Sphere(Matrix4 &xform, Point3 p, float r);
 	RayHit hit(Ray &ray);
+	Color radiosity(Vec2& uv);
+	Vec2 texUV(Vec2& uv);
 };
 
 #endif

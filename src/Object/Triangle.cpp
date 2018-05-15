@@ -4,12 +4,15 @@
 #include <cmath>
 #define E 0.0000000000001
 
-float max3( float a, float b, float c ) {
+using std::endl;
+using std::cout;
+
+inline float max3( float a, float b, float c ) {
   float max = ( a < b ) ? b : a;
   return ( ( max < c ) ? c : max );
 }
 
-float min3(float a, float b, float c) {
+inline float min3(float a, float b, float c) {
   float min = ( a > b ) ? b : a;
   return ( ( min > c ) ? c : min );
 }
@@ -27,6 +30,7 @@ Triangle::Triangle(Matrix4 xform, Point3 &p0, Point3 &p1, Point3 &p2, bool c) {
   normals[0] = Vec3::Normalize(normals[0]);
   normals[1] = normals[2] = normals[0];
   tex[0] = tex[1] = tex[2] = Vec2(0, 0);
+  rad[0] = rad[1] = rad[2] = Color(0, 0, 0);
 
   bounds[0] = Vec3(min3(p0.x, p1.x, p2.x), min3(p0.y, p1.y, p2.y), min3(p0.z, p1.z, p2.z));
   bounds[1] = Vec3(max3(p0.x, p1.x, p2.x), max3(p0.y, p1.y, p2.y), max3(p0.z, p1.z, p2.z));
@@ -46,6 +50,23 @@ void Triangle::setTexUVs(Vec2& t1, Vec2& t2, Vec2& t3) {
     tex[1] = t2; 
     tex[2] = t3;
   }
+}
+
+void Triangle::setRadiosity(Color& c1, Color& c2, Color& c3) {
+  if (c1.Valid() && c2.Valid() && c3.Valid()) {
+    rad[0] = c1; 
+    rad[1] = c2; 
+    rad[2] = c3;
+    //c1.Print(); cout << "   "; c2.Print(); cout << "   "; c3.Print(); cout << endl;
+  }
+}
+
+Vec2 Triangle::texUV(Vec2& uv) {
+  return tex[0] * (1 - uv.x - uv.y) + tex[1] * uv.x + tex[2] * uv.y;
+}
+
+Color Triangle::radiosity(Vec2& uv) {
+  return rad[0] * (1 - uv.x - uv.y) + rad[1] * uv.x + rad[2] * uv.y;
 }
 
 RayHit Triangle::hit(Ray &ray) {
@@ -89,9 +110,8 @@ RayHit Triangle::hit(Ray &ray) {
       return hr;
     hr.t = Vec3::Dot(e2, e1vec) * inv_det;
   }
-  double w = 1 - u - v;
   hr.point = ray.at(hr.t);
-  hr.uv = tex[0] * w + tex[1] * u + tex[2] * v;
-  hr.normal = normals[0] * w + normals[1] * u + normals[2] * v;
+  hr.uv = Vec2(u, v);
+  hr.normal = normals[0] * (1 - u - v) + normals[1] * u + normals[2] * v;
   return hr;
 }

@@ -6,6 +6,7 @@
 #include "../Renderer/DielectricRenderer.h"
 #include "../Renderer/BlinnPhongRenderer.h"
 #include "../Renderer/CelRenderer.h"
+#include "../Renderer/RadiosityRenderer.h"
 #include "../Camera/OrthogonalCamera.h"
 #include "../Camera/PerspectiveCamera.h"
 #include "../Light/DirectionalLight.h"
@@ -98,6 +99,8 @@ Renderer* parseRenderer(json_spirit::Value &value) {
     return new DiffuseRenderer(samples, treeDepth, depth);
   } else if (type == "blinnphong") {
     return new BlinnPhongRenderer(samples, treeDepth);
+  } else if (type == "radiosity") {
+    return new RadiosityRenderer(samples, treeDepth);
   } else if (type == "cel") {
     return new CelRenderer(samples, treeDepth);
   } else if (type == "dielectric") {

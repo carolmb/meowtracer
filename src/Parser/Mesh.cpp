@@ -33,6 +33,7 @@ Vec2 Mesh::getTexUV(int i) {
 }
 
 Vec3 Mesh::getColor(int i) { 
+	cout << vertices[i].color << endl;
 	return getElement(colors, vertices[i].color);
 }
 
@@ -59,7 +60,7 @@ void Mesh::clear() {
 	vertices.clear();
 	normals.push_back(Vec3(NAN, NAN, NAN));
 	texUVs.push_back(Vec2(0, 0));
-	colors.push_back(Vec3(1, 1, 1));
+	colors.push_back(Vec3(0, 0, 0));
 }
 
 string Mesh::loadFace(vector<string> &words) {
