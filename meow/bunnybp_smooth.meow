@@ -1,7 +1,7 @@
 {
   "CODIFICATION": "binary",
-  "WIDTH": 200,
-  "HEIGHT": 100,
+  "WIDTH": 600,
+  "HEIGHT": 300,
   "UPPER_LEFT": [1, 1, 1], 
   "LOWER_LEFT": [0.5, 0.7, 1],
   "UPPER_RIGHT": [1, 1, 1],
@@ -15,12 +15,13 @@
   },
   "RENDERER": {
     "TYPE": "blinnphong",
-    "SAMPLES": 8,
-    "RAYDEPTH": 5
+    "SAMPLES": 1,
+    "RAYDEPTH": 5,
+    "TREEDEPTH": 10
   },
   "LIGHTS": [
     {
-      "TYPE": "area",
+      "TYPE": "sphere",
       "COLOR": [0.6, 0.6, 0.6],
       "ORIGIN": [0, 1, 0.7],
       "DIRECTION": [0, -1, 0],

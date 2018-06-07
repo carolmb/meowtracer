@@ -23,6 +23,7 @@ public:
 	Color* render(Scene &scene, int width, int height);
   RayHit getHit(std::vector<Object*> objects, Ray& ray);
   RayHit getHit(Ray& ray);
+  bool intersects(Scene &scene, Point3 &p, Vec3 &l);
 	virtual Color getColor(Scene &scene, Ray &ray, float &x, float &y) = 0;
 };
 

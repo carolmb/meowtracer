@@ -5,6 +5,7 @@
 #include "../Renderer/DiffuseRenderer.h"
 #include "../Renderer/DielectricRenderer.h"
 #include "../Renderer/BlinnPhongRenderer.h"
+#include "../Renderer/CookTorranceRenderer.h"
 #include "../Renderer/CelRenderer.h"
 #include "../Renderer/RadiosityRenderer.h"
 #include "../Camera/OrthogonalCamera.h"
@@ -99,6 +100,8 @@ Renderer* parseRenderer(json_spirit::Value &value) {
     return new DiffuseRenderer(samples, treeDepth, depth);
   } else if (type == "blinnphong") {
     return new BlinnPhongRenderer(samples, treeDepth);
+  } else if (type == "cooktorrance") {
+    return new CookTorranceRenderer(samples, treeDepth);
   } else if (type == "radiosity") {
     return new RadiosityRenderer(samples, treeDepth);
   } else if (type == "cel") {

@@ -4,6 +4,10 @@
 #include <ctime>
 #include <iostream>
 
+Vec2 randomVec2() {
+  return Vec2(rand() / RAND_MAX, rand() / RAND_MAX);
+}
+
 Vec3 randomUnitVec3(float radius) {
   float phi = PI2 * rand() / RAND_MAX;
   float cost = 1.0 * rand() / RAND_MAX;
@@ -13,15 +17,12 @@ Vec3 randomUnitVec3(float radius) {
   return Vec3(x * radius, y * radius, cost * radius);
 }
 
-bool intersects(Scene &scene, Point3 &p, Vec3 &l) {
-  Ray ray(p, l);
-  for (int i = 0; i < scene.objects.size(); i++) {
-    RayHit hr = scene.objects[i]->hit(ray);
-    if (!std::isnan(hr.t) && hr.t > 0.00001 && hr.t <= 1) {
-      return true;
-    }
-  }
-  return false;
+Vec2 beckmanRandom(float m2) {
+  float e1 = rand() / RAND_MAX;
+  float e2 = rand() / RAND_MAX;
+  float tetha = 1; // TODO
+  float phi = PI2 * e2;
+  return Vec2(tetha, phi);
 }
 
 bool hitsBox(Vec3 bounds[2], Ray &r) {

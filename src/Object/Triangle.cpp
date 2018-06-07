@@ -57,7 +57,6 @@ void Triangle::setRadiosity(Color& c1, Color& c2, Color& c3) {
     rad[0] = c1; 
     rad[1] = c2; 
     rad[2] = c3;
-    //c1.Print(); cout << "   "; c2.Print(); cout << "   "; c3.Print(); cout << endl;
   }
 }
 

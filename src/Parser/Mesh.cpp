@@ -33,7 +33,6 @@ Vec2 Mesh::getTexUV(int i) {
 }
 
 Vec3 Mesh::getColor(int i) { 
-	cout << vertices[i].color << endl;
 	return getElement(colors, vertices[i].color);
 }
 

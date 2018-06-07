@@ -13,11 +13,11 @@ Color BlinnPhongRenderer::getColor(Scene &scene, Ray &r, float &x, float &y) {
 		for (int i = 0; i < scene.lights.size(); i++) {
 			lh.lightDir = scene.lights[i]->getDirection(lh);
 			if (!intersects(scene, hr.point, lh.lightDir)) {
-				finalColor += scene.lights[i]->diffuseColor(lh);
+				finalColor += scene.lights[i]->diffuseColor(lh) * hr.getTexture();
 				finalColor += scene.lights[i]->specularColor(lh);
 			}
 		}
-		finalColor = (finalColor * hr.getTexture()) + hr.object->material->ambient * scene.ambientColor;
+		finalColor = finalColor + hr.object->material->ambient * scene.ambientColor;
 		return finalColor;
 	} else {
 		return scene.backgroundColor(x, y);

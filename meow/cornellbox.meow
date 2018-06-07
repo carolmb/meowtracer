@@ -15,7 +15,8 @@
   },
   "RENDERER": {
     "TYPE": "radiosity",
-    "SAMPLES": 1
+    "SAMPLES": 1,
+    "TREEDEPTH": 5
   },
   "LIGHTS": [
     {

@@ -95,6 +95,9 @@ Material* parseMaterial(json_spirit::Value &value) {
   if (json.count("SHINE")) {
     m->shininess = json["SHINE"].getReal();
   }
+  if (json.count("ROUGH")) {
+    m->roughness = json["ROUGH"].getReal();
+  }
   if (json.count("REFRACTION")) {
     m->ref = json["REFRACTION"].getReal();
   }

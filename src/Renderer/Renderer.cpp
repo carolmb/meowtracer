@@ -4,6 +4,9 @@
 #include <stack>
 #include <cstdlib>
 
+using std::cout;
+using std::endl;
+
 Tree* accelerate(std::vector<Object*> &objects, Vec3 bounds[2], int depth);
 
 void clusterBounds(std::vector<Object*> &objects, Vec3 bounds[2]) {
@@ -69,9 +72,11 @@ Tree* accelerate(std::vector<Object*> &objects, Vec3 bounds[2], int depth) {
 }
 
 Color* Renderer::render(Scene &scene, int width, int height) {
-	Vec3 b[2];
-	clusterBounds(scene.objects, b);
-	tree = accelerate(scene.objects, b, treeDepth);
+	{
+		Vec3 bounds[2];
+		clusterBounds(scene.objects, bounds);
+		tree = accelerate(scene.objects, bounds, treeDepth);
+	}
 
 	Color* colors = new Color[width * height];
 	float progress = 0;
@@ -107,7 +112,7 @@ Color* Renderer::render(Scene &scene, int width, int height) {
 			colors[j * width + i] = c;
 		}
 	}
-	std::cout << std::endl;
+	cout << std::endl;
 	return colors;
 }
 
@@ -122,6 +127,12 @@ RayHit Renderer::getHit(std::vector<Object*> objects, Ray& ray) {
 		}
 	}
 	return minhr;
+}
+
+bool Renderer::intersects(Scene &scene, Point3 &p, Vec3 &l) {
+  Ray ray(p, l);
+  RayHit hr = getHit(ray);
+  return !std::isnan(hr.t) && hr.t > 0.00001 && hr.t <= 1;
 }
 
 RayHit Renderer::getHit(Ray& r) {

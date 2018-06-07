@@ -16,7 +16,8 @@
   "RENDERER": {
     "TYPE": "blinnphong",
     "SAMPLES": 1,
-    "RAYDEPTH": 5
+    "RAYDEPTH": 5,
+    "TREEDEPTH": 11
   },
   "LIGHTS": [
     {
@@ -35,7 +36,7 @@
     },
     {
       "DIFFUSE": [0, 1, 0],
-      "AMBIENT": [0, 0, 0]
+      "AMBIENT": [1, 1, 1]
     }
   ],
   "OBJECTS": [

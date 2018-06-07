@@ -16,6 +16,7 @@ struct Material {
 
 	int illum = 0;
 	float shininess = 1;
+	float roughness = 1;
 	float ref = 0;
 	float opacity = 1;
 	
